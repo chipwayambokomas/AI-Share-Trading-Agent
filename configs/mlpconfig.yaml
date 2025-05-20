@@ -1,0 +1,50 @@
+# configs/config.yml
+
+experiment:
+  name: "price_prediction_baseline"
+  seed: 42
+
+#To be used in initial training when initiating model
+model:
+  type: "mlp" # Currently not used by scripts, but good for future extension
+  input_size: 10
+  hidden_size: 64
+  output_size: 1
+
+training:
+  epochs: 50 # Keep low for quick testing if needed
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0
+  #early_stopping_patience: 10 # For trainMLP.py
+
+
+data:
+  path: "data/ABG.csv" # IMPORTANT: Create this file or change path
+  target_column: "Value" 
+  split:
+    train: 0.6
+    val: 0.2
+    # test is the remainder (0.2)
+
+
+hpo:
+  enabled: false # Set to true to run HPO via main.py --mode hpo or --mode full
+  study_name: "mlp_hpo_study_from_config_yml"
+  max_trials: 5 # Keep low for quick testing; increase for real HPO (e.g., 30)
+  cleanup_temp_trial_dir_after_hpo: true
+  search_space:
+    # Keys must be dot-separated paths to the config value they override
+    # Types: "categorical", "int", "float_log", "float"
+    training.learning_rate:
+      type: "categorical"
+      values: [0.0001, 0.001, 0.01]
+    model.hidden_size:
+      type: "categorical"
+      values: [32, 64, 128]
+    training.batch_size:
+      type: "categorical"
+      values: [16, 32, 64]
+    model.input_size: # Window size
+      type: "categorical"
+      values: [5, 10, 20]
