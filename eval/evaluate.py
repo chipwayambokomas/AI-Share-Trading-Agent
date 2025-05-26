@@ -59,14 +59,13 @@ def load_test_data(config,count):
     # We only need the test data, but load_data returns all data splits
     data_loaders, scaler = load_data(config)
     test_loader = data_loaders[count][3]
-    sheet_name = data_loaders[count][0]
     
     # Log the dtype of the first batch for debugging
     for inputs, targets in test_loader:
         print(f"Test data dtype: {inputs.dtype}, shape: {inputs.shape}")
         break
         
-    return sheet_name, test_loader, scaler
+    return test_loader, scaler
 
 def calculate_mape(y_true, y_pred):
     """
@@ -223,7 +222,7 @@ def evaluate_trained_model(checkpoint_path, project_root_dir):
                 config['project_root_dir'] = project_root_dir
             
             # Load test data
-            sheet_name,test_loader, scaler = load_test_data(config,count)
+            test_loader, scaler = load_test_data(config,count)
             
             if len(test_loader.dataset) == 0:
                 print(f"Test dataset is empty. Cannot evaluate.")
@@ -237,7 +236,7 @@ def evaluate_trained_model(checkpoint_path, project_root_dir):
                 return None
             
             # Print results to console
-            print(f"\n========== {sheet_name} Evaluation Results ==========")
+            print(f"\n========== Evaluation Results ==========")
             for metric_name, metric_value in metrics.items():
                 print(f"  - {metric_name}: {metric_value:.4f}")
             

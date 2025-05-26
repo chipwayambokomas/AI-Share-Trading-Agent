@@ -1,0 +1,6 @@
+Evaluation Results
+=================
+
+RMSE: 274.0014
+MAE: 198.6558
+MAPE: 2.9395
