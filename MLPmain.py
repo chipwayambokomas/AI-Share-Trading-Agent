@@ -58,11 +58,11 @@ def main():
         print("\n=== Mode: Training Model (Standalone) ===")
         training_results = train_mlp(base_config, trial_name_for_temp_checkpoint="main_standalone_run")
         for i, (_,temp_ckpt_path,sheet_name) in enumerate(training_results):
-            abs_main_standalone_model_path = os.path.join(PROJECT_ROOT, f"checkpoints/MLP/standalone/{sheet_name}_best_model.pt")
+            abs_main_standalone_models_path = os.path.join(PROJECT_ROOT, f"checkpoints/MLP/standalone/{sheet_name}_best_model.pt")
             if temp_ckpt_path and os.path.exists(temp_ckpt_path):
-                os.makedirs(os.path.dirname(abs_main_standalone_model_path), exist_ok=True)
-                shutil.copy(temp_ckpt_path, abs_main_standalone_model_path)
-                print(f"Standalone training finished. Model saved to: {abs_main_standalone_model_path}")
+                os.makedirs(os.path.dirname(abs_main_standalone_models_path), exist_ok=True)
+                shutil.copy(temp_ckpt_path, abs_main_standalone_models_path)
+                print(f"Standalone training finished. Model saved to: {abs_main_standalone_models_path}")
                 try: os.remove(temp_ckpt_path); # print(f"Cleaned up temp file: {temp_ckpt_path}")
                 except OSError as e: print(f"Warning: Could not remove temp file {temp_ckpt_path}: {e}")
             else:
@@ -127,7 +127,7 @@ def main():
         if models_path_for_evaluation_rel:
             abs_models_path_for_evaluation = os.path.join(PROJECT_ROOT, models_path_for_evaluation_rel)
             if os.path.exists(abs_models_path_for_evaluation):
-                print(f"\n--- Evaluating Model: {model_path_for_evaluation_rel} (Full Pipeline) ---")
+                print(f"\n--- Evaluating Model: {models_path_for_evaluation_rel} (Full Pipeline) ---")
                 evaluate_trained_model(checkpoint_path=abs_models_path_for_evaluation, project_root_dir=PROJECT_ROOT) 
             else: # Should not happen if logic is correct
                 print(f"Model path {model_path_for_evaluation_rel} determined but file not found at {abs_models_path_for_evaluation}.")

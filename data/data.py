@@ -37,7 +37,7 @@ def load_data(config: dict):
             return None, None, None, None
         
         # Extract raw values (before scaling)
-        raw_values = df.iloc[:, 1].values.reshape(-1, 1) # Keep as 2D for scaler
+        raw_values = df.iloc[::-1, 1].values.reshape(-1, 1) # Keep as 2D for scaler
 
         # --- 3. Split Data into Training, Validation, and Test Sets (RAW values) ---
         total_len = len(raw_values)
@@ -103,7 +103,7 @@ def load_data(config: dict):
         
         data_loaders[count] = [sheet_name,train_loader, val_loader, test_loader]
         count += 1
-        print(f"Loaded and processed data from sheet: {sheet_name}")
 
+    print(f"Successfully loaded and processed data.")
     # --- 7. Return Processed Data ---
     return data_loaders, scaler
