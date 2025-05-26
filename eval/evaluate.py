@@ -42,7 +42,7 @@ def load_model(checkpoint_path, device):
     
     return model, config
 
-def load_test_data(config):
+def load_test_data(config,count):
     """
     Load only the test data needed for evaluation.
     
@@ -57,7 +57,8 @@ def load_test_data(config):
     from data.data import load_data
     
     # We only need the test data, but load_data returns all data splits
-    _, _, test_loader, scaler = load_data(config)
+    data_loaders, scaler = load_data(config)
+    test_loader = data_loaders[count][3]
     
     # Log the dtype of the first batch for debugging
     for inputs, targets in test_loader:
@@ -197,7 +198,7 @@ def evaluate_trained_model(checkpoint_path, project_root_dir):
     Main function to evaluate a trained model.
     
     Args:
-        checkpoint_path (str): Path to the model checkpoint
+        checkpoint_path (str): Path to the models checkpoints
         project_root_dir (str): Path to the project root directory
         
     Returns:
@@ -207,42 +208,49 @@ def evaluate_trained_model(checkpoint_path, project_root_dir):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
     
-    try:
-        # Load the model
-        model, config = load_model(checkpoint_path, device)
-        
-        # Ensure project_root_dir is in config
-        if 'project_root_dir' not in config:
-            config['project_root_dir'] = project_root_dir
-        
-        # Load test data
-        test_loader, scaler = load_test_data(config)
-        
-        if len(test_loader.dataset) == 0:
-            print(f"Test dataset is empty. Cannot evaluate.")
-            return None
+    metrics_collection = [None for _ in range(38)]
+    count = 0
+    for filename in os.listdir(checkpoint_path):
+        if filename.endswith('.pt'):
+            filepath = os.path.join(checkpoint_path, filename)
+        try:
+            # Load the model
+            model, config = load_model(filepath, device)
             
-        # Evaluate the model
-        y_true, y_pred, metrics = evaluate_model(model, test_loader, scaler, device)
-        
-        if len(y_true) == 0 or "error" in metrics:
-            print("Evaluation failed: No data processed")
+            # Ensure project_root_dir is in config
+            if 'project_root_dir' not in config:
+                config['project_root_dir'] = project_root_dir
+            
+            # Load test data
+            test_loader, scaler = load_test_data(config,count)
+            
+            if len(test_loader.dataset) == 0:
+                print(f"Test dataset is empty. Cannot evaluate.")
+                return None
+                
+            # Evaluate the model
+            y_true, y_pred, metrics = evaluate_model(model, test_loader, scaler, device)
+            
+            if len(y_true) == 0 or "error" in metrics:
+                print("Evaluation failed: No data processed")
+                return None
+            
+            # Print results to console
+            print("\n========== Evaluation Results ==========")
+            for metric_name, metric_value in metrics.items():
+                print(f"  - {metric_name}: {metric_value:.4f}")
+            
+            # Save results to files
+            results_dir = os.path.join(project_root_dir, "results")
+            model_name = os.path.splitext(os.path.basename(filepath))[0]
+            save_results(y_true, y_pred, metrics, results_dir, model_name)
+            
+            metrics_collection[count] = metrics
+            
+        except Exception as e:
+            print(f"Error during evaluation: {e}")
+            import traceback
+            traceback.print_exc()
             return None
         
-        # Print results to console
-        print("\n========== Evaluation Results ==========")
-        for metric_name, metric_value in metrics.items():
-            print(f"  - {metric_name}: {metric_value:.4f}")
-        
-        # Save results to files
-        results_dir = os.path.join(project_root_dir, "results")
-        model_name = os.path.splitext(os.path.basename(checkpoint_path))[0]
-        save_results(y_true, y_pred, metrics, results_dir, model_name)
-        
-        return metrics
-        
-    except Exception as e:
-        print(f"Error during evaluation: {e}")
-        import traceback
-        traceback.print_exc()
-        return None
+    return metrics_collection

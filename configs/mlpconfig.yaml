@@ -21,7 +21,6 @@ training:
 
 data:
   path: "data/JSE_Top_40_Dataset.xlsx" # IMPORTANT: Create this file or change path
-  target_column: "Value" 
   split:
     train: 0.6
     val: 0.2

@@ -56,16 +56,17 @@ def main():
 
     if args.mode == "train":
         print("\n=== Mode: Training Model (Standalone) ===")
-        _, temp_ckpt_path = train_mlp(base_config, trial_name_for_temp_checkpoint="main_standalone_run")
-        
-        abs_main_standalone_model_path = os.path.join(PROJECT_ROOT, MAIN_STANDALONE_MODEL_PATH)
-        if temp_ckpt_path and os.path.exists(temp_ckpt_path):
-            shutil.copy(temp_ckpt_path, abs_main_standalone_model_path)
-            print(f"Standalone training finished. Model saved to: {abs_main_standalone_model_path}")
-            try: os.remove(temp_ckpt_path); # print(f"Cleaned up temp file: {temp_ckpt_path}")
-            except OSError as e: print(f"Warning: Could not remove temp file {temp_ckpt_path}: {e}")
-        else:
-            print("Standalone training did not produce a model checkpoint.")
+        training_results = train_mlp(base_config, trial_name_for_temp_checkpoint="main_standalone_run")
+        for i, (_,temp_ckpt_path,sheet_name) in enumerate(training_results):
+            abs_main_standalone_model_path = os.path.join(PROJECT_ROOT, f"checkpoints/MLP/standalone/{sheet_name}_best_model.pt")
+            if temp_ckpt_path and os.path.exists(temp_ckpt_path):
+                os.makedirs(os.path.dirname(abs_main_standalone_model_path), exist_ok=True)
+                shutil.copy(temp_ckpt_path, abs_main_standalone_model_path)
+                print(f"Standalone training finished. Model saved to: {abs_main_standalone_model_path}")
+                try: os.remove(temp_ckpt_path); # print(f"Cleaned up temp file: {temp_ckpt_path}")
+                except OSError as e: print(f"Warning: Could not remove temp file {temp_ckpt_path}: {e}")
+            else:
+                print("Standalone training did not produce a model checkpoint.")
 
     elif args.mode == "hpo":
         print("\n=== Mode: Hyperparameter Optimization ===")
@@ -98,7 +99,7 @@ def main():
 
     elif args.mode == "full":
         print("\n=== Mode: Full Pipeline Run ===")
-        model_path_for_evaluation_rel = None # Relative path to project root
+        models_path_for_evaluation_rel = "checkpoints/MLP/standalone" # Relative path to project root
         
         if base_config.get("hpo", {}).get("enabled", False):
             print("\n--- Running HPO (Full Pipeline) ---")
@@ -110,25 +111,26 @@ def main():
                  return
         else:
             print("\n--- Training Model (Standalone, HPO disabled, Full Pipeline) ---")
-            _, temp_ckpt_path = train_mlp(base_config, trial_name_for_temp_checkpoint="full_pipeline_standalone")
-            abs_main_standalone_model_path = os.path.join(PROJECT_ROOT, MAIN_STANDALONE_MODEL_PATH)
-            if temp_ckpt_path and os.path.exists(temp_ckpt_path):
-                shutil.copy(temp_ckpt_path, abs_main_standalone_model_path)
-                # print(f"Model saved to: {abs_main_standalone_model_path}")
-                model_path_for_evaluation_rel = MAIN_STANDALONE_MODEL_PATH
-                try: os.remove(temp_ckpt_path);
-                except OSError as e: print(f"Warning: Could not remove temp file {temp_ckpt_path}: {e}")
-            else:
-                print("Standalone training (full pipeline) did not produce a model. Cannot evaluate.")
-                return
+            training_results = train_mlp(base_config, trial_name_for_temp_checkpoint="main_standalone_run")
+            for i, (_,temp_ckpt_path,sheet_name) in enumerate(training_results):
+                abs_main_standalone_models_path = os.path.join(PROJECT_ROOT, f"checkpoints/MLP/standalone/{sheet_name}_best_model.pt")
+                if temp_ckpt_path and os.path.exists(temp_ckpt_path):
+                    os.makedirs(os.path.dirname(abs_main_standalone_models_path), exist_ok=True)
+                    shutil.copy(temp_ckpt_path, abs_main_standalone_models_path)
+                    try: os.remove(temp_ckpt_path); # print(f"Cleaned up temp file: {temp_ckpt_path}")
+                    except OSError as e: print(f"Warning: Could not remove temp file {temp_ckpt_path}: {e}")
+                else:
+                    print("Standalone training (full pipeline) did not produce a model. Cannot evaluate.")
+                    return
+            
 
-        if model_path_for_evaluation_rel:
-            abs_model_path_for_evaluation = os.path.join(PROJECT_ROOT, model_path_for_evaluation_rel)
-            if os.path.exists(abs_model_path_for_evaluation):
+        if models_path_for_evaluation_rel:
+            abs_models_path_for_evaluation = os.path.join(PROJECT_ROOT, models_path_for_evaluation_rel)
+            if os.path.exists(abs_models_path_for_evaluation):
                 print(f"\n--- Evaluating Model: {model_path_for_evaluation_rel} (Full Pipeline) ---")
-                evaluate_trained_model(checkpoint_path=abs_model_path_for_evaluation, project_root_dir=PROJECT_ROOT) 
+                evaluate_trained_model(checkpoint_path=abs_models_path_for_evaluation, project_root_dir=PROJECT_ROOT) 
             else: # Should not happen if logic is correct
-                print(f"Model path {model_path_for_evaluation_rel} determined but file not found at {abs_model_path_for_evaluation}.")
+                print(f"Model path {model_path_for_evaluation_rel} determined but file not found at {abs_models_path_for_evaluation}.")
         else:
             print("No model was successfully trained or found from the pipeline steps for evaluation.")
 

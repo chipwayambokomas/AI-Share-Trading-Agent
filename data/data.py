@@ -16,8 +16,7 @@ def load_data(config: dict):
     
     # data_loader variable removed as it was unused and invalid
     # Example: Initialize a 2D array (numpy) of zeros with shape (rows, cols)
-    rows, cols = 39, 4
-    data_loaders = np.zeros((rows, cols))
+    data_loaders = [[None for _ in range(4)] for _ in range(38)]
        
     # --- 1. Load Raw Data ---
     data_path = config["data"]["path"]
@@ -38,7 +37,7 @@ def load_data(config: dict):
             return None, None, None, None
         
         # Extract raw values (before scaling)
-        raw_values = df[1].values.reshape(-1, 1) # Keep as 2D for scaler
+        raw_values = df.iloc[:, 1].values.reshape(-1, 1) # Keep as 2D for scaler
 
         # --- 3. Split Data into Training, Validation, and Test Sets (RAW values) ---
         total_len = len(raw_values)
