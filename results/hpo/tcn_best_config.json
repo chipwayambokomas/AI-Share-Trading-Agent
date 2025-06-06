@@ -1,0 +1,187 @@
+{
+  "data": {
+    "file_path": "data/ABG.csv",
+    "target_column": "Value",
+    "feature_columns": [
+      "Value"
+    ],
+    "train_ratio": 0.8,
+    "val_ratio": 0.1
+  },
+  "model": {
+    "input_size": 1,
+    "output_size": 1,
+    "sequence_length": 30,
+    "num_channels": [
+      32,
+      16,
+      16
+    ],
+    "kernel_size": 2,
+    "dropout": 0.48495492608099716
+  },
+  "training": {
+    "epochs": 105,
+    "batch_size": 64,
+    "learning_rate": 8.17949947521167e-05,
+    "weight_decay": 3.752055855124284e-05,
+    "patience": 16,
+    "lr_scheduler": {
+      "enabled": true,
+      "factor": 0.5,
+      "patience": 7,
+      "min_lr": 1e-06
+    },
+    "gradient_clipping": {
+      "enabled": true,
+      "max_norm": 1.0
+    }
+  },
+  "hpo": {
+    "enabled": false,
+    "n_trials": 1,
+    "timeout": 300,
+    "study_name": "tcn_stock_prediction_hpo",
+    "storage": null,
+    "search_space": {
+      "num_layers": {
+        "type": "int",
+        "low": 2,
+        "high": 6
+      },
+      "base_channels": {
+        "type": "categorical",
+        "choices": [
+          32,
+          64,
+          128
+        ]
+      },
+      "kernel_size": {
+        "type": "int",
+        "low": 2,
+        "high": 8
+      },
+      "dropout": {
+        "type": "float",
+        "low": 0.0,
+        "high": 0.5
+      },
+      "sequence_length": {
+        "type": "categorical",
+        "choices": [
+          30,
+          60,
+          90,
+          120
+        ]
+      },
+      "learning_rate": {
+        "type": "float",
+        "low": 1e-05,
+        "high": 0.01,
+        "log": true
+      },
+      "weight_decay": {
+        "type": "float",
+        "low": 1e-06,
+        "high": 0.001,
+        "log": true
+      },
+      "batch_size": {
+        "type": "categorical",
+        "choices": [
+          16,
+          32,
+          64,
+          128
+        ]
+      },
+      "patience": {
+        "type": "int",
+        "low": 10,
+        "high": 30
+      }
+    }
+  },
+  "evaluation": {
+    "metrics": [
+      "mse",
+      "mae",
+      "rmse",
+      "mape"
+    ],
+    "plots": {
+      "enabled": true,
+      "save_path": "results/evaluation_plots",
+      "formats": [
+        "png",
+        "pdf"
+      ]
+    },
+    "save_predictions": true,
+    "predictions_path": "results/predictions"
+  },
+  "logging": {
+    "level": "INFO",
+    "file_path": "logs/tcn_training.log",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  },
+  "device": {
+    "use_cuda": true,
+    "cuda_device": 0
+  },
+  "random_seed": 42,
+  "checkpointing": {
+    "save_best_only": true,
+    "monitor": "val_loss",
+    "mode": "min",
+    "save_frequency": 1
+  },
+  "advanced": {
+    "dilation_strategy": "exponential",
+    "custom_dilations": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "use_layer_norm": true,
+    "use_batch_norm": false,
+    "use_weight_norm": true,
+    "activation": "relu",
+    "use_residual": true,
+    "causal_padding": true
+  },
+  "preprocessing": {
+    "normalize_features": true,
+    "normalization_method": "minmax",
+    "handle_missing": true,
+    "missing_strategy": "interpolate",
+    "outlier_detection": {
+      "enabled": false,
+      "method": "iqr",
+      "threshold": 3.0,
+      "action": "clip"
+    }
+  },
+  "technical_indicators": {
+    "enabled": false,
+    "indicators": [
+      "SMA_20",
+      "EMA_12",
+      "RSI_14",
+      "MACD",
+      "BB_upper",
+      "BB_lower"
+    ]
+  },
+  "ensemble": {
+    "enabled": false,
+    "num_models": 3,
+    "aggregation_method": "mean"
+  },
+  "project_root_dir": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent"
+}

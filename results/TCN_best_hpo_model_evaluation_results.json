@@ -1,0 +1,50 @@
+{
+  "model_type": "TCN",
+  "checkpoint_path": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/checkpoints/TCN/TCN_best_hpo_model.pt",
+  "evaluation_date": "2025-05-26T17:02:03.222832",
+  "metrics": {
+    "normalized": {
+      "mse": 0.0390840619802475,
+      "mae": 0.19220954179763794,
+      "rmse": 0.19769689420991798,
+      "mape": 26.817203521728516,
+      "r2": -4.253122806549072,
+      "directional_accuracy": 53.76344086021505
+    },
+    "original_scale": {
+      "mse": 8005044.5,
+      "mae": 2750.787109375,
+      "rmse": 2829.318734253884,
+      "mape": 16.287202835083008,
+      "r2": -4.253124237060547,
+      "directional_accuracy": 53.76344086021505
+    }
+  },
+  "model_info": {
+    "model_type": "TCN",
+    "input_size": 1,
+    "sequence_length": 30,
+    "output_size": 1,
+    "num_channels": [
+      32,
+      16,
+      16
+    ],
+    "kernel_size": 2,
+    "dropout": 0.48495492608099716,
+    "total_parameters": 5537,
+    "trainable_parameters": 5537
+  },
+  "data_info": {
+    "test_samples": 373,
+    "data_path": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/data/ABG.csv"
+  },
+  "plots": [
+    "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/evaluation_plots/tcn_time_series.png",
+    "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/evaluation_plots/tcn_scatter.png",
+    "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/evaluation_plots/tcn_residuals.png",
+    "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/evaluation_plots/tcn_error_analysis.png"
+  ],
+  "metrics_file": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/TCN_best_hpo_model_metrics.txt",
+  "predictions_file": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/TCN_best_hpo_model_predictions.csv"
+}

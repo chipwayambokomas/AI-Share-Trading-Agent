@@ -1,0 +1,9 @@
+TCN Model Evaluation Results
+========================================
+
+MSE: 8005044.5000
+MAE: 2750.7871
+RMSE: 2829.3187
+MAPE: 16.29%
+R²: -4.2531
+DIRECTIONAL_ACCURACY: 53.76%

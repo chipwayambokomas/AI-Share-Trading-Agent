@@ -1,0 +1,184 @@
+# TCN Configuration for Stock Price Prediction
+# Configuration file for Temporal Convolutional Network (TCN) model
+
+# Data Configuration
+data:
+  file_path: "data/ABG.csv"  # Use the sorted file
+  target_column: "Value"  # Column to predict (the Value column)
+  feature_columns: ["Value"]  # Input features (using Value to predict future Value)
+  train_ratio: 0.8  # Proportion of data for training
+  val_ratio: 0.1   # Proportion of data for validation (remaining is test)
+  
+# Model Configuration
+model:
+  # Input/Output dimensions
+  input_size: 1  # Number of input features (just "Value")
+  output_size: 1  # Number of outputs (predicting next Value)
+  sequence_length: 60  # Number of time steps to look back
+  
+  # TCN Architecture Parameters
+  num_channels: [64, 64, 64]  # Number of filters in each TCN layer
+  kernel_size: 2  # Kernel size for temporal convolutions
+  dropout: 0.2    # Dropout rate for regularization
+  
+# Training Configuration
+training:
+  # Optimization parameters
+  epochs: 5 #Default 100
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.00001  # 1e-5 in decimal notation
+  
+  # Early stopping
+  patience: 15  # Number of epochs to wait for improvement
+  
+  # Learning rate scheduling
+  lr_scheduler:
+    enabled: true
+    factor: 0.5      # Factor by which to reduce learning rate
+    patience: 7      # Epochs to wait before reducing LR
+    min_lr: 0.000001     # Minimum learning rate (1e-6 in decimal)
+  
+  # Gradient clipping
+  gradient_clipping:
+    enabled: true
+    max_norm: 1.0
+
+# Hyperparameter Optimization (HPO) Configuration
+hpo:
+  enabled: false  # Set to true to enable HPO
+  n_trials: 1    # Number of optimization trials  (Original 50)
+  timeout: 300   # Maximum time in seconds (1 hour) (Original 300)
+  study_name: "tcn_stock_prediction_hpo"
+  storage: null   # Database URL for study persistence (optional)
+  
+  # HPO Search Space
+  search_space:
+    # Model architecture
+    num_layers:
+      type: "int"
+      low: 2
+      high: 6
+    base_channels:
+      type: "categorical"
+      choices: [32, 64, 128]
+    kernel_size:
+      type: "int"
+      low: 2
+      high: 8
+    dropout:
+      type: "float"
+      low: 0.0
+      high: 0.5
+    sequence_length:
+      type: "categorical"
+      choices: [30, 60, 90, 120]
+    
+    # Training parameters
+    learning_rate:
+      type: "float"
+      low: 0.00001  # 1e-5 in decimal
+      high: 0.01    # 1e-2 in decimal
+      log: true
+    weight_decay:
+      type: "float"
+      low: 0.000001  # 1e-6 in decimal
+      high: 0.001    # 1e-3 in decimal
+      log: true
+    batch_size:
+      type: "categorical"
+      choices: [16, 32, 64, 128]
+    patience:
+      type: "int"
+      low: 10
+      high: 30
+
+# Evaluation Configuration
+evaluation:
+  # Metrics to compute
+  metrics: ["mse", "mae", "rmse", "mape"]
+  
+  # Visualization settings
+  plots:
+    enabled: true
+    save_path: "results/evaluation_plots"
+    formats: ["png", "pdf"]
+    
+  # Prediction output
+  save_predictions: true
+  predictions_path: "results/predictions"
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  file_path: "logs/tcn_training.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Device Configuration
+device:
+  use_cuda: true  # Use GPU if available
+  cuda_device: 0  # CUDA device index
+  
+# Reproducibility
+random_seed: 42
+
+# Model Checkpointing
+checkpointing:
+  save_best_only: true
+  monitor: "val_loss"
+  mode: "min"
+  save_frequency: 1  # Save every N epochs
+  
+# Advanced TCN Parameters (for fine-tuning)
+advanced:
+  # Dilation strategy
+  dilation_strategy: "exponential"  # exponential, linear, or custom
+  custom_dilations: [1, 2, 4, 8, 16, 32]  # Used if dilation_strategy is "custom"
+  
+  # Normalization
+  use_layer_norm: true
+  use_batch_norm: false
+  use_weight_norm: true
+  
+  # Activation function
+  activation: "relu"  # relu, gelu, swish, etc.
+  
+  # Residual connections
+  use_residual: true
+  
+  # Causal padding
+  causal_padding: true
+
+# Data Preprocessing
+preprocessing:
+  # Normalization
+  normalize_features: true
+  normalization_method: "minmax"  # minmax, standard, robust
+  
+  # Missing value handling
+  handle_missing: true
+  missing_strategy: "interpolate"  # interpolate, forward_fill, backward_fill, drop
+  
+  # Outlier detection and handling
+  outlier_detection:
+    enabled: false
+    method: "iqr"  # iqr, zscore
+    threshold: 3.0
+    action: "clip"  # clip, remove, transform
+
+# Technical Indicators (optional features) - Not applicable for single-value data
+technical_indicators:
+  enabled: false  # Cannot compute technical indicators with single Value column
+  indicators:
+    - "SMA_20"    # Simple Moving Average (20 periods)
+    - "EMA_12"    # Exponential Moving Average (12 periods)
+    - "RSI_14"    # Relative Strength Index (14 periods)
+    - "MACD"      # Moving Average Convergence Divergence
+    - "BB_upper"  # Bollinger Bands (upper)
+    - "BB_lower"  # Bollinger Bands (lower)
+
+# Model Ensemble (for advanced usage)
+ensemble:
+  enabled: false
+  num_models: 3
+  aggregation_method: "mean"  # mean, median, weighted_mean

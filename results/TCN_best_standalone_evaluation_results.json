@@ -1,0 +1,50 @@
+{
+  "model_type": "TCN",
+  "checkpoint_path": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/checkpoints/TCN/TCN_best_standalone.pt",
+  "evaluation_date": "2025-05-26T16:22:46.123126",
+  "metrics": {
+    "normalized": {
+      "mse": 0.0020792789291590452,
+      "mae": 0.037334877997636795,
+      "rmse": 0.04559911105667571,
+      "mape": 5.135618686676025,
+      "r2": 0.7226658463478088,
+      "directional_accuracy": 55.013550135501355
+    },
+    "original_scale": {
+      "mse": 425869.59375,
+      "mae": 534.3140869140625,
+      "rmse": 652.5868476685689,
+      "mape": 3.1350958347320557,
+      "r2": 0.7226659059524536,
+      "directional_accuracy": 55.013550135501355
+    }
+  },
+  "model_info": {
+    "model_type": "TCN",
+    "input_size": 1,
+    "sequence_length": 60,
+    "output_size": 1,
+    "num_channels": [
+      64,
+      64,
+      64
+    ],
+    "kernel_size": 2,
+    "dropout": 0.2,
+    "total_parameters": 42049,
+    "trainable_parameters": 42049
+  },
+  "data_info": {
+    "test_samples": 370,
+    "data_path": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/data/ABG.csv"
+  },
+  "plots": [
+    "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/evaluation_plots/tcn_time_series.png",
+    "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/evaluation_plots/tcn_scatter.png",
+    "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/evaluation_plots/tcn_residuals.png",
+    "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/evaluation_plots/tcn_error_analysis.png"
+  ],
+  "metrics_file": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/TCN_best_standalone_metrics.txt",
+  "predictions_file": "/Users/kabelo/Desktop/School/Computer Science Honours/AI Trader/AI-Share-Trading-Agent/results/TCN_best_standalone_predictions.csv"
+}

@@ -1,0 +1,30 @@
+{
+  "best_trial_number": 0,
+  "best_validation_loss": 0.01915940867426495,
+  "best_parameters": {
+    "num_layers": 3,
+    "base_channels": 32,
+    "layer_1_multiplier": 0.5,
+    "layer_2_multiplier": 0.5,
+    "kernel_size": 2,
+    "dropout": 0.48495492608099716,
+    "sequence_length": 30,
+    "learning_rate": 8.17949947521167e-05,
+    "weight_decay": 3.752055855124284e-05,
+    "batch_size": 64,
+    "patience": 16,
+    "epochs": 105
+  },
+  "best_metrics": {
+    "test_loss": 0.04010140445704261,
+    "mse": 8005044.5,
+    "mae": 2750.787109375,
+    "rmse": 2829.318734253884,
+    "mape": "16.287203",
+    "best_val_loss": 0.05515899478147427,
+    "best_epoch": 46,
+    "total_epochs": 63
+  },
+  "total_trials": 1,
+  "study_name": "tcn_stock_prediction_hpo"
+}
