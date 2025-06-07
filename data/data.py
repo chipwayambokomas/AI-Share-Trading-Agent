@@ -16,7 +16,7 @@ def load_data(config: dict):
     
     # data_loader variable removed as it was unused and invalid
     # Example: Initialize a 2D array (numpy) of zeros with shape (rows, cols)
-    rows, cols = 39, 4
+    rows, cols = 38, 4
     data_loaders = np.zeros((rows, cols))
        
     # --- 1. Load Raw Data ---
