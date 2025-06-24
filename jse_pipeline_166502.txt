@@ -1,0 +1,314 @@
+=====================================================
+Job started on srvrochpc221.uct.ac.za at Sat Jun 21 01:47:09 AM SAST 2025
+=====================================================
+Running the main script using Python from 'myenv'...
+2025-06-21 01:47:17,075 - INFO - Starting preprocessing with mode: TREND
+2025-06-21 01:47:17,075 - INFO - Timestamp: 2025-06-21 01:47:17
+2025-06-21 01:47:17,075 - INFO - Running parallel trend prediction preprocessing
+2025-06-21 01:47:17,075 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-06-21 01:47:17,075 - INFO - Input dataframe shape: (124520, 3)
+2025-06-21 01:47:17,079 - INFO - Unique stocks: 38
+2025-06-21 01:47:17,079 - INFO - Target column: Close
+2025-06-21 01:47:17,079 - INFO - Average points per trend: 75
+2025-06-21 01:47:17,079 - INFO - Trend input window size: 10
+2025-06-21 01:47:17,079 - INFO - No SLURM environment detected. Using 40 available CPU cores.
+2025-06-21 01:47:17,079 - INFO - Preparing stocks for parallel processing...
+2025-06-21 01:47:17,089 - INFO - Stock ABG: 3746 data points
+2025-06-21 01:47:17,089 - INFO - Stock AGL: 3745 data points
+2025-06-21 01:47:17,089 - INFO - Stock AMS: 3745 data points
+2025-06-21 01:47:17,089 - INFO - Stock ANG: 3745 data points
+2025-06-21 01:47:17,089 - INFO - Stock ANH: 2236 data points
+2025-06-21 01:47:17,089 - INFO - Stock BHG: 727 data points
+2025-06-21 01:47:17,089 - INFO - Stock BID: 2146 data points
+2025-06-21 01:47:17,089 - INFO - Stock BTI: 3745 data points
+2025-06-21 01:47:17,089 - INFO - Stock BVT: 3745 data points
+2025-06-21 01:47:17,089 - INFO - Stock CFR: 3746 data points
+2025-06-21 01:47:17,089 - INFO - Stock CLS: 3745 data points
+2025-06-21 01:47:17,089 - INFO - Stock CPI: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock DSY: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock FSR: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock GLN: 2778 data points
+2025-06-21 01:47:17,090 - INFO - Stock HAR: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock IMP: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock INP: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock KIO: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock MNP: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock MRP: 3744 data points
+2025-06-21 01:47:17,090 - INFO - Stock MTN: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock NED: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock NPN: 3745 data points
+2025-06-21 01:47:17,090 - INFO - Stock NRP: 1867 data points
+2025-06-21 01:47:17,090 - INFO - Stock OUT: 3450 data points
+2025-06-21 01:47:17,091 - INFO - Stock PPH: 1818 data points
+2025-06-21 01:47:17,091 - INFO - Stock PRX: 1325 data points
+2025-06-21 01:47:17,091 - INFO - Stock REM: 3745 data points
+2025-06-21 01:47:17,091 - INFO - Stock RNI: 1769 data points
+2025-06-21 01:47:17,091 - INFO - Stock S32: 2405 data points
+2025-06-21 01:47:17,091 - INFO - Stock SBK: 3745 data points
+2025-06-21 01:47:17,091 - INFO - Stock SHC: 3660 data points
+2025-06-21 01:47:17,091 - INFO - Stock SLM: 3745 data points
+2025-06-21 01:47:17,091 - INFO - Stock SSW: 2968 data points
+2025-06-21 01:47:17,091 - INFO - Stock TBS: 3745 data points
+2025-06-21 01:47:17,091 - INFO - Stock VOD: 3745 data points
+2025-06-21 01:47:17,091 - INFO - Stock WHL: 3745 data points
+2025-06-21 01:47:17,091 - INFO - Prepared 38 stocks for parallel segmentation
+2025-06-21 01:47:17,091 - INFO - Starting parallel segmentation...
+
+[INFO] Multiprocessing start method set to 'spawn'.
+================================================================================
+## JSE STOCK PREDICTION PIPELINE ##
+================================================================================
+Running pipeline in 'TREND' mode with model: MLP
+
+[INFO] Random seed set to 42 for reproducibility.
+
+================================================================================
+## STAGE 1: FEATURE EXTRACTION ##
+================================================================================
+
+Purpose: Read data from all sheets in the Excel file, stack them into a single
+DataFrame, and add a 'StockID' to identify each security.
+Executing Code: Loading and concatenating data from all sheets...
+    
+Found 39 sheets (stocks) in the file: ['ABG', 'AMS', 'AGL', 'ANG', 'ANH', 'BHG', 'BID', 'BTI', 'CPI', 'CLS', 'CFR', 'DSY', 'FSR', 'GLN', 'HAR', 'IMP', 'INP', 'KIO', 'MNP', 'MRP', 'MTN', 'NPN', 'NED', 'NRP', 'OUT', 'PPH', 'PRX', 'RNI', 'REM', 'SLM', 'SHC', 'SHP', 'SSW', 'S32', 'SBK', 'BVT', 'TBS', 'VOD', 'WHL']
+    - WARNING: Sheet 'SHP' is empty. Skipping.
+
+Successfully loaded and combined data from all stocks.
+  - Total rows in combined DataFrame: 124520
+  - Unique stocks found: 38
+
+================================================================================
+## STAGE 2: DATA PREPROCESSING (TREND PREDICTION - PARALLEL MODE) ##
+================================================================================
+2025-06-21 01:47:17,537 - INFO - Pool created with 40 processes
+Segmenting Stocks:   0%|          | 0/38 [00:00<?, ?it/s]2025-06-21 01:47:27,687 - INFO - [Worker PID: 2364930] Starting segmentation for stock: ABG
+2025-06-21 01:47:27,687 - INFO - [Worker PID: 2364930] Stock ABG: 3746 data points
+2025-06-21 01:47:27,687 - INFO - [Worker PID: 2364930] Stock ABG: Calculating 49 segments
+2025-06-21 01:47:27,687 - INFO - [Worker PID: 2364930] Stock ABG: Initializing piecewise linear fit
+2025-06-21 01:47:27,687 - INFO - [Worker PID: 2364930] Stock ABG: Fitting 49 segments
+2025-06-21 01:47:27,725 - INFO - [Worker PID: 2364947] Starting segmentation for stock: AGL
+2025-06-21 01:47:27,725 - INFO - [Worker PID: 2364947] Stock AGL: 3745 data points
+2025-06-21 01:47:27,725 - INFO - [Worker PID: 2364947] Stock AGL: Calculating 49 segments
+2025-06-21 01:47:27,725 - INFO - [Worker PID: 2364947] Stock AGL: Initializing piecewise linear fit
+2025-06-21 01:47:27,725 - INFO - [Worker PID: 2364947] Stock AGL: Fitting 49 segments
+2025-06-21 01:47:28,568 - INFO - [Worker PID: 2364953] Starting segmentation for stock: AMS
+2025-06-21 01:47:28,568 - INFO - [Worker PID: 2364953] Stock AMS: 3745 data points
+2025-06-21 01:47:28,568 - INFO - [Worker PID: 2364953] Stock AMS: Calculating 49 segments
+2025-06-21 01:47:28,568 - INFO - [Worker PID: 2364953] Stock AMS: Initializing piecewise linear fit
+2025-06-21 01:47:28,568 - INFO - [Worker PID: 2364953] Stock AMS: Fitting 49 segments
+2025-06-21 01:47:28,701 - INFO - [Worker PID: 2364928] Starting segmentation for stock: ANG
+2025-06-21 01:47:28,701 - INFO - [Worker PID: 2364928] Stock ANG: 3745 data points
+2025-06-21 01:47:28,701 - INFO - [Worker PID: 2364928] Stock ANG: Calculating 49 segments
+2025-06-21 01:47:28,701 - INFO - [Worker PID: 2364928] Stock ANG: Initializing piecewise linear fit
+2025-06-21 01:47:28,701 - INFO - [Worker PID: 2364928] Stock ANG: Fitting 49 segments
+2025-06-21 01:47:28,769 - INFO - [Worker PID: 2364951] Starting segmentation for stock: ANH
+2025-06-21 01:47:28,769 - INFO - [Worker PID: 2364951] Stock ANH: 2236 data points
+2025-06-21 01:47:28,769 - INFO - [Worker PID: 2364951] Stock ANH: Calculating 29 segments
+2025-06-21 01:47:28,769 - INFO - [Worker PID: 2364951] Stock ANH: Initializing piecewise linear fit
+2025-06-21 01:47:28,769 - INFO - [Worker PID: 2364951] Stock ANH: Fitting 29 segments
+2025-06-21 01:47:28,805 - INFO - [Worker PID: 2364954] Starting segmentation for stock: BHG
+2025-06-21 01:47:28,806 - INFO - [Worker PID: 2364955] Starting segmentation for stock: BID
+2025-06-21 01:47:28,807 - INFO - [Worker PID: 2364955] Stock BID: 2146 data points
+2025-06-21 01:47:28,807 - INFO - [Worker PID: 2364955] Stock BID: Calculating 28 segments
+2025-06-21 01:47:28,807 - INFO - [Worker PID: 2364955] Stock BID: Initializing piecewise linear fit
+2025-06-21 01:47:28,807 - INFO - [Worker PID: 2364955] Stock BID: Fitting 28 segments
+2025-06-21 01:47:28,806 - INFO - [Worker PID: 2364954] Stock BHG: 727 data points
+2025-06-21 01:47:28,811 - WARNING - [Worker PID: 2364954] Stock BHG: Insufficient data points (727 < 825)
+2025-06-21 01:47:28,816 - INFO - [Worker PID: 2364954] Starting segmentation for stock: BTI
+2025-06-21 01:47:28,816 - INFO - [Worker PID: 2364954] Stock BTI: 3745 data points
+2025-06-21 01:47:28,816 - INFO - [Worker PID: 2364954] Stock BTI: Calculating 49 segments
+2025-06-21 01:47:28,816 - INFO - [Worker PID: 2364954] Stock BTI: Initializing piecewise linear fit
+2025-06-21 01:47:28,816 - INFO - [Worker PID: 2364954] Stock BTI: Fitting 49 segments
+2025-06-21 01:47:29,015 - INFO - [Worker PID: 2364927] Starting segmentation for stock: BVT
+2025-06-21 01:47:29,016 - INFO - [Worker PID: 2364927] Stock BVT: 3745 data points
+2025-06-21 01:47:29,016 - INFO - [Worker PID: 2364927] Stock BVT: Calculating 49 segments
+2025-06-21 01:47:29,016 - INFO - [Worker PID: 2364927] Stock BVT: Initializing piecewise linear fit
+2025-06-21 01:47:29,016 - INFO - [Worker PID: 2364927] Stock BVT: Fitting 49 segments
+2025-06-21 01:47:29,048 - INFO - [Worker PID: 2364935] Starting segmentation for stock: CFR
+2025-06-21 01:47:29,048 - INFO - [Worker PID: 2364935] Stock CFR: 3746 data points
+2025-06-21 01:47:29,048 - INFO - [Worker PID: 2364935] Stock CFR: Calculating 49 segments
+2025-06-21 01:47:29,049 - INFO - [Worker PID: 2364935] Stock CFR: Initializing piecewise linear fit
+2025-06-21 01:47:29,049 - INFO - [Worker PID: 2364935] Stock CFR: Fitting 49 segments
+2025-06-21 01:47:29,430 - INFO - [Worker PID: 2364962] Starting segmentation for stock: CLS
+2025-06-21 01:47:29,430 - INFO - [Worker PID: 2364962] Stock CLS: 3745 data points
+2025-06-21 01:47:29,430 - INFO - [Worker PID: 2364962] Stock CLS: Calculating 49 segments
+2025-06-21 01:47:29,430 - INFO - [Worker PID: 2364962] Stock CLS: Initializing piecewise linear fit
+2025-06-21 01:47:29,430 - INFO - [Worker PID: 2364962] Stock CLS: Fitting 49 segments
+2025-06-21 01:47:29,441 - INFO - [Worker PID: 2364942] Starting segmentation for stock: CPI
+2025-06-21 01:47:29,442 - INFO - [Worker PID: 2364942] Stock CPI: 3745 data points
+2025-06-21 01:47:29,442 - INFO - [Worker PID: 2364942] Stock CPI: Calculating 49 segments
+2025-06-21 01:47:29,442 - INFO - [Worker PID: 2364942] Stock CPI: Initializing piecewise linear fit
+2025-06-21 01:47:29,442 - INFO - [Worker PID: 2364942] Stock CPI: Fitting 49 segments
+2025-06-21 01:47:29,532 - INFO - [Worker PID: 2364965] Starting segmentation for stock: DSY
+2025-06-21 01:47:29,533 - INFO - [Worker PID: 2364965] Stock DSY: 3745 data points
+2025-06-21 01:47:29,533 - INFO - [Worker PID: 2364965] Stock DSY: Calculating 49 segments
+2025-06-21 01:47:29,533 - INFO - [Worker PID: 2364965] Stock DSY: Initializing piecewise linear fit
+2025-06-21 01:47:29,533 - INFO - [Worker PID: 2364965] Stock DSY: Fitting 49 segments
+2025-06-21 01:47:29,535 - INFO - [Worker PID: 2364957] Starting segmentation for stock: FSR
+2025-06-21 01:47:29,535 - INFO - [Worker PID: 2364957] Stock FSR: 3745 data points
+2025-06-21 01:47:29,535 - INFO - [Worker PID: 2364957] Stock FSR: Calculating 49 segments
+2025-06-21 01:47:29,535 - INFO - [Worker PID: 2364957] Stock FSR: Initializing piecewise linear fit
+2025-06-21 01:47:29,536 - INFO - [Worker PID: 2364957] Stock FSR: Fitting 49 segments
+2025-06-21 01:47:29,702 - INFO - [Worker PID: 2364938] Starting segmentation for stock: GLN
+2025-06-21 01:47:29,702 - INFO - [Worker PID: 2364938] Stock GLN: 2778 data points
+2025-06-21 01:47:29,702 - INFO - [Worker PID: 2364938] Stock GLN: Calculating 37 segments
+2025-06-21 01:47:29,702 - INFO - [Worker PID: 2364938] Stock GLN: Initializing piecewise linear fit
+2025-06-21 01:47:29,702 - INFO - [Worker PID: 2364938] Stock GLN: Fitting 37 segments
+2025-06-21 01:47:29,789 - INFO - [Worker PID: 2364936] Starting segmentation for stock: HAR
+2025-06-21 01:47:29,792 - INFO - [Worker PID: 2364936] Stock HAR: 3745 data points
+2025-06-21 01:47:29,792 - INFO - [Worker PID: 2364936] Stock HAR: Calculating 49 segments
+2025-06-21 01:47:29,792 - INFO - [Worker PID: 2364936] Stock HAR: Initializing piecewise linear fit
+2025-06-21 01:47:29,792 - INFO - [Worker PID: 2364936] Stock HAR: Fitting 49 segments
+2025-06-21 01:47:29,837 - INFO - [Worker PID: 2364964] Starting segmentation for stock: IMP
+2025-06-21 01:47:29,838 - INFO - [Worker PID: 2364964] Stock IMP: 3745 data points
+2025-06-21 01:47:29,838 - INFO - [Worker PID: 2364964] Stock IMP: Calculating 49 segments
+2025-06-21 01:47:29,838 - INFO - [Worker PID: 2364964] Stock IMP: Initializing piecewise linear fit
+2025-06-21 01:47:29,838 - INFO - [Worker PID: 2364964] Stock IMP: Fitting 49 segments
+2025-06-21 01:47:29,965 - INFO - [Worker PID: 2364929] Starting segmentation for stock: INP
+2025-06-21 01:47:29,968 - INFO - [Worker PID: 2364929] Stock INP: 3745 data points
+2025-06-21 01:47:29,968 - INFO - [Worker PID: 2364929] Stock INP: Calculating 49 segments
+2025-06-21 01:47:29,968 - INFO - [Worker PID: 2364929] Stock INP: Initializing piecewise linear fit
+2025-06-21 01:47:29,968 - INFO - [Worker PID: 2364929] Stock INP: Fitting 49 segments
+2025-06-21 01:47:30,048 - INFO - [Worker PID: 2364941] Starting segmentation for stock: KIO
+2025-06-21 01:47:30,048 - INFO - [Worker PID: 2364941] Stock KIO: 3745 data points
+2025-06-21 01:47:30,048 - INFO - [Worker PID: 2364941] Stock KIO: Calculating 49 segments
+2025-06-21 01:47:30,048 - INFO - [Worker PID: 2364941] Stock KIO: Initializing piecewise linear fit
+2025-06-21 01:47:30,048 - INFO - [Worker PID: 2364941] Stock KIO: Fitting 49 segments
+2025-06-21 01:47:30,082 - INFO - [Worker PID: 2364940] Starting segmentation for stock: MNP
+2025-06-21 01:47:30,083 - INFO - [Worker PID: 2364940] Stock MNP: 3745 data points
+2025-06-21 01:47:30,083 - INFO - [Worker PID: 2364940] Stock MNP: Calculating 49 segments
+2025-06-21 01:47:30,083 - INFO - [Worker PID: 2364940] Stock MNP: Initializing piecewise linear fit
+2025-06-21 01:47:30,083 - INFO - [Worker PID: 2364940] Stock MNP: Fitting 49 segments
+2025-06-21 01:47:30,173 - INFO - [Worker PID: 2364944] Starting segmentation for stock: MRP
+2025-06-21 01:47:30,173 - INFO - [Worker PID: 2364944] Stock MRP: 3744 data points
+2025-06-21 01:47:30,173 - INFO - [Worker PID: 2364944] Stock MRP: Calculating 49 segments
+2025-06-21 01:47:30,173 - INFO - [Worker PID: 2364944] Stock MRP: Initializing piecewise linear fit
+2025-06-21 01:47:30,173 - INFO - [Worker PID: 2364944] Stock MRP: Fitting 49 segments
+2025-06-21 01:47:30,184 - INFO - [Worker PID: 2364961] Starting segmentation for stock: MTN
+2025-06-21 01:47:30,184 - INFO - [Worker PID: 2364961] Stock MTN: 3745 data points
+2025-06-21 01:47:30,184 - INFO - [Worker PID: 2364961] Stock MTN: Calculating 49 segments
+2025-06-21 01:47:30,184 - INFO - [Worker PID: 2364961] Stock MTN: Initializing piecewise linear fit
+2025-06-21 01:47:30,185 - INFO - [Worker PID: 2364961] Stock MTN: Fitting 49 segments
+2025-06-21 01:47:30,232 - INFO - [Worker PID: 2364933] Starting segmentation for stock: NED
+2025-06-21 01:47:30,232 - INFO - [Worker PID: 2364933] Stock NED: 3745 data points
+2025-06-21 01:47:30,232 - INFO - [Worker PID: 2364933] Stock NED: Calculating 49 segments
+2025-06-21 01:47:30,232 - INFO - [Worker PID: 2364933] Stock NED: Initializing piecewise linear fit
+2025-06-21 01:47:30,232 - INFO - [Worker PID: 2364933] Stock NED: Fitting 49 segments
+2025-06-21 01:47:30,261 - INFO - [Worker PID: 2364952] Starting segmentation for stock: NPN
+2025-06-21 01:47:30,261 - INFO - [Worker PID: 2364952] Stock NPN: 3745 data points
+2025-06-21 01:47:30,261 - INFO - [Worker PID: 2364952] Stock NPN: Calculating 49 segments
+2025-06-21 01:47:30,261 - INFO - [Worker PID: 2364952] Stock NPN: Initializing piecewise linear fit
+2025-06-21 01:47:30,261 - INFO - [Worker PID: 2364952] Stock NPN: Fitting 49 segments
+2025-06-21 01:47:30,306 - INFO - [Worker PID: 2364939] Starting segmentation for stock: NRP
+2025-06-21 01:47:30,306 - INFO - [Worker PID: 2364939] Stock NRP: 1867 data points
+2025-06-21 01:47:30,306 - INFO - [Worker PID: 2364939] Stock NRP: Calculating 24 segments
+2025-06-21 01:47:30,306 - INFO - [Worker PID: 2364939] Stock NRP: Initializing piecewise linear fit
+2025-06-21 01:47:30,306 - INFO - [Worker PID: 2364939] Stock NRP: Fitting 24 segments
+2025-06-21 01:47:30,338 - INFO - [Worker PID: 2364950] Starting segmentation for stock: OUT
+2025-06-21 01:47:30,338 - INFO - [Worker PID: 2364950] Stock OUT: 3450 data points
+2025-06-21 01:47:30,338 - INFO - [Worker PID: 2364950] Stock OUT: Calculating 46 segments
+2025-06-21 01:47:30,339 - INFO - [Worker PID: 2364950] Stock OUT: Initializing piecewise linear fit
+2025-06-21 01:47:30,339 - INFO - [Worker PID: 2364950] Stock OUT: Fitting 46 segments
+2025-06-21 01:47:30,341 - INFO - [Worker PID: 2364937] Starting segmentation for stock: PPH
+2025-06-21 01:47:30,341 - INFO - [Worker PID: 2364937] Stock PPH: 1818 data points
+2025-06-21 01:47:30,341 - INFO - [Worker PID: 2364937] Stock PPH: Calculating 24 segments
+2025-06-21 01:47:30,341 - INFO - [Worker PID: 2364937] Stock PPH: Initializing piecewise linear fit
+2025-06-21 01:47:30,341 - INFO - [Worker PID: 2364937] Stock PPH: Fitting 24 segments
+2025-06-21 01:47:30,384 - INFO - [Worker PID: 2364968] Starting segmentation for stock: PRX
+2025-06-21 01:47:30,384 - INFO - [Worker PID: 2364968] Stock PRX: 1325 data points
+2025-06-21 01:47:30,384 - INFO - [Worker PID: 2364968] Stock PRX: Calculating 17 segments
+2025-06-21 01:47:30,384 - INFO - [Worker PID: 2364968] Stock PRX: Initializing piecewise linear fit
+2025-06-21 01:47:30,384 - INFO - [Worker PID: 2364968] Stock PRX: Fitting 17 segments
+2025-06-21 01:47:30,406 - INFO - [Worker PID: 2364931] Starting segmentation for stock: REM
+2025-06-21 01:47:30,406 - INFO - [Worker PID: 2364931] Stock REM: 3745 data points
+2025-06-21 01:47:30,406 - INFO - [Worker PID: 2364931] Stock REM: Calculating 49 segments
+2025-06-21 01:47:30,406 - INFO - [Worker PID: 2364931] Stock REM: Initializing piecewise linear fit
+2025-06-21 01:47:30,406 - INFO - [Worker PID: 2364931] Stock REM: Fitting 49 segments
+2025-06-21 01:47:30,411 - INFO - [Worker PID: 2364934] Starting segmentation for stock: RNI
+2025-06-21 01:47:30,411 - INFO - [Worker PID: 2364934] Stock RNI: 1769 data points
+2025-06-21 01:47:30,411 - INFO - [Worker PID: 2364934] Stock RNI: Calculating 23 segments
+2025-06-21 01:47:30,411 - INFO - [Worker PID: 2364934] Stock RNI: Initializing piecewise linear fit
+2025-06-21 01:47:30,411 - INFO - [Worker PID: 2364934] Stock RNI: Fitting 23 segments
+2025-06-21 01:47:30,602 - INFO - [Worker PID: 2364946] Starting segmentation for stock: S32
+2025-06-21 01:47:30,602 - INFO - [Worker PID: 2364946] Stock S32: 2405 data points
+2025-06-21 01:47:30,602 - INFO - [Worker PID: 2364946] Stock S32: Calculating 32 segments
+2025-06-21 01:47:30,603 - INFO - [Worker PID: 2364946] Stock S32: Initializing piecewise linear fit
+2025-06-21 01:47:30,603 - INFO - [Worker PID: 2364946] Stock S32: Fitting 32 segments
+2025-06-21 01:47:30,650 - INFO - [Worker PID: 2364959] Starting segmentation for stock: SBK
+2025-06-21 01:47:30,650 - INFO - [Worker PID: 2364959] Stock SBK: 3745 data points
+2025-06-21 01:47:30,650 - INFO - [Worker PID: 2364959] Stock SBK: Calculating 49 segments
+2025-06-21 01:47:30,651 - INFO - [Worker PID: 2364959] Stock SBK: Initializing piecewise linear fit
+2025-06-21 01:47:30,651 - INFO - [Worker PID: 2364959] Stock SBK: Fitting 49 segments
+2025-06-21 01:47:30,797 - INFO - [Worker PID: 2364945] Starting segmentation for stock: SHC
+2025-06-21 01:47:30,797 - INFO - [Worker PID: 2364945] Stock SHC: 3660 data points
+2025-06-21 01:47:30,797 - INFO - [Worker PID: 2364945] Stock SHC: Calculating 48 segments
+2025-06-21 01:47:30,797 - INFO - [Worker PID: 2364945] Stock SHC: Initializing piecewise linear fit
+2025-06-21 01:47:30,797 - INFO - [Worker PID: 2364945] Stock SHC: Fitting 48 segments
+2025-06-21 01:47:30,804 - INFO - [Worker PID: 2364948] Starting segmentation for stock: SLM
+2025-06-21 01:47:30,804 - INFO - [Worker PID: 2364948] Stock SLM: 3745 data points
+2025-06-21 01:47:30,804 - INFO - [Worker PID: 2364948] Stock SLM: Calculating 49 segments
+2025-06-21 01:47:30,804 - INFO - [Worker PID: 2364948] Stock SLM: Initializing piecewise linear fit
+2025-06-21 01:47:30,805 - INFO - [Worker PID: 2364948] Stock SLM: Fitting 49 segments
+2025-06-21 01:47:30,857 - INFO - [Worker PID: 2364967] Starting segmentation for stock: SSW
+2025-06-21 01:47:30,857 - INFO - [Worker PID: 2364967] Stock SSW: 2968 data points
+2025-06-21 01:47:30,857 - INFO - [Worker PID: 2364967] Stock SSW: Calculating 39 segments
+2025-06-21 01:47:30,857 - INFO - [Worker PID: 2364967] Stock SSW: Initializing piecewise linear fit
+2025-06-21 01:47:30,858 - INFO - [Worker PID: 2364967] Stock SSW: Fitting 39 segments
+2025-06-21 01:47:30,915 - INFO - [Worker PID: 2364943] Starting segmentation for stock: TBS
+2025-06-21 01:47:30,916 - INFO - [Worker PID: 2364943] Stock TBS: 3745 data points
+2025-06-21 01:47:30,916 - INFO - [Worker PID: 2364943] Stock TBS: Calculating 49 segments
+2025-06-21 01:47:30,916 - INFO - [Worker PID: 2364943] Stock TBS: Initializing piecewise linear fit
+2025-06-21 01:47:30,916 - INFO - [Worker PID: 2364943] Stock TBS: Fitting 49 segments
+2025-06-21 01:47:30,996 - INFO - [Worker PID: 2364932] Starting segmentation for stock: VOD
+2025-06-21 01:47:30,996 - INFO - [Worker PID: 2364932] Stock VOD: 3745 data points
+2025-06-21 01:47:30,996 - INFO - [Worker PID: 2364932] Stock VOD: Calculating 49 segments
+2025-06-21 01:47:30,996 - INFO - [Worker PID: 2364932] Stock VOD: Initializing piecewise linear fit
+2025-06-21 01:47:30,996 - INFO - [Worker PID: 2364932] Stock VOD: Fitting 49 segments
+2025-06-21 01:47:31,074 - INFO - [Worker PID: 2364956] Starting segmentation for stock: WHL
+2025-06-21 01:47:31,074 - INFO - [Worker PID: 2364956] Stock WHL: 3745 data points
+2025-06-21 01:47:31,074 - INFO - [Worker PID: 2364956] Stock WHL: Calculating 49 segments
+2025-06-21 01:47:31,074 - INFO - [Worker PID: 2364956] Stock WHL: Initializing piecewise linear fit
+2025-06-21 01:47:31,075 - INFO - [Worker PID: 2364956] Stock WHL: Fitting 49 segments
+2025-06-21 02:24:33,623 - INFO - [Worker PID: 2364968] Stock PRX: Completed segmentation in 2223.24s
+2025-06-21 02:24:33,641 - INFO - [Worker PID: 2364968] Stock PRX: Generated 17 slopes and 17 durations
+2025-06-21 02:45:39,829 - INFO - [Worker PID: 2364934] Stock RNI: Completed segmentation in 3489.42s
+2025-06-21 02:45:39,830 - INFO - [Worker PID: 2364934] Stock RNI: Generated 23 slopes and 23 durations
+2025-06-21 03:07:21,103 - INFO - [Worker PID: 2364937] Stock PPH: Completed segmentation in 4790.76s
+2025-06-21 03:07:21,116 - INFO - [Worker PID: 2364937] Stock PPH: Generated 24 slopes and 24 durations
+2025-06-21 03:25:50,255 - INFO - [Worker PID: 2364939] Stock NRP: Completed segmentation in 5899.95s
+2025-06-21 03:25:50,275 - INFO - [Worker PID: 2364939] Stock NRP: Generated 24 slopes and 24 durations
+2025-06-21 04:50:38,667 - INFO - [Worker PID: 2364946] Stock S32: Completed segmentation in 10988.06s
+2025-06-21 04:50:38,680 - INFO - [Worker PID: 2364946] Stock S32: Generated 32 slopes and 32 durations
+2025-06-21 05:08:00,448 - INFO - [Worker PID: 2364955] Stock BID: Completed segmentation in 12031.64s
+2025-06-21 05:08:00,475 - INFO - [Worker PID: 2364955] Stock BID: Generated 28 slopes and 28 durations
+2025-06-21 05:18:44,520 - INFO - [Worker PID: 2364951] Stock ANH: Completed segmentation in 12675.75s
+2025-06-21 05:18:44,530 - INFO - [Worker PID: 2364951] Stock ANH: Generated 29 slopes and 29 durations
+2025-06-21 07:27:01,092 - INFO - [Worker PID: 2364938] Stock GLN: Completed segmentation in 20371.39s
+2025-06-21 07:27:01,102 - INFO - [Worker PID: 2364938] Stock GLN: Generated 37 slopes and 37 durations
+2025-06-21 08:51:07,010 - INFO - [Worker PID: 2364967] Stock SSW: Completed segmentation in 25416.15s
+2025-06-21 08:51:07,046 - INFO - [Worker PID: 2364967] Stock SSW: Generated 39 slopes and 39 durations
+2025-06-21 11:04:30,172 - INFO - [Worker PID: 2364940] Stock MNP: Completed segmentation in 33420.09s
+2025-06-21 11:04:30,200 - INFO - [Worker PID: 2364940] Stock MNP: Generated 49 slopes and 49 durations
+2025-06-21 11:23:50,516 - INFO - [Worker PID: 2364929] Stock INP: Completed segmentation in 34580.55s
+2025-06-21 11:23:50,530 - INFO - [Worker PID: 2364929] Stock INP: Generated 49 slopes and 49 durations
+2025-06-21 11:41:04,366 - INFO - [Worker PID: 2364961] Stock MTN: Completed segmentation in 35614.18s
+2025-06-21 11:41:04,367 - INFO - [Worker PID: 2364961] Stock MTN: Generated 49 slopes and 49 durations
+2025-06-21 11:41:49,573 - INFO - [Worker PID: 2364927] Stock BVT: Completed segmentation in 35660.56s
+2025-06-21 11:41:49,574 - INFO - [Worker PID: 2364927] Stock BVT: Generated 49 slopes and 49 durations
+2025-06-21 11:47:23,798 - INFO - [Worker PID: 2364931] Stock REM: Completed segmentation in 35993.39s
+2025-06-21 11:47:23,811 - INFO - [Worker PID: 2364931] Stock REM: Generated 49 slopes and 49 durations
+2025-06-21 12:17:22,961 - INFO - [Worker PID: 2364950] Stock OUT: Completed segmentation in 37792.62s
+2025-06-21 12:17:22,975 - INFO - [Worker PID: 2364950] Stock OUT: Generated 46 slopes and 46 durations
+2025-06-21 12:43:24,577 - INFO - [Worker PID: 2364959] Stock SBK: Completed segmentation in 39353.93s
+2025-06-21 12:43:24,591 - INFO - [Worker PID: 2364959] Stock SBK: Generated 49 slopes and 49 durations
+2025-06-21 12:59:05,591 - INFO - [Worker PID: 2364933] Stock NED: Completed segmentation in 40295.36s
+2025-06-21 12:59:05,605 - INFO - [Worker PID: 2364933] Stock NED: Generated 49 slopes and 49 durations
+2025-06-21 13:03:56,795 - INFO - [Worker PID: 2364936] Stock HAR: Completed segmentation in 40587.01s
+2025-06-21 13:03:56,809 - INFO - [Worker PID: 2364936] Stock HAR: Generated 49 slopes and 49 durations
+2025-06-21 13:11:48,075 - INFO - [Worker PID: 2364932] Stock VOD: Completed segmentation in 41057.08s
+2025-06-21 13:11:48,107 - INFO - [Worker PID: 2364932] Stock VOD: Generated 49 slopes and 49 durations
+2025-06-21 13:27:13,481 - INFO - [Worker PID: 2364954] Stock BTI: Completed segmentation in 41984.66s
+2025-06-21 13:27:13,498 - INFO - [Worker PID: 2364954] Stock BTI: Generated 49 slopes and 49 durations
+2025-06-21 13:44:16,090 - INFO - [Worker PID: 2364957] Stock FSR: Completed segmentation in 43006.55s
+2025-06-21 13:44:16,103 - INFO - [Worker PID: 2364957] Stock FSR: Generated 49 slopes and 49 durations
+slurmstepd: error: *** JOB 166502 ON srvrochpc221 CANCELLED AT 2025-06-21T13:47:16 DUE TO TIME LIMIT ***

@@ -1,0 +1,330 @@
+=====================================================
+Job started on srvrochpc221.uct.ac.za at Sat Jun 21 06:01:46 PM SAST 2025
+SLURM Job ID: 166615
+SLURM Nodes: srvrochpc221
+SLURM CPUs per Task: 8
+=====================================================
+Running the main script using Python from 'myenv'...
+2025-06-21 18:01:53,302 - INFO - Starting preprocessing with mode: TREND
+2025-06-21 18:01:53,303 - INFO - Timestamp: 2025-06-21 18:01:53
+2025-06-21 18:01:53,303 - INFO - Running parallel trend prediction preprocessing
+2025-06-21 18:01:53,303 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-06-21 18:01:53,306 - INFO - Input dataframe shape: (124520, 3), Unique stocks: 38
+2025-06-21 18:01:53,307 - INFO - Target: Close, Avg points/trend: 75, Window: 10
+2025-06-21 18:01:53,307 - INFO - SLURM environment detected (cpus-per-task). Using 8 allocated CPU cores.
+2025-06-21 18:01:53,318 - INFO - Prepared 38 stocks for parallel segmentation.
+2025-06-21 18:01:53,318 - INFO - Starting parallel segmentation on 8 cores...
+
+[INFO] Multiprocessing start method set to 'spawn'.
+================================================================================
+## JSE STOCK PREDICTION PIPELINE ##
+================================================================================
+Running pipeline in 'TREND' mode with model: MLP
+
+[INFO] Random seed set to 42 for reproducibility.
+
+================================================================================
+## STAGE 1: FEATURE EXTRACTION ##
+================================================================================
+
+Purpose: Read data from all sheets in the Excel file, stack them into a single
+DataFrame, and add a 'StockID' to identify each security.
+Executing Code: Loading and concatenating data from all sheets...
+    
+Found 39 sheets (stocks) in the file: ['ABG', 'AMS', 'AGL', 'ANG', 'ANH', 'BHG', 'BID', 'BTI', 'CPI', 'CLS', 'CFR', 'DSY', 'FSR', 'GLN', 'HAR', 'IMP', 'INP', 'KIO', 'MNP', 'MRP', 'MTN', 'NPN', 'NED', 'NRP', 'OUT', 'PPH', 'PRX', 'RNI', 'REM', 'SLM', 'SHC', 'SHP', 'SSW', 'S32', 'SBK', 'BVT', 'TBS', 'VOD', 'WHL']
+    - WARNING: Sheet 'SHP' is empty. Skipping.
+
+Successfully loaded and combined data from all stocks.
+  - Total rows in combined DataFrame: 124520
+  - Unique stocks found: 38
+
+================================================================================
+## STAGE 2: DATA PREPROCESSING (TREND PREDICTION - PARALLEL MODE) ##
+================================================================================
+Segmenting Stocks:   0%|          | 0/38 [00:00<?, ?it/s]2025-06-21 18:01:56,111 - INFO - [Worker PID: 2581838] Starting segmentation for stock: ABG (3746 points)
+2025-06-21 18:01:56,111 - INFO - [Worker PID: 2581833] Starting segmentation for stock: AGL (3745 points)
+2025-06-21 18:01:56,111 - INFO - [Worker PID: 2581837] Starting segmentation for stock: AMS (3745 points)
+2025-06-21 18:01:56,111 - INFO - [Worker PID: 2581834] Starting segmentation for stock: ANG (3745 points)
+2025-06-21 18:01:56,119 - INFO - [Worker PID: 2581836] Starting segmentation for stock: ANH (2236 points)
+2025-06-21 18:01:56,119 - INFO - [Worker PID: 2581839] Starting segmentation for stock: BHG (727 points)
+2025-06-21 18:01:56,119 - INFO - [Worker PID: 2581835] Starting segmentation for stock: BID (2146 points)
+2025-06-21 18:01:56,119 - WARNING - [Worker PID: 2581839] Stock BHG: Insufficient data (727 < 825)
+2025-06-21 18:01:56,120 - INFO - [Worker PID: 2581839] Starting segmentation for stock: BTI (3745 points)
+2025-06-21 18:01:56,124 - INFO - [Worker PID: 2581840] Starting segmentation for stock: BVT (3745 points)
+2025-06-21 18:02:09,171 - INFO - [Worker PID: 2581835] Completed stock: BID in 13.05s. Found 28 trends.
+2025-06-21 18:02:09,181 - INFO - [Worker PID: 2581835] Starting segmentation for stock: CFR (3746 points)
+2025-06-21 18:02:10,875 - INFO - [Worker PID: 2581836] Completed stock: ANH in 14.76s. Found 29 trends.
+2025-06-21 18:02:10,885 - INFO - [Worker PID: 2581836] Starting segmentation for stock: CLS (3745 points)
+2025-06-21 18:03:23,710 - INFO - [Worker PID: 2581838] Completed stock: ABG in 87.60s. Found 49 trends.
+Segmenting Stocks:   3%|▎         | 1/38 [01:30<55:43, 90.37s/it]2025-06-21 18:03:23,720 - INFO - [Worker PID: 2581838] Starting segmentation for stock: CPI (3745 points)
+2025-06-21 18:03:23,734 - INFO - [Worker PID: 2581837] Completed stock: AMS in 87.62s. Found 49 trends.
+2025-06-21 18:03:23,743 - INFO - [Worker PID: 2581837] Starting segmentation for stock: DSY (3745 points)
+2025-06-21 18:03:23,887 - INFO - [Worker PID: 2581833] Completed stock: AGL in 87.78s. Found 49 trends.
+Segmenting Stocks:   5%|▌         | 2/38 [01:30<22:23, 37.31s/it]2025-06-21 18:03:23,897 - INFO - [Worker PID: 2581833] Starting segmentation for stock: FSR (3745 points)
+2025-06-21 18:03:24,487 - INFO - [Worker PID: 2581840] Completed stock: BVT in 88.36s. Found 49 trends.
+2025-06-21 18:03:24,497 - INFO - [Worker PID: 2581840] Starting segmentation for stock: GLN (2778 points)
+2025-06-21 18:03:24,523 - INFO - [Worker PID: 2581839] Completed stock: BTI in 88.40s. Found 49 trends.
+2025-06-21 18:03:24,532 - INFO - [Worker PID: 2581839] Starting segmentation for stock: HAR (3745 points)
+2025-06-21 18:03:24,744 - INFO - [Worker PID: 2581834] Completed stock: ANG in 88.63s. Found 49 trends.
+Segmenting Stocks:  11%|█         | 4/38 [01:31<08:02, 14.19s/it]2025-06-21 18:03:24,754 - INFO - [Worker PID: 2581834] Starting segmentation for stock: IMP (3745 points)
+2025-06-21 18:03:37,617 - INFO - [Worker PID: 2581835] Completed stock: CFR in 88.44s. Found 49 trends.
+Segmenting Stocks:  26%|██▋       | 10/38 [01:44<02:31,  5.41s/it]2025-06-21 18:03:37,627 - INFO - [Worker PID: 2581835] Starting segmentation for stock: INP (3745 points)
+2025-06-21 18:03:38,507 - INFO - [Worker PID: 2581836] Completed stock: CLS in 87.62s. Found 49 trends.
+Segmenting Stocks:  29%|██▉       | 11/38 [01:45<02:08,  4.74s/it]2025-06-21 18:03:38,516 - INFO - [Worker PID: 2581836] Starting segmentation for stock: KIO (3745 points)
+2025-06-21 18:03:56,691 - INFO - [Worker PID: 2581840] Completed stock: GLN in 32.19s. Found 37 trends.
+2025-06-21 18:03:56,700 - INFO - [Worker PID: 2581840] Starting segmentation for stock: MNP (3745 points)
+2025-06-21 18:04:50,706 - INFO - [Worker PID: 2581838] Completed stock: CPI in 86.99s. Found 49 trends.
+Segmenting Stocks:  32%|███▏      | 12/38 [02:57<07:09, 16.51s/it]2025-06-21 18:04:50,716 - INFO - [Worker PID: 2581838] Starting segmentation for stock: MRP (3744 points)
+2025-06-21 18:04:51,779 - INFO - [Worker PID: 2581837] Completed stock: DSY in 88.04s. Found 49 trends.
+Segmenting Stocks:  34%|███▍      | 13/38 [02:58<05:35, 13.43s/it]2025-06-21 18:04:51,789 - INFO - [Worker PID: 2581837] Starting segmentation for stock: MTN (3745 points)
+2025-06-21 18:04:51,816 - INFO - [Worker PID: 2581833] Completed stock: FSR in 87.92s. Found 49 trends.
+2025-06-21 18:04:51,825 - INFO - [Worker PID: 2581833] Starting segmentation for stock: NED (3745 points)
+2025-06-21 18:04:53,035 - INFO - [Worker PID: 2581839] Completed stock: HAR in 88.50s. Found 49 trends.
+Segmenting Stocks:  42%|████▏     | 16/38 [02:59<02:43,  7.43s/it]2025-06-21 18:04:53,044 - INFO - [Worker PID: 2581839] Starting segmentation for stock: NPN (3745 points)
+2025-06-21 18:04:53,702 - INFO - [Worker PID: 2581834] Completed stock: IMP in 88.95s. Found 49 trends.
+Segmenting Stocks:  45%|████▍     | 17/38 [03:00<02:10,  6.22s/it]2025-06-21 18:04:53,711 - INFO - [Worker PID: 2581834] Starting segmentation for stock: NRP (1867 points)
+2025-06-21 18:05:01,539 - INFO - [Worker PID: 2581834] Completed stock: NRP in 7.83s. Found 24 trends.
+2025-06-21 18:05:01,549 - INFO - [Worker PID: 2581834] Starting segmentation for stock: OUT (3450 points)
+2025-06-21 18:05:06,124 - INFO - [Worker PID: 2581835] Completed stock: INP in 88.50s. Found 49 trends.
+Segmenting Stocks:  47%|████▋     | 18/38 [03:12<02:29,  7.48s/it]2025-06-21 18:05:06,133 - INFO - [Worker PID: 2581835] Starting segmentation for stock: PPH (1818 points)
+2025-06-21 18:05:06,424 - INFO - [Worker PID: 2581836] Completed stock: KIO in 87.91s. Found 49 trends.
+Segmenting Stocks:  50%|█████     | 19/38 [03:13<01:51,  5.86s/it]2025-06-21 18:05:06,433 - INFO - [Worker PID: 2581836] Starting segmentation for stock: PRX (1325 points)
+2025-06-21 18:05:08,673 - INFO - [Worker PID: 2581836] Completed stock: PRX in 2.24s. Found 17 trends.
+2025-06-21 18:05:08,683 - INFO - [Worker PID: 2581836] Starting segmentation for stock: REM (3745 points)
+2025-06-21 18:05:13,432 - INFO - [Worker PID: 2581835] Completed stock: PPH in 7.30s. Found 24 trends.
+2025-06-21 18:05:13,441 - INFO - [Worker PID: 2581835] Starting segmentation for stock: RNI (1769 points)
+2025-06-21 18:05:19,876 - INFO - [Worker PID: 2581835] Completed stock: RNI in 6.44s. Found 23 trends.
+2025-06-21 18:05:19,886 - INFO - [Worker PID: 2581835] Starting segmentation for stock: S32 (2405 points)
+2025-06-21 18:05:25,320 - INFO - [Worker PID: 2581840] Completed stock: MNP in 88.62s. Found 49 trends.
+Segmenting Stocks:  53%|█████▎    | 20/38 [03:31<02:42,  9.04s/it]2025-06-21 18:05:25,330 - INFO - [Worker PID: 2581840] Starting segmentation for stock: SBK (3745 points)
+2025-06-21 18:05:39,731 - INFO - [Worker PID: 2581835] Completed stock: S32 in 19.85s. Found 32 trends.
+2025-06-21 18:05:39,741 - INFO - [Worker PID: 2581835] Starting segmentation for stock: SHC (3660 points)
+2025-06-21 18:06:09,869 - INFO - [Worker PID: 2581834] Completed stock: OUT in 68.32s. Found 46 trends.
+2025-06-21 18:06:09,878 - INFO - [Worker PID: 2581834] Starting segmentation for stock: SLM (3745 points)
+2025-06-21 18:06:17,858 - INFO - [Worker PID: 2581838] Completed stock: MRP in 87.14s. Found 49 trends.
+Segmenting Stocks:  55%|█████▌    | 21/38 [04:24<05:44, 20.29s/it]2025-06-21 18:06:17,867 - INFO - [Worker PID: 2581838] Starting segmentation for stock: SSW (2968 points)
+2025-06-21 18:06:19,592 - INFO - [Worker PID: 2581837] Completed stock: MTN in 87.80s. Found 49 trends.
+Segmenting Stocks:  58%|█████▊    | 22/38 [04:26<04:04, 15.28s/it]2025-06-21 18:06:19,602 - INFO - [Worker PID: 2581837] Starting segmentation for stock: TBS (3745 points)
+2025-06-21 18:06:19,805 - INFO - [Worker PID: 2581833] Completed stock: NED in 87.98s. Found 49 trends.
+Segmenting Stocks:  61%|██████    | 23/38 [04:26<02:46, 11.09s/it]2025-06-21 18:06:19,814 - INFO - [Worker PID: 2581833] Starting segmentation for stock: VOD (3745 points)
+2025-06-21 18:06:21,799 - INFO - [Worker PID: 2581839] Completed stock: NPN in 88.76s. Found 49 trends.
+Segmenting Stocks:  63%|██████▎   | 24/38 [04:28<01:59,  8.50s/it]2025-06-21 18:06:21,808 - INFO - [Worker PID: 2581839] Starting segmentation for stock: WHL (3745 points)
+2025-06-21 18:06:36,633 - INFO - [Worker PID: 2581836] Completed stock: REM in 87.95s. Found 49 trends.
+Segmenting Stocks:  76%|███████▋  | 29/38 [04:43<00:43,  4.79s/it]2025-06-21 18:06:53,773 - INFO - [Worker PID: 2581840] Completed stock: SBK in 88.44s. Found 49 trends.
+Segmenting Stocks:  84%|████████▍ | 32/38 [05:00<00:30,  5.13s/it]2025-06-21 18:06:57,063 - INFO - [Worker PID: 2581838] Completed stock: SSW in 39.20s. Found 39 trends.
+2025-06-21 18:07:01,387 - INFO - [Worker PID: 2581835] Completed stock: SHC in 81.65s. Found 48 trends.
+Segmenting Stocks:  87%|████████▋ | 33/38 [05:08<00:27,  5.50s/it]2025-06-21 18:07:36,302 - INFO - [Worker PID: 2581834] Completed stock: SLM in 86.42s. Found 49 trends.
+Segmenting Stocks:  89%|████████▉ | 34/38 [05:42<00:42, 10.63s/it]2025-06-21 18:07:44,711 - INFO - [Worker PID: 2581837] Completed stock: TBS in 85.11s. Found 49 trends.
+Segmenting Stocks:  95%|█████████▍| 36/38 [05:51<00:16,  8.49s/it]2025-06-21 18:07:44,940 - INFO - [Worker PID: 2581833] Completed stock: VOD in 85.13s. Found 49 trends.
+Segmenting Stocks:  97%|█████████▋| 37/38 [05:51<00:06,  6.91s/it]2025-06-21 18:07:47,137 - INFO - [Worker PID: 2581839] Completed stock: WHL in 85.33s. Found 49 trends.
+Segmenting Stocks: 100%|██████████| 38/38 [05:53<00:00,  5.89s/it]Segmenting Stocks: 100%|██████████| 38/38 [05:53<00:00,  9.31s/it]
+2025-06-21 18:07:47,219 - INFO - Parallel segmentation completed in 353.90s
+2025-06-21 18:07:47,219 - INFO - Successfully segmented 37/38 stocks.
+2025-06-21 18:07:47,219 - INFO - Fitting global scalers for slope and duration...
+2025-06-21 18:07:47,221 - INFO - Scalers created successfully.
+2025-06-21 18:07:47,221 - INFO - Creating input/output sequences from trends in parallel...
+Creating Sequences:   0%|          | 0/37 [00:00<?, ?it/s]2025-06-21 18:07:50,298 - INFO - Stock ABG: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock AGL: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock AMS: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock ANG: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock ANH: Generated 19 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock BID: Generated 18 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock BTI: Generated 39 sequences in 0.00s
+Creating Sequences:   3%|▎         | 1/37 [00:03<01:50,  3.07s/it]2025-06-21 18:07:50,299 - INFO - Stock BVT: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock CFR: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock CLS: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock DSY: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock CPI: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock FSR: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,299 - INFO - Stock GLN: Generated 27 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock HAR: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock IMP: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock INP: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock MNP: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock KIO: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock MRP: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock MTN: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock NPN: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock NED: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock NRP: Generated 14 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock OUT: Generated 36 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock PPH: Generated 14 sequences in 0.00s
+2025-06-21 18:07:50,300 - INFO - Stock PRX: Generated 7 sequences in 0.00s
+2025-06-21 18:07:50,302 - INFO - Stock REM: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,302 - INFO - Stock RNI: Generated 13 sequences in 0.00s
+2025-06-21 18:07:50,302 - INFO - Stock S32: Generated 22 sequences in 0.00s
+2025-06-21 18:07:50,302 - INFO - Stock SBK: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,302 - INFO - Stock SLM: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,302 - INFO - Stock SHC: Generated 38 sequences in 0.00s
+2025-06-21 18:07:50,302 - INFO - Stock SSW: Generated 29 sequences in 0.00s
+2025-06-21 18:07:50,303 - INFO - Stock TBS: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,303 - INFO - Stock VOD: Generated 39 sequences in 0.00s
+2025-06-21 18:07:50,303 - INFO - Stock WHL: Generated 39 sequences in 0.00s
+Creating Sequences: 100%|██████████| 37/37 [00:03<00:00, 12.05it/s]
+2025-06-21 18:07:50,382 - INFO - === TREND PREDICTION PREPROCESSING COMPLETE ===
+2025-06-21 18:07:50,382 - INFO - Total processing time: 357.08s
+2025-06-21 18:07:50,382 - INFO - Final X shape: (1251, 10, 2), Final y shape: (1251, 2)
+2025-06-21 18:07:50,383 - INFO - === PREPROCESSING SUMMARY ===
+2025-06-21 18:07:50,383 - INFO - Total sequences generated: 1251
+2025-06-21 18:07:50,383 - INFO - Input sequences shape (X): (1251, 10, 2)
+2025-06-21 18:07:50,383 - INFO - Target sequences shape (y): (1251, 2)
+2025-06-21 18:07:50,383 - INFO - Unique stocks with data: 37
+2025-06-21 18:07:50,383 - INFO - Preprocessing completed successfully!
+
+================================================================================
+## STAGE 3: DATA PARTITIONING ##
+================================================================================
+
+Purpose: Split data into training, validation, and test sets.
+- Method: Stratified split based on StockID.
+- Train Split: 70.0%
+- Validation Split: 15.0%
+- Test Split: 15%
+Executing Code: Partitioning data and creating PyTorch DataLoaders...
+    
+
+Data partitioning complete:
+  - Training set size:   720
+  - Validation set size: 155
+  - Test set size:       376
+
+PyTorch DataLoaders created with batch size: 32
+
+================================================================================
+## STAGE 4: MODEL DEVELOPMENT ##
+================================================================================
+
+Purpose: Train a model for TREND prediction.
+- Model Architecture: MLP
+Executing Code: Initializing and training the MLP model...
+    
+
+Starting model training...
+  Epoch  10/1000, Avg Train Loss: 0.005359, Avg Val Loss: 0.004329
+  Epoch  20/1000, Avg Train Loss: 0.004496, Avg Val Loss: 0.005671
+  Epoch  30/1000, Avg Train Loss: 0.004020, Avg Val Loss: 0.005341
+  Epoch  40/1000, Avg Train Loss: 0.003826, Avg Val Loss: 0.005388
+  Epoch  50/1000, Avg Train Loss: 0.003482, Avg Val Loss: 0.005796
+  Epoch  60/1000, Avg Train Loss: 0.003422, Avg Val Loss: 0.005816
+  Epoch  70/1000, Avg Train Loss: 0.003074, Avg Val Loss: 0.005823
+  Epoch  80/1000, Avg Train Loss: 0.002694, Avg Val Loss: 0.005167
+  Epoch  90/1000, Avg Train Loss: 0.002442, Avg Val Loss: 0.005099
+  Epoch 100/1000, Avg Train Loss: 0.002133, Avg Val Loss: 0.005170
+  Epoch 110/1000, Avg Train Loss: 0.002222, Avg Val Loss: 0.005331
+  Epoch 120/1000, Avg Train Loss: 0.002136, Avg Val Loss: 0.005411
+  Epoch 130/1000, Avg Train Loss: 0.001917, Avg Val Loss: 0.006216
+  Epoch 140/1000, Avg Train Loss: 0.002162, Avg Val Loss: 0.006034
+  Epoch 150/1000, Avg Train Loss: 0.001695, Avg Val Loss: 0.005834
+  Epoch 160/1000, Avg Train Loss: 0.001732, Avg Val Loss: 0.005885
+  Epoch 170/1000, Avg Train Loss: 0.002021, Avg Val Loss: 0.005318
+  Epoch 180/1000, Avg Train Loss: 0.001644, Avg Val Loss: 0.005161
+  Epoch 190/1000, Avg Train Loss: 0.001499, Avg Val Loss: 0.005942
+  Epoch 200/1000, Avg Train Loss: 0.001670, Avg Val Loss: 0.005391
+  Epoch 210/1000, Avg Train Loss: 0.001898, Avg Val Loss: 0.005984
+  Epoch 220/1000, Avg Train Loss: 0.001488, Avg Val Loss: 0.005409
+  Epoch 230/1000, Avg Train Loss: 0.001685, Avg Val Loss: 0.005541
+  Epoch 240/1000, Avg Train Loss: 0.001674, Avg Val Loss: 0.005073
+  Epoch 250/1000, Avg Train Loss: 0.001437, Avg Val Loss: 0.005634
+  Epoch 260/1000, Avg Train Loss: 0.001568, Avg Val Loss: 0.005017
+  Epoch 270/1000, Avg Train Loss: 0.001223, Avg Val Loss: 0.005524
+  Epoch 280/1000, Avg Train Loss: 0.001550, Avg Val Loss: 0.005700
+  Epoch 290/1000, Avg Train Loss: 0.001415, Avg Val Loss: 0.005162
+  Epoch 300/1000, Avg Train Loss: 0.001466, Avg Val Loss: 0.005126
+  Epoch 310/1000, Avg Train Loss: 0.001780, Avg Val Loss: 0.004966
+  Epoch 320/1000, Avg Train Loss: 0.001408, Avg Val Loss: 0.005012
+  Epoch 330/1000, Avg Train Loss: 0.001323, Avg Val Loss: 0.005134
+  Epoch 340/1000, Avg Train Loss: 0.001190, Avg Val Loss: 0.005434
+  Epoch 350/1000, Avg Train Loss: 0.001344, Avg Val Loss: 0.004984
+  Epoch 360/1000, Avg Train Loss: 0.001487, Avg Val Loss: 0.005300
+  Epoch 370/1000, Avg Train Loss: 0.001170, Avg Val Loss: 0.005099
+  Epoch 380/1000, Avg Train Loss: 0.001460, Avg Val Loss: 0.005132
+  Epoch 390/1000, Avg Train Loss: 0.001398, Avg Val Loss: 0.005102
+  Epoch 400/1000, Avg Train Loss: 0.001328, Avg Val Loss: 0.005090
+  Epoch 410/1000, Avg Train Loss: 0.001348, Avg Val Loss: 0.005104
+  Epoch 420/1000, Avg Train Loss: 0.001212, Avg Val Loss: 0.004897
+  Epoch 430/1000, Avg Train Loss: 0.001098, Avg Val Loss: 0.004925
+  Epoch 440/1000, Avg Train Loss: 0.001086, Avg Val Loss: 0.004684
+  Epoch 450/1000, Avg Train Loss: 0.000996, Avg Val Loss: 0.004919
+  Epoch 460/1000, Avg Train Loss: 0.001156, Avg Val Loss: 0.005145
+  Epoch 470/1000, Avg Train Loss: 0.001171, Avg Val Loss: 0.005389
+  Epoch 480/1000, Avg Train Loss: 0.001295, Avg Val Loss: 0.005203
+  Epoch 490/1000, Avg Train Loss: 0.001103, Avg Val Loss: 0.005205
+  Epoch 500/1000, Avg Train Loss: 0.001098, Avg Val Loss: 0.004970
+  Epoch 510/1000, Avg Train Loss: 0.001169, Avg Val Loss: 0.005024
+  Epoch 520/1000, Avg Train Loss: 0.001084, Avg Val Loss: 0.005114
+  Epoch 530/1000, Avg Train Loss: 0.001014, Avg Val Loss: 0.005396
+  Epoch 540/1000, Avg Train Loss: 0.001255, Avg Val Loss: 0.005024
+  Epoch 550/1000, Avg Train Loss: 0.001124, Avg Val Loss: 0.005280
+  Epoch 560/1000, Avg Train Loss: 0.000936, Avg Val Loss: 0.005409
+  Epoch 570/1000, Avg Train Loss: 0.000928, Avg Val Loss: 0.005122
+  Epoch 580/1000, Avg Train Loss: 0.001216, Avg Val Loss: 0.005159
+  Epoch 590/1000, Avg Train Loss: 0.001068, Avg Val Loss: 0.004916
+  Epoch 600/1000, Avg Train Loss: 0.001172, Avg Val Loss: 0.005054
+  Epoch 610/1000, Avg Train Loss: 0.001392, Avg Val Loss: 0.005075
+  Epoch 620/1000, Avg Train Loss: 0.000997, Avg Val Loss: 0.005580
+  Epoch 630/1000, Avg Train Loss: 0.000997, Avg Val Loss: 0.004852
+  Epoch 640/1000, Avg Train Loss: 0.001258, Avg Val Loss: 0.004980
+  Epoch 650/1000, Avg Train Loss: 0.001109, Avg Val Loss: 0.005029
+  Epoch 660/1000, Avg Train Loss: 0.000912, Avg Val Loss: 0.004715
+  Epoch 670/1000, Avg Train Loss: 0.001025, Avg Val Loss: 0.004976
+  Epoch 680/1000, Avg Train Loss: 0.001411, Avg Val Loss: 0.004946
+  Epoch 690/1000, Avg Train Loss: 0.001149, Avg Val Loss: 0.004884
+  Epoch 700/1000, Avg Train Loss: 0.001016, Avg Val Loss: 0.005250
+  Epoch 710/1000, Avg Train Loss: 0.000893, Avg Val Loss: 0.004941
+  Epoch 720/1000, Avg Train Loss: 0.000956, Avg Val Loss: 0.005211
+  Epoch 730/1000, Avg Train Loss: 0.000988, Avg Val Loss: 0.005332
+  Epoch 740/1000, Avg Train Loss: 0.000895, Avg Val Loss: 0.005080
+  Epoch 750/1000, Avg Train Loss: 0.000835, Avg Val Loss: 0.005100
+  Epoch 760/1000, Avg Train Loss: 0.001150, Avg Val Loss: 0.004927
+  Epoch 770/1000, Avg Train Loss: 0.001353, Avg Val Loss: 0.005667
+  Epoch 780/1000, Avg Train Loss: 0.001005, Avg Val Loss: 0.005266
+  Epoch 790/1000, Avg Train Loss: 0.000849, Avg Val Loss: 0.005257
+  Epoch 800/1000, Avg Train Loss: 0.000965, Avg Val Loss: 0.005191
+  Epoch 810/1000, Avg Train Loss: 0.000817, Avg Val Loss: 0.004766
+  Epoch 820/1000, Avg Train Loss: 0.000911, Avg Val Loss: 0.004929
+  Epoch 830/1000, Avg Train Loss: 0.000801, Avg Val Loss: 0.005022
+  Epoch 840/1000, Avg Train Loss: 0.001048, Avg Val Loss: 0.005172
+  Epoch 850/1000, Avg Train Loss: 0.000976, Avg Val Loss: 0.004830
+  Epoch 860/1000, Avg Train Loss: 0.000987, Avg Val Loss: 0.005206
+  Epoch 870/1000, Avg Train Loss: 0.001094, Avg Val Loss: 0.005049
+  Epoch 880/1000, Avg Train Loss: 0.000787, Avg Val Loss: 0.004949
+  Epoch 890/1000, Avg Train Loss: 0.000879, Avg Val Loss: 0.004911
+  Epoch 900/1000, Avg Train Loss: 0.001019, Avg Val Loss: 0.004941
+  Epoch 910/1000, Avg Train Loss: 0.001043, Avg Val Loss: 0.004957
+  Epoch 920/1000, Avg Train Loss: 0.000801, Avg Val Loss: 0.004730
+  Epoch 930/1000, Avg Train Loss: 0.000758, Avg Val Loss: 0.004601
+  Epoch 940/1000, Avg Train Loss: 0.000936, Avg Val Loss: 0.004945
+  Epoch 950/1000, Avg Train Loss: 0.000915, Avg Val Loss: 0.004693
+  Epoch 960/1000, Avg Train Loss: 0.000784, Avg Val Loss: 0.004730
+  Epoch 970/1000, Avg Train Loss: 0.001224, Avg Val Loss: 0.004893
+  Epoch 980/1000, Avg Train Loss: 0.001218, Avg Val Loss: 0.004555
+  Epoch 990/1000, Avg Train Loss: 0.001080, Avg Val Loss: 0.004564
+  Epoch 1000/1000, Avg Train Loss: 0.000830, Avg Val Loss: 0.004749
+Model training complete.
+
+================================================================================
+## STAGE 5: MODEL EVALUATION ##
+================================================================================
+Purpose: Assess final model performance for TREND mode.
+
+Evaluating TREND prediction performance...
+
+  --- Slope Prediction ---
+  - RMSE: 2611.3208, MAE: 730.2118
+
+  --- Duration Prediction ---
+  - RMSE: 75.18 (days), MAE: 47.32 (days)
+
+Trend evaluation results saved to 'evaluation_results_TREND_MLP.csv'.
+
+================================================================================
+## PIPELINE PERFORMANCE SUMMARY ##
+================================================================================
+Data Loading & Preprocessing Time: 359.63 seconds.
+Model Training Time:               34.12 seconds.
+----------------------------------------
+Total Pipeline Execution Time:     398.79 seconds.
+================================================================================
+=====================================================
+Job finished at Sat Jun 21 06:08:30 PM SAST 2025
+=====================================================

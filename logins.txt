@@ -1,0 +1,46 @@
+ssh mkhsiy057@hex.uct.ac.za
+My@24SiyandaMakh
+/home/mkhsiy057
+
+Install torch: 
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+Install Pandas: 
+pip install pandas
+
+Install Sklearn:
+pip install scikit-learn
+
+Install Pwlf
+pip install pwlf
+
+Install Tqdm
+pip install tqdm
+
+python3 -m pip install openpyxl
+
+install ruptures 
+pip install ruptures 
+
+transfer file from cluster 
+pscp mkhsiy057@hex.uct.ac.za:/home/mkhsiy057/JSE_TCN_Project/src/pipeline/stage_5_model_evaluation.py "C:\Users\PIC\Desktop\ML pipeline\src\pipeline"
+
+transfer folder from cluster 
+pscp -r mkhsiy057@hex.uct.ac.za:/home/mkhsiy057/myfolder C:\Users\YourName\Documents\
+
+transfer file from PC
+pscp myfile.txt mkhsiy057@hex.uct.ac.za:/home/mkhsiy057/
+
+transfer folder from PC 
+pscp -r C:"\Users\PIC\Desktop\CS HONOURS\honoursproject\JSE_TCN_Project" mkhsiy057@hex.uct.ac.za:/home/mkhsiy057/
+
+Nightmare 
+nightmare.cs.uct.ac.za
+mkhsiy057
+K5tyRshkm
+transfer file 
+pscp C:\path\to\myfile.txt your_username@nightmare.cs.uct.ac.za:/home/your_username/
+pscp -r mkhsiy057@nightmare.cs.uct.ac.za:/home/m/mkhsiy057/'ML pipeline'"C:\Users\PIC\Desktop\CS HONOURS\honoursproject\ML pipeline"
+transfer folder 
+pscp -r "C:\Users\PIC\Desktop\CS HONOURS\honoursproject\ML pipeline" mkhsiy057@nightmare.cs.uct.ac.za:/home/m/mkhsiy057
+

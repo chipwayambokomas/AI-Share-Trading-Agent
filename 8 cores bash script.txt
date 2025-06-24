@@ -1,0 +1,25 @@
+#!/bin/bash
+#SBATCH --job-name="JSE_Trend_Pipeline_MLP_1"
+#SBATCH --account=compsci
+#SBATCH --partition=swan
+#SBATCH --time=12:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks=8
+#SBATCH --output=jse_pipeline_%j.out
+#SBATCH --mail-user=mkhsiy057@myuct.ac.za
+#SBATCH --mail-type=ALL
+
+cd $SLURM_SUBMIT_DIR
+
+echo "====================================================="
+echo "Job started on $(hostname) at $(date)"
+echo "====================================================="
+
+module load python/miniconda3-py3.12
+
+echo "Running the main script using Python from 'myenv'..."
+myenv/bin/python main.py $SLURM_NTASKS
+
+echo "====================================================="
+echo "Job finished at $(date)"
+echo "====================================================="

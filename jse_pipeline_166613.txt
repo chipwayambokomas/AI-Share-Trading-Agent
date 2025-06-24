@@ -1,0 +1,182 @@
+=====================================================
+Job started on srvrochpc221.uct.ac.za at Sat Jun 21 05:50:28 PM SAST 2025
+SLURM Job ID: 166613
+SLURM Nodes: srvrochpc221
+SLURM CPUs per Task: 8
+=====================================================
+Running the main script using Python from 'myenv'...
+2025-06-21 17:50:35,383 - INFO - Starting preprocessing with mode: TREND
+2025-06-21 17:50:35,383 - INFO - Timestamp: 2025-06-21 17:50:35
+2025-06-21 17:50:35,383 - INFO - Running parallel trend prediction preprocessing
+2025-06-21 17:50:35,383 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-06-21 17:50:35,387 - INFO - Input dataframe shape: (124520, 3), Unique stocks: 38
+2025-06-21 17:50:35,387 - INFO - Target: Close, Avg points/trend: 75, Window: 10
+2025-06-21 17:50:35,387 - INFO - SLURM environment detected (cpus-per-task). Using 8 allocated CPU cores.
+2025-06-21 17:50:35,398 - INFO - Prepared 38 stocks for parallel segmentation.
+2025-06-21 17:50:35,398 - INFO - Starting parallel segmentation on 8 cores...
+
+[INFO] Multiprocessing start method set to 'spawn'.
+================================================================================
+## JSE STOCK PREDICTION PIPELINE ##
+================================================================================
+Running pipeline in 'TREND' mode with model: MLP
+
+[INFO] Random seed set to 42 for reproducibility.
+
+================================================================================
+## STAGE 1: FEATURE EXTRACTION ##
+================================================================================
+
+Purpose: Read data from all sheets in the Excel file, stack them into a single
+DataFrame, and add a 'StockID' to identify each security.
+Executing Code: Loading and concatenating data from all sheets...
+    
+Found 39 sheets (stocks) in the file: ['ABG', 'AMS', 'AGL', 'ANG', 'ANH', 'BHG', 'BID', 'BTI', 'CPI', 'CLS', 'CFR', 'DSY', 'FSR', 'GLN', 'HAR', 'IMP', 'INP', 'KIO', 'MNP', 'MRP', 'MTN', 'NPN', 'NED', 'NRP', 'OUT', 'PPH', 'PRX', 'RNI', 'REM', 'SLM', 'SHC', 'SHP', 'SSW', 'S32', 'SBK', 'BVT', 'TBS', 'VOD', 'WHL']
+    - WARNING: Sheet 'SHP' is empty. Skipping.
+
+Successfully loaded and combined data from all stocks.
+  - Total rows in combined DataFrame: 124520
+  - Unique stocks found: 38
+
+================================================================================
+## STAGE 2: DATA PREPROCESSING (TREND PREDICTION - PARALLEL MODE) ##
+================================================================================
+Segmenting Stocks:   0%|          | 0/38 [00:00<?, ?it/s]2025-06-21 17:50:38,131 - INFO - [Worker PID: 2579647] Starting segmentation for stock: ABG (3746 points)
+2025-06-21 17:50:38,131 - INFO - [Worker PID: 2579653] Starting segmentation for stock: AGL (3745 points)
+2025-06-21 17:50:38,132 - INFO - [Worker PID: 2579646] Starting segmentation for stock: AMS (3745 points)
+2025-06-21 17:50:38,132 - INFO - [Worker PID: 2579650] Starting segmentation for stock: ANG (3745 points)
+2025-06-21 17:50:38,135 - INFO - [Worker PID: 2579649] Starting segmentation for stock: ANH (2236 points)
+2025-06-21 17:50:38,139 - INFO - [Worker PID: 2579651] Starting segmentation for stock: BHG (727 points)
+2025-06-21 17:50:38,139 - WARNING - [Worker PID: 2579651] Stock BHG: Insufficient data (727 < 825)
+2025-06-21 17:50:38,139 - INFO - [Worker PID: 2579651] Starting segmentation for stock: BID (2146 points)
+2025-06-21 17:50:38,143 - INFO - [Worker PID: 2579652] Starting segmentation for stock: BTI (3745 points)
+2025-06-21 17:50:38,151 - INFO - [Worker PID: 2579648] Starting segmentation for stock: BVT (3745 points)
+2025-06-21 17:50:51,205 - INFO - [Worker PID: 2579651] Completed stock: BID in 13.07s. Found 28 trends.
+2025-06-21 17:50:51,215 - INFO - [Worker PID: 2579651] Starting segmentation for stock: CFR (3746 points)
+2025-06-21 17:50:52,859 - INFO - [Worker PID: 2579649] Completed stock: ANH in 14.72s. Found 29 trends.
+2025-06-21 17:50:52,868 - INFO - [Worker PID: 2579649] Starting segmentation for stock: CLS (3745 points)
+2025-06-21 17:52:05,460 - INFO - [Worker PID: 2579648] Completed stock: BVT in 87.31s. Found 49 trends.
+2025-06-21 17:52:05,471 - INFO - [Worker PID: 2579648] Starting segmentation for stock: CPI (3745 points)
+2025-06-21 17:52:05,970 - INFO - [Worker PID: 2579647] Completed stock: ABG in 87.84s. Found 49 trends.
+Segmenting Stocks:   3%|▎         | 1/38 [01:30<55:50, 90.55s/it]2025-06-21 17:52:05,979 - INFO - [Worker PID: 2579647] Starting segmentation for stock: DSY (3745 points)
+2025-06-21 17:52:06,052 - INFO - [Worker PID: 2579650] Completed stock: ANG in 87.92s. Found 49 trends.
+2025-06-21 17:52:06,061 - INFO - [Worker PID: 2579650] Starting segmentation for stock: FSR (3745 points)
+2025-06-21 17:52:06,306 - INFO - [Worker PID: 2579646] Completed stock: AMS in 88.17s. Found 49 trends.
+2025-06-21 17:52:06,315 - INFO - [Worker PID: 2579646] Starting segmentation for stock: GLN (2778 points)
+2025-06-21 17:52:06,524 - INFO - [Worker PID: 2579653] Completed stock: AGL in 88.39s. Found 49 trends.
+Segmenting Stocks:   5%|▌         | 2/38 [01:31<22:34, 37.61s/it]2025-06-21 17:52:06,533 - INFO - [Worker PID: 2579653] Starting segmentation for stock: HAR (3745 points)
+2025-06-21 17:52:07,123 - INFO - [Worker PID: 2579652] Completed stock: BTI in 88.98s. Found 49 trends.
+Segmenting Stocks:  21%|██        | 8/38 [01:31<03:09,  6.31s/it]2025-06-21 17:52:07,132 - INFO - [Worker PID: 2579652] Starting segmentation for stock: IMP (3745 points)
+2025-06-21 17:52:20,155 - INFO - [Worker PID: 2579651] Completed stock: CFR in 88.94s. Found 49 trends.
+Segmenting Stocks:  26%|██▋       | 10/38 [01:44<02:58,  6.37s/it]2025-06-21 17:52:20,164 - INFO - [Worker PID: 2579651] Starting segmentation for stock: INP (3745 points)
+2025-06-21 17:52:20,551 - INFO - [Worker PID: 2579649] Completed stock: CLS in 87.68s. Found 49 trends.
+Segmenting Stocks:  29%|██▉       | 11/38 [01:45<02:24,  5.36s/it]2025-06-21 17:52:20,561 - INFO - [Worker PID: 2579649] Starting segmentation for stock: KIO (3745 points)
+2025-06-21 17:52:38,503 - INFO - [Worker PID: 2579646] Completed stock: GLN in 32.19s. Found 37 trends.
+2025-06-21 17:52:38,512 - INFO - [Worker PID: 2579646] Starting segmentation for stock: MNP (3745 points)
+2025-06-21 17:53:33,183 - INFO - [Worker PID: 2579648] Completed stock: CPI in 87.71s. Found 49 trends.
+Segmenting Stocks:  32%|███▏      | 12/38 [02:57<07:59, 18.43s/it]2025-06-21 17:53:33,193 - INFO - [Worker PID: 2579648] Starting segmentation for stock: MRP (3744 points)
+2025-06-21 17:53:33,880 - INFO - [Worker PID: 2579647] Completed stock: DSY in 87.90s. Found 49 trends.
+Segmenting Stocks:  34%|███▍      | 13/38 [02:58<06:04, 14.58s/it]2025-06-21 17:53:33,889 - INFO - [Worker PID: 2579647] Starting segmentation for stock: MTN (3745 points)
+2025-06-21 17:53:34,001 - INFO - [Worker PID: 2579650] Completed stock: FSR in 87.94s. Found 49 trends.
+Segmenting Stocks:  37%|███▋      | 14/38 [02:58<04:27, 11.15s/it]2025-06-21 17:53:34,011 - INFO - [Worker PID: 2579650] Starting segmentation for stock: NED (3745 points)
+2025-06-21 17:53:34,662 - INFO - [Worker PID: 2579653] Completed stock: HAR in 88.13s. Found 49 trends.
+Segmenting Stocks:  42%|████▏     | 16/38 [02:59<02:29,  6.79s/it]2025-06-21 17:53:34,672 - INFO - [Worker PID: 2579653] Starting segmentation for stock: NPN (3745 points)
+2025-06-21 17:53:35,821 - INFO - [Worker PID: 2579652] Completed stock: IMP in 88.69s. Found 49 trends.
+Segmenting Stocks:  45%|████▍     | 17/38 [03:00<01:56,  5.53s/it]2025-06-21 17:53:35,830 - INFO - [Worker PID: 2579652] Starting segmentation for stock: NRP (1867 points)
+2025-06-21 17:53:43,741 - INFO - [Worker PID: 2579652] Completed stock: NRP in 7.91s. Found 24 trends.
+2025-06-21 17:53:43,750 - INFO - [Worker PID: 2579652] Starting segmentation for stock: OUT (3450 points)
+2025-06-21 17:53:48,330 - INFO - [Worker PID: 2579649] Completed stock: KIO in 87.77s. Found 49 trends.
+2025-06-21 17:53:48,340 - INFO - [Worker PID: 2579649] Starting segmentation for stock: PPH (1818 points)
+2025-06-21 17:53:48,707 - INFO - [Worker PID: 2579651] Completed stock: INP in 88.54s. Found 49 trends.
+Segmenting Stocks:  47%|████▋     | 18/38 [03:13<02:26,  7.31s/it]2025-06-21 17:53:48,716 - INFO - [Worker PID: 2579651] Starting segmentation for stock: PRX (1325 points)
+2025-06-21 17:53:51,090 - INFO - [Worker PID: 2579651] Completed stock: PRX in 2.37s. Found 17 trends.
+2025-06-21 17:53:51,099 - INFO - [Worker PID: 2579651] Starting segmentation for stock: REM (3745 points)
+2025-06-21 17:53:55,681 - INFO - [Worker PID: 2579649] Completed stock: PPH in 7.34s. Found 24 trends.
+2025-06-21 17:53:55,691 - INFO - [Worker PID: 2579649] Starting segmentation for stock: RNI (1769 points)
+2025-06-21 17:54:02,172 - INFO - [Worker PID: 2579649] Completed stock: RNI in 6.48s. Found 23 trends.
+2025-06-21 17:54:02,181 - INFO - [Worker PID: 2579649] Starting segmentation for stock: S32 (2405 points)
+2025-06-21 17:54:06,802 - INFO - [Worker PID: 2579646] Completed stock: MNP in 88.29s. Found 49 trends.
+Segmenting Stocks:  53%|█████▎    | 20/38 [03:31<02:24,  8.02s/it]2025-06-21 17:54:06,811 - INFO - [Worker PID: 2579646] Starting segmentation for stock: SBK (3745 points)
+2025-06-21 17:54:21,877 - INFO - [Worker PID: 2579649] Completed stock: S32 in 19.70s. Found 32 trends.
+2025-06-21 17:54:21,886 - INFO - [Worker PID: 2579649] Starting segmentation for stock: SHC (3660 points)
+2025-06-21 17:54:51,868 - INFO - [Worker PID: 2579652] Completed stock: OUT in 68.12s. Found 46 trends.
+2025-06-21 17:54:51,878 - INFO - [Worker PID: 2579652] Starting segmentation for stock: SLM (3745 points)
+2025-06-21 17:55:00,586 - INFO - [Worker PID: 2579648] Completed stock: MRP in 87.39s. Found 49 trends.
+Segmenting Stocks:  55%|█████▌    | 21/38 [04:25<05:12, 18.37s/it]2025-06-21 17:55:00,595 - INFO - [Worker PID: 2579648] Starting segmentation for stock: SSW (2968 points)
+2025-06-21 17:55:01,563 - INFO - [Worker PID: 2579647] Completed stock: MTN in 87.67s. Found 49 trends.
+Segmenting Stocks:  58%|█████▊    | 22/38 [04:26<03:45, 14.12s/it]2025-06-21 17:55:01,572 - INFO - [Worker PID: 2579647] Starting segmentation for stock: TBS (3745 points)
+2025-06-21 17:55:01,769 - INFO - [Worker PID: 2579650] Completed stock: NED in 87.76s. Found 49 trends.
+Segmenting Stocks:  61%|██████    | 23/38 [04:26<02:37, 10.52s/it]2025-06-21 17:55:01,779 - INFO - [Worker PID: 2579650] Starting segmentation for stock: VOD (3745 points)
+2025-06-21 17:55:03,177 - INFO - [Worker PID: 2579653] Completed stock: NPN in 88.51s. Found 49 trends.
+Segmenting Stocks:  63%|██████▎   | 24/38 [04:27<01:52,  8.06s/it]2025-06-21 17:55:03,186 - INFO - [Worker PID: 2579653] Starting segmentation for stock: WHL (3745 points)
+2025-06-21 17:55:19,859 - INFO - [Worker PID: 2579651] Completed stock: REM in 88.76s. Found 49 trends.
+Segmenting Stocks:  76%|███████▋  | 29/38 [04:44<00:44,  4.95s/it]2025-06-21 17:55:34,824 - INFO - [Worker PID: 2579646] Completed stock: SBK in 88.01s. Found 49 trends.
+Segmenting Stocks:  84%|████████▍ | 32/38 [04:59<00:29,  4.96s/it]2025-06-21 17:55:39,787 - INFO - [Worker PID: 2579648] Completed stock: SSW in 39.19s. Found 39 trends.
+2025-06-21 17:55:42,976 - INFO - [Worker PID: 2579649] Completed stock: SHC in 81.09s. Found 48 trends.
+Segmenting Stocks:  87%|████████▋ | 33/38 [05:07<00:27,  5.43s/it]2025-06-21 17:56:18,320 - INFO - [Worker PID: 2579652] Completed stock: SLM in 86.44s. Found 49 trends.
+Segmenting Stocks:  89%|████████▉ | 34/38 [05:42<00:42, 10.61s/it]2025-06-21 17:56:26,387 - INFO - [Worker PID: 2579647] Completed stock: TBS in 84.82s. Found 49 trends.
+Segmenting Stocks:  95%|█████████▍| 36/38 [05:50<00:16,  8.43s/it]2025-06-21 17:56:26,591 - INFO - [Worker PID: 2579650] Completed stock: VOD in 84.81s. Found 49 trends.
+Segmenting Stocks:  97%|█████████▋| 37/38 [05:51<00:06,  6.86s/it]2025-06-21 17:56:28,266 - INFO - [Worker PID: 2579653] Completed stock: WHL in 85.08s. Found 49 trends.
+Segmenting Stocks: 100%|██████████| 38/38 [05:52<00:00,  5.75s/it]Segmenting Stocks: 100%|██████████| 38/38 [05:52<00:00,  9.29s/it]
+2025-06-21 17:56:28,345 - INFO - Parallel segmentation completed in 352.95s
+2025-06-21 17:56:28,345 - INFO - Successfully segmented 37/38 stocks.
+2025-06-21 17:56:28,345 - INFO - Fitting global scalers for slope and duration...
+2025-06-21 17:56:28,346 - INFO - Scalers created successfully.
+2025-06-21 17:56:28,347 - INFO - Creating input/output sequences from trends in parallel...
+Creating Sequences:   0%|          | 0/37 [00:00<?, ?it/s]2025-06-21 17:56:31,445 - INFO - Stock ABG: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,445 - INFO - Stock AGL: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,445 - INFO - Stock AMS: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,445 - INFO - Stock ANH: Generated 19 sequences in 0.00s
+2025-06-21 17:56:31,445 - INFO - Stock ANG: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,445 - INFO - Stock BID: Generated 18 sequences in 0.00s
+2025-06-21 17:56:31,445 - INFO - Stock BTI: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,445 - INFO - Stock BVT: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock CFR: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock CPI: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock DSY: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock FSR: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock GLN: Generated 27 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock CLS: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock HAR: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock IMP: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock KIO: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock INP: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock MRP: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock MNP: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,446 - INFO - Stock MTN: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,447 - INFO - Stock NED: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,447 - INFO - Stock NPN: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,447 - INFO - Stock NRP: Generated 14 sequences in 0.00s
+2025-06-21 17:56:31,447 - INFO - Stock OUT: Generated 36 sequences in 0.00s
+Creating Sequences:   3%|▎         | 1/37 [00:03<01:51,  3.09s/it]2025-06-21 17:56:31,448 - INFO - Stock PPH: Generated 14 sequences in 0.00s
+2025-06-21 17:56:31,448 - INFO - Stock PRX: Generated 7 sequences in 0.00s
+2025-06-21 17:56:31,448 - INFO - Stock REM: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,448 - INFO - Stock RNI: Generated 13 sequences in 0.00s
+2025-06-21 17:56:31,448 - INFO - Stock SBK: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,448 - INFO - Stock SLM: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,448 - INFO - Stock SHC: Generated 38 sequences in 0.00s
+2025-06-21 17:56:31,448 - INFO - Stock S32: Generated 22 sequences in 0.00s
+2025-06-21 17:56:31,448 - INFO - Stock SSW: Generated 29 sequences in 0.00s
+2025-06-21 17:56:31,449 - INFO - Stock TBS: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,449 - INFO - Stock VOD: Generated 39 sequences in 0.00s
+2025-06-21 17:56:31,449 - INFO - Stock WHL: Generated 39 sequences in 0.00s
+Creating Sequences: 100%|██████████| 37/37 [00:03<00:00, 11.97it/s]
+2025-06-21 17:56:31,522 - INFO - === TREND PREDICTION PREPROCESSING COMPLETE ===
+2025-06-21 17:56:31,522 - INFO - Total processing time: 356.14s
+2025-06-21 17:56:31,522 - INFO - Final X shape: (1251, 10, 2), Final y shape: (1251, 2)
+2025-06-21 17:56:31,522 - INFO - === PREPROCESSING SUMMARY ===
+2025-06-21 17:56:31,523 - INFO - Total sequences generated: 1251
+2025-06-21 17:56:31,523 - INFO - Input sequences shape (X): (1251, 10, 2)
+2025-06-21 17:56:31,523 - INFO - Target sequences shape (y): (1251, 2)
+2025-06-21 17:56:31,523 - INFO - Unique stocks with data: 37
+2025-06-21 17:56:31,523 - INFO - Preprocessing completed successfully!
+Traceback (most recent call last):
+  File "/home/mkhsiy057/JSE_TCN_Project/main.py", line 92, in <module>
+    main()
+  File "/home/mkhsiy057/JSE_TCN_Project/main.py", line 56, in main
+    train_loader, val_loader, X_test_t, y_test_t, stock_ids_test = stage_3_data_partitioning.run(X, y, stock_ids, config)
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: run() takes 3 positional arguments but 4 were given
+=====================================================
+Job finished at Sat Jun 21 05:56:31 PM SAST 2025
+=====================================================
