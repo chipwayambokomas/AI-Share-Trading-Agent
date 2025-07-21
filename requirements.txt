@@ -1,0 +1,8 @@
+pandas
+numpy
+torch
+scikit-learn
+tqdm
+ruptures
+openpyxl
+networkx
