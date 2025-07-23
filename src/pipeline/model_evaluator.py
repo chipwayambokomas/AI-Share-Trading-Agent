@@ -165,33 +165,70 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     results_df.to_csv(save_path, index=False)
     print(f"\nTrend evaluation results saved to '{save_path}'.")
 
-def _calculate_graph_metrics(adj_matrix, stock_ids,settings):
-    """Calculates and prints graph-based network metrics."""
+def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_threshold=90):
+    """
+    Calculates and prints graph-based network metrics after pruning weak edges.
+    
+    Args:
+        adj_matrix (torch.Tensor): The learned (N, N) adjacency matrix.
+        stock_ids (list): List of stock names/IDs for labeling.
+        settings: Your settings object.
+        percentile_threshold (int): The percentile of edge weights to use as a
+                                    threshold. E.g., 90 means keep the top 10%
+                                    of edge weights.
+    """
     print_header("Network Analysis Metrics")
-    G = nx.from_numpy_array(adj_matrix.cpu().numpy())
+    
+    adj_numpy = adj_matrix.cpu().numpy()
+    
+    # --- 1. DETERMINE THE THRESHOLD ---
+    # Find the threshold value that corresponds to the desired percentile
+    # This is a robust way to handle pruning.
+    threshold = np.percentile(adj_numpy, percentile_threshold)
+    print(f"Pruning graph: Keeping top {100 - percentile_threshold}% of edges.")
+    print(f"Calculated threshold value: {threshold:.6f}")
+
+    # --- 2. PRUNE THE MATRIX ---
+    # Create a copy and set all values below the threshold to 0
+    pruned_adj_numpy = np.copy(adj_numpy)
+    pruned_adj_numpy[pruned_adj_numpy < threshold] = 0
+    
+    # --- 3. CREATE THE GRAPH ---
+    # Create a DiGraph from the now-sparse (pruned) matrix
+    G = nx.from_numpy_array(pruned_adj_numpy, create_using=nx.DiGraph)
+    
+    num_edges_before = np.count_nonzero(adj_numpy)
+    num_edges_after = G.number_of_edges()
+    print(f"Pruning reduced edges from {num_edges_before} to {num_edges_after}")
+
+    if num_edges_after == 0:
+        print("WARNING: Threshold is too high, no edges remain. Try a lower percentile (e.g., 80 or 70).")
+        return
+
+    # --- 4. CALCULATE METRICS ON THE PRUNED GRAPH ---
     mapping = {i: name for i, name in enumerate(stock_ids)}
     nx.relabel_nodes(G, mapping, copy=False)
     
-    # Calculate all metrics
-    degree_centrality = nx.degree_centrality(G)
+    in_degree_centrality = nx.in_degree_centrality(G)
+    out_degree_centrality = nx.out_degree_centrality(G)
     betweenness_centrality = nx.betweenness_centrality(G)
-    eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=1000) # max_iter for convergence
+    
+    try:
+        eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=5000)
+    except (nx.PowerIterationFailedConvergence, nx.NetworkXError):
+        print("WARNING: Eigenvector centrality failed. Using PageRank instead.")
+        eigenvector_centrality = nx.pagerank(G)
+        
     local_clustering_coeff = nx.clustering(G)
-
-    # Find communities using the Louvain method
-    louvain_communities = community.louvain_communities(G, seed=123)
-    community_map = {node: i for i, comm in enumerate(louvain_communities) for node in comm}
     
     analysis_df = pd.DataFrame(index=G.nodes())
-
-    # Add each metric as a new column
-    analysis_df['degree_centrality'] = analysis_df.index.map(degree_centrality)
+    analysis_df['in_degree_centrality'] = analysis_df.index.map(in_degree_centrality)
+    analysis_df['out_degree_centrality'] = analysis_df.index.map(out_degree_centrality)
     analysis_df['betweenness_centrality'] = analysis_df.index.map(betweenness_centrality)
-    analysis_df['eigenvector_centrality'] = analysis_df.index.map(eigenvector_centrality)
+    analysis_df['eigenvector_centrality_or_pagerank'] = analysis_df.index.map(eigenvector_centrality)
     analysis_df['local_clustering_coeff'] = analysis_df.index.map(local_clustering_coeff)
-    analysis_df['community_id'] = analysis_df.index.map(community_map)
     
-    print("\n--- Network Metrics per Stock ---")
+    print("\n--- Network Metrics per Stock (on Pruned Graph) ---")
     print(analysis_df)
     save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_GRAPH_{settings.PREDICTION_MODE}__{settings.MODEL_TYPE}.csv"
     analysis_df.to_csv(save_path, index=True)
@@ -202,6 +239,49 @@ def run(model, X_test_t, y_test_t, test_stock_ids, scalers, handler: BaseModelHa
     Stage 5: Assesses final model performance and calculates network metrics if applicable.
     """
     print_header("Stage 5: Model Evaluation")
+    
+    if adj_matrix is not None:
+        adj_numpy = adj_matrix.cpu().numpy()
+        
+        print("--- Learned Adjacency Matrix Diagnostics ---")
+        print("Matrix shape:", adj_numpy.shape)
+        
+        # Print the first 3 rows to check for similarity
+        print("First 3 rows:\n", adj_numpy[:3, :5]) # Show first 5 columns for brevity
+        
+        # Check if rows are nearly identical
+        row_diff = np.max(adj_numpy, axis=0) - np.min(adj_numpy, axis=0)
+        print("Max difference between elements in any column:", np.max(row_diff))
+        
+        # Check row and column sums
+        print("Sum of first row:", np.sum(adj_numpy[0, :])) # Should be 1.0
+        print("Sum of second row:", np.sum(adj_numpy[1, :])) # Should be 1.0
+        print("Sum of first column:", np.sum(adj_numpy[:, 0])) # Will likely NOT be 1.0
+        
+            # --- NEW HYPOTHESIS 1 DIAGNOSTICS ---
+        print("\n--- Checking for Self-Loop Dominance ---")
+        
+        # Get the diagonal elements (self-loops)
+        diagonal_weights = np.diag(adj_numpy)
+        print("Diagonal (self-loop) weights (first 5):", diagonal_weights[:5])
+        
+        # For each row, find the max off-diagonal weight
+        off_diagonal_max = np.copy(adj_numpy)
+        np.fill_diagonal(off_diagonal_max, 0) # Set diagonal to zero to ignore it
+        max_off_diagonal_weights = np.max(off_diagonal_max, axis=1) # Max of each row
+        
+        print("Max off-diagonal weights (first 5):", max_off_diagonal_weights[:5])
+        
+        # Compare them
+        dominance_ratio = diagonal_weights / (max_off_diagonal_weights + 1e-9) # Add epsilon for stability
+        print("Dominance Ratio (self-loop / max_other_link) (first 5):", dominance_ratio[:5])
+        
+        is_dense = np.all(adj_numpy > 0)
+        print(f"Is the matrix fully dense (all values > 0)? {is_dense}")
+        if is_dense:
+            print("WARNING: Matrix is fully dense. This can lead to uniform graph metrics.")
+
+        # If you see that the first few rows are visually identical, you've found the problem.
     
     if settings.PREDICTION_MODE == "POINT":
         _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings)

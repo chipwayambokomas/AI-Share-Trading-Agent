@@ -147,6 +147,12 @@ class NewSTGNNHandler(BaseModelHandler):
 
     def adapt_output_for_loss(self, y_pred, y_batch):
         return y_pred, y_batch
+    
+    def extract_adjacency_matrix(self, model: GraphWaveNet):
+        """
+        Model specific implementation of learned adj_matrix
+        """
+        return final_adj_matrix
 ```
 
 ### Step 3: Add to Configuration

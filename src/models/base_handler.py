@@ -32,6 +32,7 @@ class BaseModelHandler(ABC):
         """Returns the appropriate loss function for the model."""
         pass
 
+
     # These are helper methods with default implementations that can be used by all handlers.
     def get_input_dims(self):
         # Centralizes the logic for determining input/output features based on the mode.

@@ -54,7 +54,7 @@ def main():
     # will then use the handler to build the model (`handler.build_model()`), get the
     # correct loss function (`handler.get_loss_function()`), and adapt data shapes
     # for training (`handler.adapt_output_for_loss()`).
-    model, training_time = model_trainer.run(
+    model, training_time, final_adj_matrix = model_trainer.run(
         train_loader, val_loader, model_handler, settings, supports=[adj_matrix] if adj_matrix is not None else None
     )
     
@@ -65,7 +65,7 @@ def main():
     # It uses the handler to know how to process the model's output for evaluation
     # and whether to calculate graph-specific metrics.
     model_evaluator.run(
-        model, X_test_t, y_test_t, test_stock_ids, scalers, model_handler, settings, adj_matrix
+        model, X_test_t, y_test_t, test_stock_ids, scalers, model_handler, settings, final_adj_matrix
     )
 
     print_header("Pipeline Finished")

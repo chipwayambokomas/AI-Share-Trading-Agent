@@ -1,6 +1,8 @@
 from .base_handler import BaseModelHandler
 from .architectures.gwn import GraphWaveNet
 import torch.nn as nn
+import torch
+import torch.nn.functional as F
 
 class GraphWaveNetHandler(BaseModelHandler):
     def name(self) -> str:
@@ -44,3 +46,27 @@ class GraphWaveNetHandler(BaseModelHandler):
             #the features are the trend and magnitude in this case
             y_pred = y_pred.squeeze(-1).permute(0, 2, 1)
         return y_pred, y_batch
+    
+    def extract_adjacency_matrix(self, model: GraphWaveNet):
+        print("Extracting adjacency matrix from GraphWaveNet...")
+        
+        # Check if the model was configured to learn an adaptive matrix
+        if not model.addaptadj:
+            print("Model was not trained with 'addaptadj=True'. No matrix to extract.")
+            return None
+            
+        # Use torch.no_grad() to ensure no gradients are computed
+        with torch.no_grad():
+            # Get the learned node embeddings from the trained model
+            nodevec1 = model.nodevec1
+            nodevec2 = model.nodevec2
+
+            # Reconstruct the matrix using the same formula as in the forward pass
+            raw_adj = torch.mm(nodevec1, nodevec2)
+            activated_adj = F.relu(raw_adj)
+            final_adj_matrix = F.softmax(activated_adj, dim=1)
+        
+        print("Successfully extracted adaptive adjacency matrix.")
+        return final_adj_matrix
+    
+    

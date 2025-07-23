@@ -78,4 +78,9 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
     training_time = time.time() - start_time
     print(f"\nModel training complete in {training_time:.2f} seconds.")
     model.load_state_dict(best_model_state)
-    return model, training_time
+    
+    final_adj_matrix = None
+    if model_handler.is_graph_based():
+        final_adj_matrix = model_handler.extract_adjacency_matrix(model)
+        
+    return model, training_time,final_adj_matrix
