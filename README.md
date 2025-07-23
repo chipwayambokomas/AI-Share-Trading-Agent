@@ -35,6 +35,7 @@ This structure makes the framework easy to maintain, extend, and debug.
 ├── logs/                     # Log files
 ├── results/                  # Evaluation outputs
 ├── src/
+|   ├── analysis/             # graph metrics visualisation logic
 │   ├── config/               # Configuration settings
 │   ├── data_processing/      # Data processors and factory
 │   ├── models/               # Handlers, architectures, factory

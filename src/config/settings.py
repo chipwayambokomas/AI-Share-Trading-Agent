@@ -6,7 +6,7 @@ FEATURE_COLUMNS = ['open', 'high', 'low', 'close', 'vwap']
 RANDOM_SEED = 42
 
 # --- MASTER SWITCH: Choose the prediction mode ---
-PREDICTION_MODE = "POINT" # "POINT" or "TREND"
+PREDICTION_MODE = "TREND" # "POINT" or "TREND"
 
 # --- MASTER SWITCH: Choose the model type ---
 MODEL_TYPE = "GraphWaveNet" # "TCN", "MLP", "GraphWaveNet",
@@ -26,6 +26,7 @@ BATCH_SIZE = 32
 
 # --- Adjacency Matrix ---
 CORRELATION_THRESHOLD = 0.75 # For static adjacency matrix
+EVAL_THRESHOLD = 90
 
 # --- Model-Specific Hyperparameters ---
 MODEL_ARGS = {
