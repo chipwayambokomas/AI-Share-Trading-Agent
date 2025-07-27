@@ -59,10 +59,6 @@ class AGCRNHandler(BaseModelHandler):
             if y_batch.dim() == 4 and y_batch.shape[1] == 1:
                 y_batch = y_batch.squeeze(1)
             
-        if print_once_loss:
-            print(f"Shape of y_pred AFTER adaptation:  {y_pred.shape}")
-            print(f"Shape of y_batch AFTER adaptation: {y_batch.shape}")
-            setattr(self, 'print_once_loss', False)
 
         # After squeezing, both tensors should be 3D and have the same shape.
         # This now works for BOTH POINT and TREND modes.
