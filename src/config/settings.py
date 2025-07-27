@@ -9,7 +9,7 @@ RANDOM_SEED = 42
 PREDICTION_MODE = "TREND" # "POINT" or "TREND"
 
 # --- MASTER SWITCH: Choose the model type ---
-MODEL_TYPE = "GraphWaveNet" # "TCN", "MLP", "GraphWaveNet",
+MODEL_TYPE = "AGCRN" # "TCN", "MLP", "GraphWaveNet", "AGCRN"
 
 # --- Data & Preprocessing ---
 POINT_INPUT_WINDOW_SIZE = 60
@@ -52,4 +52,10 @@ MODEL_ARGS = {
         "blocks": 4,
         "layers": 2,
     },
+     "AGCRN": {
+        "rnn_units": 64,
+        "num_layers": 2,
+        "cheb_k": 2,
+        "embed_dim": 10       
+    }
 }

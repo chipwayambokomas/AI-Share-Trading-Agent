@@ -10,9 +10,15 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
     """
     print_header("Stage 4: Model Development")
     print(f"Training {model_handler.name()} for {settings.PREDICTION_MODE} prediction...")
+    
+    # Determine the number of nodes for models that need it.
+    # We can inspect the shape of the data from the loader.
+    sample_x, _ = next(iter(train_loader))
+    # Input shape is either (B, T, N, F) for graph models or (B, T, F) for DNNs.
+    num_nodes = sample_x.shape[2] if model_handler.is_graph_based() else None
 
     # Build the model using the handler
-    model = model_handler.build_model(supports=supports)
+    model = model_handler.build_model(supports=supports, num_nodes=num_nodes)
     optimizer = torch.optim.Adam(model.parameters(), lr=settings.LEARNING_RATE)
     
     # Get the loss function from the handler
