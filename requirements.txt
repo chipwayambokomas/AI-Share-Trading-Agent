@@ -6,3 +6,4 @@ tqdm
 ruptures
 openpyxl
 networkx
+python-louvain
