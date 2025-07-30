@@ -178,7 +178,10 @@ def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_thresho
     print_header("Network Analysis Metrics")
     
     # Convert adjacency matrix from PyTorch tensor to NumPy array
-    adj_numpy = adj_matrix.cpu().numpy()
+    if hasattr(adj_matrix, 'cpu'):
+        adj_numpy = adj_matrix.cpu().numpy()
+    else:
+        adj_numpy = adj_matrix  # Already a numpy array
     
     # Compute the weight threshold: all values below this percentile will be removed
     threshold = np.percentile(adj_numpy, percentile_threshold)
