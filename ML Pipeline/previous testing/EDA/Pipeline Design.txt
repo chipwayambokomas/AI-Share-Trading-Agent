@@ -1,0 +1,42 @@
+Pipeline 
+
+Stage 1 Feature Extraction: 
+clean excel sheet
+plot data
+
+Stage 2 Preprocessing + Data Partitioning:
+split data chronologically 60:20:20 training, validation and test sets 
+*******Test split for data as a whole vs with each stock**************
+*claude and gemini created different splits
+save different datas, and plot before and after changes
+forward fill missing data points in each data set individually 
+save different datas, and plot before and after changes
+
+Stage 2.1 Scaling data
+get dataframe of training set
+get dataframe of validation set 
+get dataframe of test set
+min max on training data and apply that scaler on the training and the validation 
+min max on validation take the scaler and apply to test data
+save different datas, and plot before and after changes
+
+Stage 2.2 Trend analysis
+Visualise the trend decomposition of training, validation, test set before scaling 
+Visualise the trend decomposition of training, validation, test set after scaling  
+
+Stage 3 Point and Trendline prediction Training: 
+point prediction training on train set 
+trendline prediction training on train set 
+save the best model
+
+Stage 3.1: Validation and HPO tuning
+test model on validation set
+rescale data 
+calculate errors
+ 
+
+Stage 4 Evaluation: 
+test on test data 
+rescale data 
+calculate errors 
+

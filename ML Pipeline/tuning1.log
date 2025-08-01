@@ -1,0 +1,90 @@
+--- Running Initial Data Preparation (Stages 1-3) ---
+--- Data Preparation Complete ---
+Starting study with 50 trials and a timeout of 3600 seconds.
+--- Starting Trial 0 ---
+Trial 0 Parameters: {'learning_rate': 0.0006026895631300415, 'batch_size': 32, 'gwn_dropout': 0.3295059103279799, 'gwn_residual_channels': 32, 'gwn_dilation_channels': 16, 'gwn_skip_channels': 256, 'gwn_end_channels': 512, 'gwn_blocks': 5, 'gwn_layers': 2}
+Trial 0 - Epoch 1: Validation Loss = 0.029610
+Trial 0 - Epoch 2: Validation Loss = 0.029526
+--- Running Initial Data Preparation (Stages 1-3) ---
+--- Data Preparation Complete ---
+Starting study with 2 trials and a timeout of 3600 seconds.
+--- Starting Trial 0 ---
+Trial 0 Parameters: {'learning_rate': 0.0005268487498443375, 'batch_size': 64, 'gwn_dropout': 0.28821760888517445, 'gwn_residual_channels': 16, 'gwn_dilation_channels': 32, 'gwn_skip_channels': 64, 'gwn_end_channels': 512, 'gwn_blocks': 4, 'gwn_layers': 2}
+Trial 0 - Epoch 1: Validation Loss = 0.044675
+Trial 0 - Epoch 2: Validation Loss = 0.050010
+Trial 0 - Epoch 3: Validation Loss = 0.024761
+Trial 0 - Epoch 4: Validation Loss = 0.044893
+Trial 0 - Epoch 5: Validation Loss = 0.034355
+Trial 0 - Epoch 6: Validation Loss = 0.028128
+Trial 0 - Epoch 7: Validation Loss = 0.026388
+Trial 0 - Epoch 8: Validation Loss = 0.024556
+Trial 0 - Epoch 9: Validation Loss = 0.018295
+Trial 0 - Epoch 10: Validation Loss = 0.017346
+Trial 0 - Epoch 11: Validation Loss = 0.015336
+Trial 0 - Epoch 12: Validation Loss = 0.014234
+Trial 0 - Epoch 13: Validation Loss = 0.013046
+Trial 0 - Epoch 14: Validation Loss = 0.012611
+Trial 0 - Epoch 15: Validation Loss = 0.012135
+Trial 0 - Epoch 16: Validation Loss = 0.011079
+Trial 0 - Epoch 17: Validation Loss = 0.010694
+Trial 0 - Epoch 18: Validation Loss = 0.009836
+Trial 0 - Epoch 19: Validation Loss = 0.009343
+Trial 0 - Epoch 20: Validation Loss = 0.008820
+Trial 0 - Epoch 21: Validation Loss = 0.008636
+Trial 0 - Epoch 22: Validation Loss = 0.007728
+Trial 0 - Epoch 23: Validation Loss = 0.007362
+Trial 0 - Epoch 24: Validation Loss = 0.007073
+Trial 0 - Epoch 25: Validation Loss = 0.006544
+Trial 0 - Epoch 26: Validation Loss = 0.006267
+Trial 0 - Epoch 27: Validation Loss = 0.005670
+Trial 0 - Epoch 28: Validation Loss = 0.005442
+Trial 0 - Epoch 29: Validation Loss = 0.005337
+Trial 0 - Epoch 30: Validation Loss = 0.005328
+--- Trial 0 Finished. Final Validation Loss: 0.005328 ---
+--- Starting Trial 1 ---
+Trial 1 Parameters: {'learning_rate': 0.004859257408579666, 'batch_size': 32, 'gwn_dropout': 0.4909000047285017, 'gwn_residual_channels': 16, 'gwn_dilation_channels': 16, 'gwn_skip_channels': 64, 'gwn_end_channels': 256, 'gwn_blocks': 4, 'gwn_layers': 3}
+Trial 1 - Epoch 1: Validation Loss = 0.043860
+Trial 1 - Epoch 2: Validation Loss = 0.033465
+Trial 1 - Epoch 3: Validation Loss = 0.024479
+Trial 1 - Epoch 4: Validation Loss = 0.016426
+Trial 1 - Epoch 5: Validation Loss = 0.015774
+Trial 1 - Epoch 6: Validation Loss = 0.007883
+Trial 1 - Epoch 7: Validation Loss = 0.005653
+Trial 1 - Epoch 8: Validation Loss = 0.005143
+Trial 1 - Epoch 9: Validation Loss = 0.005443
+Trial 1 - Epoch 10: Validation Loss = 0.005140
+Trial 1 - Epoch 11: Validation Loss = 0.005937
+Trial 1 - Epoch 12: Validation Loss = 0.004982
+Trial 1 - Epoch 13: Validation Loss = 0.004316
+Trial 1 - Epoch 14: Validation Loss = 0.004730
+Trial 1 - Epoch 15: Validation Loss = 0.006962
+Trial 1 - Epoch 16: Validation Loss = 0.003762
+Trial 1 - Epoch 17: Validation Loss = 0.003492
+Trial 1 - Epoch 18: Validation Loss = 0.004754
+Trial 1 - Epoch 19: Validation Loss = 0.003105
+Trial 1 - Epoch 20: Validation Loss = 0.005054
+Trial 1 - Epoch 21: Validation Loss = 0.002854
+Trial 1 - Epoch 22: Validation Loss = 0.003613
+Trial 1 - Epoch 23: Validation Loss = 0.002486
+Trial 1 - Epoch 24: Validation Loss = 0.002638
+Trial 1 - Epoch 25: Validation Loss = 0.002075
+Trial 1 - Epoch 26: Validation Loss = 0.002423
+Trial 1 - Epoch 27: Validation Loss = 0.002283
+Trial 1 - Epoch 28: Validation Loss = 0.002335
+Trial 1 - Epoch 29: Validation Loss = 0.002310
+Trial 1 - Epoch 30: Validation Loss = 0.002099
+--- Trial 1 Finished. Final Validation Loss: 0.002075 ---
+--- STUDY RESULTS ---
+Number of finished trials: 2
+Best trial:
+  Value (Min Validation Loss): 0.002075
+  Best Hyperparameters (update config.py with these):
+    learning_rate: 0.004859257408579666
+    batch_size: 32
+    gwn_dropout: 0.4909000047285017
+    gwn_residual_channels: 16
+    gwn_dilation_channels: 16
+    gwn_skip_channels: 64
+    gwn_end_channels: 256
+    gwn_blocks: 4
+    gwn_layers: 3

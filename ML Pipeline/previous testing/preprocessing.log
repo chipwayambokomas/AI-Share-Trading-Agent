@@ -1,0 +1,1668 @@
+2025-07-01 01:52:54,244 - INFO - Starting preprocessing with mode: POINT
+2025-07-01 01:52:54,244 - INFO - Timestamp: 2025-07-01 01:52:54
+2025-07-01 01:52:54,244 - INFO - === STARTING POINT PREDICTION PREPROCESSING ===
+2025-07-01 01:52:54,249 - INFO - Starting data cleaning process...
+2025-07-01 01:52:54,436 - INFO - Data cleaning complete. Kept 40/40 stocks.
+2025-07-01 01:52:54,450 - INFO - Cleaned dataframe shape: (100736, 7), Unique stocks: 40
+2025-07-01 01:52:54,475 - INFO - Features: ['open', 'high', 'low', 'close', 'vwap']
+2025-07-01 01:52:54,481 - INFO - Window In/Out: 60/1
+2025-07-01 01:52:55,345 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-01 01:52:55,345 - INFO - Total processing time: 1.10s
+2025-07-01 01:52:55,347 - INFO - Final X shape: (98336, 60, 5), Final y shape: (98336, 1, 1)
+2025-07-01 01:52:55,388 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-01 01:52:55,390 - INFO - Total sequences generated: 98336
+2025-07-01 01:52:55,390 - INFO - Input sequences shape (X): (98336, 60, 5)
+2025-07-01 01:52:55,390 - INFO - Target sequences shape (y): (98336, 1, 1)
+2025-07-01 01:52:55,415 - INFO - Unique stocks with data: 40
+2025-07-01 01:52:55,415 - INFO - Preprocessing completed successfully!
+2025-07-01 12:51:11,442 - INFO - Starting preprocessing with mode: POINT
+2025-07-01 12:51:11,445 - INFO - Timestamp: 2025-07-01 12:51:11
+2025-07-01 12:51:11,446 - INFO - === STARTING POINT PREDICTION PREPROCESSING ===
+2025-07-01 12:51:11,446 - INFO - Starting data cleaning process...
+2025-07-01 12:51:11,694 - INFO - Data cleaning complete. Kept 40/40 stocks.
+2025-07-01 12:51:11,698 - INFO - Cleaned dataframe shape: (100736, 7), Unique stocks: 40
+2025-07-01 12:51:11,698 - INFO - Features: ['open', 'high', 'low', 'close', 'vwap']
+2025-07-01 12:51:11,698 - INFO - Window In/Out: 60/1
+2025-07-01 12:51:12,466 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-01 12:51:12,466 - INFO - Total processing time: 1.02s
+2025-07-01 12:51:12,466 - INFO - Final X shape: (98336, 60, 5), Final y shape: (98336, 1, 1)
+2025-07-01 12:51:12,506 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-01 12:51:12,508 - INFO - Total sequences generated: 98336
+2025-07-01 12:51:12,508 - INFO - Input sequences shape (X): (98336, 60, 5)
+2025-07-01 12:51:12,508 - INFO - Target sequences shape (y): (98336, 1, 1)
+2025-07-01 12:51:12,537 - INFO - Unique stocks with data: 40
+2025-07-01 12:51:12,537 - INFO - Preprocessing completed successfully!
+2025-07-04 03:02:38,259 - INFO - Starting preprocessing with mode: POINT
+2025-07-04 03:02:38,259 - INFO - Timestamp: 2025-07-04 03:02:38
+2025-07-04 03:02:38,260 - INFO - === STARTING POINT PREDICTION PREPROCESSING ===
+2025-07-04 03:02:38,260 - INFO - Starting data cleaning process...
+2025-07-04 03:02:38,403 - INFO - Data cleaning complete. Kept 40/40 stocks.
+2025-07-04 03:02:38,407 - INFO - Cleaned dataframe shape: (100736, 7), Unique stocks: 40
+2025-07-04 03:02:38,407 - INFO - Features: ['open', 'high', 'low', 'close', 'vwap']
+2025-07-04 03:02:38,408 - INFO - Window In/Out: 60/1
+2025-07-04 03:02:38,935 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-04 03:02:38,936 - INFO - Total processing time: 0.68s
+2025-07-04 03:02:38,936 - INFO - Final X shape: (98336, 60, 5), Final y shape: (98336, 1, 1)
+2025-07-04 03:02:38,956 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-04 03:02:38,957 - INFO - Total sequences generated: 98336
+2025-07-04 03:02:38,957 - INFO - Input sequences shape (X): (98336, 60, 5)
+2025-07-04 03:02:38,957 - INFO - Target sequences shape (y): (98336, 1, 1)
+2025-07-04 03:02:38,971 - INFO - Unique stocks with data: 40
+2025-07-04 03:02:38,971 - INFO - Preprocessing completed successfully!
+2025-07-05 03:11:43,800 - INFO - Starting preprocessing with mode: POINT
+2025-07-05 03:11:43,811 - INFO - Timestamp: 2025-07-05 03:11:43
+2025-07-05 03:11:43,811 - INFO - === STARTING POINT PREDICTION PREPROCESSING ===
+2025-07-05 03:11:43,811 - INFO - Starting data cleaning process...
+2025-07-05 03:11:43,987 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-05 03:11:43,989 - INFO - Cleaned dataframe shape: (89184, 7), Unique stocks: 32
+2025-07-05 03:11:43,989 - INFO - Features: ['open', 'high', 'low', 'close', 'vwap']
+2025-07-05 03:11:43,989 - INFO - Window In/Out: 60/1
+2025-07-05 03:11:44,579 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-05 03:11:44,579 - INFO - Total processing time: 0.77s
+2025-07-05 03:11:44,579 - INFO - Final X shape: (87264, 60, 5), Final y shape: (87264, 1, 1)
+2025-07-05 03:11:44,606 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-05 03:11:44,606 - INFO - Total sequences generated: 87264
+2025-07-05 03:11:44,606 - INFO - Input sequences shape (X): (87264, 60, 5)
+2025-07-05 03:11:44,606 - INFO - Target sequences shape (y): (87264, 1, 1)
+2025-07-05 03:11:44,620 - INFO - Unique stocks with data: 32
+2025-07-05 03:11:44,620 - INFO - Preprocessing completed successfully!
+2025-07-05 03:37:25,252 - INFO - Starting preprocessing with mode: POINT
+2025-07-05 03:37:25,252 - INFO - Timestamp: 2025-07-05 03:37:25
+2025-07-05 03:37:25,252 - INFO - Performing 60:20:20 chronological split for each stock...
+2025-07-05 03:37:25,277 - INFO - Split complete. Train: 53504, Val: 17824, Test: 17856 rows.
+2025-07-05 03:37:25,277 - INFO - Starting data cleaning process for Train set...
+2025-07-05 03:37:25,462 - INFO - Data cleaning for Train complete. Kept 32/32 stocks.
+2025-07-05 03:37:25,462 - INFO - Starting data cleaning process for Validation set...
+2025-07-05 03:37:25,579 - INFO - Data cleaning for Validation complete. Kept 32/32 stocks.
+2025-07-05 03:37:25,579 - INFO - Starting data cleaning process for Test set...
+2025-07-05 03:37:25,705 - INFO - Data cleaning for Test complete. Kept 32/32 stocks.
+2025-07-05 03:37:25,705 - INFO - Fitting scaler on training data...
+2025-07-05 03:37:25,723 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 03:37:25,729 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 03:37:25,731 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 03:37:25,736 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 03:37:25,745 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 03:37:25,751 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 03:37:25,757 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 03:37:25,759 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 03:37:25,766 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 03:37:25,771 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 03:37:25,777 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 03:37:25,784 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 03:37:25,787 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 03:37:25,794 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 03:37:25,802 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 03:37:25,804 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 03:37:25,810 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 03:37:25,818 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 03:37:25,826 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 03:37:25,832 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 03:37:25,832 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 03:37:25,845 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 03:37:25,850 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 03:37:25,852 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 03:37:25,861 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 03:37:25,865 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 03:37:25,870 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 03:37:25,876 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 03:37:25,883 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 03:37:25,887 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 03:37:25,896 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 03:37:25,898 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 03:37:25,977 - INFO - Transforming validation data and creating sequences...
+2025-07-05 03:37:25,982 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 03:37:25,989 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 03:37:25,991 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 03:37:25,995 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 03:37:25,998 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 03:37:26,000 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 03:37:26,002 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 03:37:26,004 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 03:37:26,004 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 03:37:26,007 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 03:37:26,010 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 03:37:26,012 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 03:37:26,014 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 03:37:26,016 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 03:37:26,017 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 03:37:26,020 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 03:37:26,022 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 03:37:26,027 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 03:37:26,029 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 03:37:26,031 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 03:37:26,033 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 03:37:26,035 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 03:37:26,037 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 03:37:26,038 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 03:37:26,041 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 03:37:26,044 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 03:37:26,047 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 03:37:26,049 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 03:37:26,050 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 03:37:26,052 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 03:37:26,052 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 03:37:26,054 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 03:37:26,077 - INFO - Fitting separate scaler on test data and creating sequences...
+2025-07-05 03:37:26,092 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 03:37:26,095 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 03:37:26,096 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 03:37:26,099 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 03:37:26,101 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 03:37:26,102 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 03:37:26,104 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 03:37:26,106 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 03:37:26,107 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 03:37:26,110 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 03:37:26,111 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 03:37:26,113 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 03:37:26,113 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 03:37:26,118 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 03:37:26,118 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 03:37:26,118 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 03:37:26,118 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 03:37:26,126 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 03:37:26,128 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 03:37:26,128 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 03:37:26,133 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 03:37:26,133 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 03:37:26,135 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 03:37:26,135 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 03:37:26,140 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 03:37:26,142 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 03:37:26,146 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 03:37:26,147 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 03:37:26,150 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 03:37:26,152 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 03:37:26,153 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 03:37:26,153 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 03:37:26,179 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-05 03:37:26,179 - INFO - Total processing time: 0.47s
+2025-07-05 03:37:26,179 - INFO - Train shapes: X=(51584, 60, 5), y=(51584, 1, 1)
+2025-07-05 03:37:26,179 - INFO - Val shapes:   X=(15904, 60, 5), y=(15904, 1, 1)
+2025-07-05 03:37:26,182 - INFO - Test shapes:  X=(15936, 60, 5), y=(15936, 1, 1)
+2025-07-05 03:37:26,182 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-05 03:37:26,182 - INFO - Total sequences generated: 83424
+2025-07-05 03:37:26,190 - INFO - Unique stocks in Train: 32, Val: 32, Test: 32
+2025-07-05 03:37:26,192 - INFO - Preprocessing completed successfully!
+2025-07-05 03:58:31,966 - INFO - Starting preprocessing with mode: POINT
+2025-07-05 03:58:31,970 - INFO - Timestamp: 2025-07-05 03:58:31
+2025-07-05 03:58:31,970 - INFO - Performing 60:20:20 chronological split for each stock...
+2025-07-05 03:58:31,983 - INFO - Split complete. Train: 53504, Val: 17824, Test: 17856 rows.
+2025-07-05 03:58:31,983 - INFO - Starting data cleaning process for Train set...
+2025-07-05 03:58:32,117 - INFO - Data cleaning for Train complete. Kept 32/32 stocks.
+2025-07-05 03:58:32,122 - INFO - Starting data cleaning process for Validation set...
+2025-07-05 03:58:32,311 - INFO - Data cleaning for Validation complete. Kept 32/32 stocks.
+2025-07-05 03:58:32,312 - INFO - Starting data cleaning process for Test set...
+2025-07-05 03:58:32,472 - INFO - Data cleaning for Test complete. Kept 32/32 stocks.
+2025-07-05 03:58:32,476 - INFO - Fitting scaler on training data...
+2025-07-05 03:58:32,500 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 03:58:32,519 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 03:58:32,533 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 03:58:32,551 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 03:58:32,564 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 03:58:32,572 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 03:58:32,587 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 03:58:32,600 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 03:58:32,604 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 03:58:32,616 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 03:58:32,624 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 03:58:32,637 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 03:58:32,638 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 03:58:32,650 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 03:58:32,654 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 03:58:32,658 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 03:58:32,665 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 03:58:32,670 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 03:58:32,680 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 03:58:32,682 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 03:58:32,689 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 03:58:32,699 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 03:58:32,705 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 03:58:32,708 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 03:58:32,716 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 03:58:32,722 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 03:58:32,727 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 03:58:32,733 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 03:58:32,738 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 03:58:32,747 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 03:58:32,748 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 03:58:32,758 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 03:58:32,846 - INFO - Transforming validation data and creating sequences...
+2025-07-05 03:58:32,863 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 03:58:32,866 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 03:58:32,867 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 03:58:32,871 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 03:58:32,872 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 03:58:32,872 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 03:58:32,872 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 03:58:32,882 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 03:58:32,883 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 03:58:32,887 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 03:58:32,889 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 03:58:32,889 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 03:58:32,897 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 03:58:32,899 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 03:58:32,904 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 03:58:32,905 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 03:58:32,908 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 03:58:32,911 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 03:58:32,915 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 03:58:32,919 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 03:58:32,919 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 03:58:32,925 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 03:58:32,927 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 03:58:32,932 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 03:58:32,933 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 03:58:32,937 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 03:58:32,941 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 03:58:32,943 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 03:58:32,947 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 03:58:32,952 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 03:58:32,952 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 03:58:32,958 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 03:58:32,991 - INFO - Fitting separate scaler on test data and creating sequences...
+2025-07-05 03:58:32,999 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 03:58:33,005 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 03:58:33,006 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 03:58:33,006 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 03:58:33,011 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 03:58:33,013 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 03:58:33,015 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 03:58:33,019 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 03:58:33,019 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 03:58:33,021 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 03:58:33,021 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 03:58:33,026 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 03:58:33,026 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 03:58:33,029 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 03:58:33,033 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 03:58:33,033 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 03:58:33,038 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 03:58:33,039 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 03:58:33,041 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 03:58:33,043 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 03:58:33,045 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 03:58:33,048 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 03:58:33,049 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 03:58:33,052 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 03:58:33,054 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 03:58:33,056 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 03:58:33,057 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 03:58:33,060 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 03:58:33,062 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 03:58:33,065 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 03:58:33,067 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 03:58:33,070 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 03:58:33,095 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-05 03:58:33,095 - INFO - Total processing time: 0.62s
+2025-07-05 03:58:33,095 - INFO - Train shapes: X=(51584, 60, 5), y=(51584, 1, 1)
+2025-07-05 03:58:33,095 - INFO - Val shapes:   X=(15904, 60, 5), y=(15904, 1, 1)
+2025-07-05 03:58:33,095 - INFO - Test shapes:  X=(15936, 60, 5), y=(15936, 1, 1)
+2025-07-05 03:58:33,095 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-05 03:58:33,095 - INFO - Total sequences generated: 83424
+2025-07-05 03:58:33,105 - INFO - Unique stocks in Train: 32, Val: 32, Test: 32
+2025-07-05 03:58:33,105 - INFO - Preprocessing completed successfully!
+2025-07-05 04:14:23,398 - INFO - Starting preprocessing with mode: POINT
+2025-07-05 04:14:23,402 - INFO - Timestamp: 2025-07-05 04:14:23
+2025-07-05 04:14:23,402 - INFO - Performing 60:20:20 chronological split for each stock...
+2025-07-05 04:14:23,419 - INFO - Split complete. Train: 53504, Val: 17824, Test: 17856 rows.
+2025-07-05 04:14:23,419 - INFO - Starting data cleaning process for Train set...
+2025-07-05 04:14:23,580 - INFO - Data cleaning for Train complete. Kept 32/32 stocks.
+2025-07-05 04:14:23,583 - INFO - Starting data cleaning process for Validation set...
+2025-07-05 04:14:23,799 - INFO - Data cleaning for Validation complete. Kept 32/32 stocks.
+2025-07-05 04:14:23,806 - INFO - Starting data cleaning process for Test set...
+2025-07-05 04:14:23,973 - INFO - Data cleaning for Test complete. Kept 32/32 stocks.
+2025-07-05 04:14:23,973 - INFO - Fitting scaler on training data...
+2025-07-05 04:14:24,004 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 04:14:24,013 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 04:14:24,023 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 04:14:24,032 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 04:14:24,044 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 04:14:24,050 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 04:14:24,067 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 04:14:24,075 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 04:14:24,083 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 04:14:24,098 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 04:14:24,115 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 04:14:24,126 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 04:14:24,135 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 04:14:24,149 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 04:14:24,163 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 04:14:24,174 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 04:14:24,183 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 04:14:24,198 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 04:14:24,207 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 04:14:24,219 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 04:14:24,223 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 04:14:24,232 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 04:14:24,237 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 04:14:24,249 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 04:14:24,255 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 04:14:24,263 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 04:14:24,272 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 04:14:24,274 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 04:14:24,283 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 04:14:24,290 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 04:14:24,298 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 04:14:24,305 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 04:14:24,383 - INFO - Transforming validation data and creating sequences...
+2025-07-05 04:14:24,395 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 04:14:24,399 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 04:14:24,399 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 04:14:24,401 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 04:14:24,404 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 04:14:24,406 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 04:14:24,409 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 04:14:24,410 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 04:14:24,412 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 04:14:24,416 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 04:14:24,418 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 04:14:24,420 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 04:14:24,422 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 04:14:24,424 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 04:14:24,426 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 04:14:24,427 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 04:14:24,431 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 04:14:24,431 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 04:14:24,435 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 04:14:24,437 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 04:14:24,439 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 04:14:24,439 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 04:14:24,443 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 04:14:24,445 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 04:14:24,449 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 04:14:24,451 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 04:14:24,454 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 04:14:24,456 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 04:14:24,457 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 04:14:24,459 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 04:14:24,461 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 04:14:24,464 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 04:14:24,493 - INFO - Fitting separate scaler on test data and creating sequences...
+2025-07-05 04:14:24,498 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 04:14:24,507 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 04:14:24,509 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 04:14:24,511 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 04:14:24,514 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 04:14:24,515 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 04:14:24,515 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 04:14:24,521 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 04:14:24,522 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 04:14:24,524 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 04:14:24,526 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 04:14:24,528 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 04:14:24,531 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 04:14:24,534 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 04:14:24,537 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 04:14:24,538 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 04:14:24,542 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 04:14:24,544 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 04:14:24,547 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 04:14:24,548 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 04:14:24,552 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 04:14:24,553 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 04:14:24,557 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 04:14:24,559 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 04:14:24,560 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 04:14:24,564 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 04:14:24,568 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 04:14:24,570 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 04:14:24,572 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 04:14:24,574 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 04:14:24,577 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 04:14:24,581 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 04:14:24,606 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-05 04:14:24,606 - INFO - Total processing time: 0.63s
+2025-07-05 04:14:24,609 - INFO - Train shapes: X=(51584, 60, 5), y=(51584, 1, 1)
+2025-07-05 04:14:24,609 - INFO - Val shapes:   X=(15904, 60, 5), y=(15904, 1, 1)
+2025-07-05 04:14:24,609 - INFO - Test shapes:  X=(15936, 60, 5), y=(15936, 1, 1)
+2025-07-05 04:14:24,609 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-05 04:14:24,609 - INFO - Total sequences generated: 83424
+2025-07-05 04:14:24,616 - INFO - Unique stocks in Train: 32, Val: 32, Test: 32
+2025-07-05 04:14:24,621 - INFO - Preprocessing completed successfully!
+2025-07-05 05:34:29,919 - INFO - Starting preprocessing with mode: POINT
+2025-07-05 05:34:29,922 - INFO - Timestamp: 2025-07-05 05:34:29
+2025-07-05 05:34:29,922 - INFO - Performing 60:20:20 chronological split for each stock...
+2025-07-05 05:34:29,955 - INFO - Split complete. Train: 53504, Val: 17824, Test: 17856 rows.
+2025-07-05 05:34:29,955 - INFO - Starting data cleaning process for Train set...
+2025-07-05 05:34:30,208 - INFO - Data cleaning for Train complete. Kept 32/32 stocks.
+2025-07-05 05:34:30,208 - INFO - Starting data cleaning process for Validation set...
+2025-07-05 05:34:30,608 - INFO - Data cleaning for Validation complete. Kept 32/32 stocks.
+2025-07-05 05:34:30,608 - INFO - Starting data cleaning process for Test set...
+2025-07-05 05:34:30,901 - INFO - Data cleaning for Test complete. Kept 32/32 stocks.
+2025-07-05 05:34:30,905 - INFO - Fitting scaler on training data...
+2025-07-05 05:34:30,941 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 05:34:30,953 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 05:34:30,966 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 05:34:30,976 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 05:34:30,990 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 05:34:31,006 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 05:34:31,019 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 05:34:31,025 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 05:34:31,042 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 05:34:31,057 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 05:34:31,069 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 05:34:31,083 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 05:34:31,087 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 05:34:31,109 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 05:34:31,122 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 05:34:31,133 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 05:34:31,141 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 05:34:31,158 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 05:34:31,170 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 05:34:31,187 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 05:34:31,199 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 05:34:31,213 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 05:34:31,228 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 05:34:31,239 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 05:34:31,252 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 05:34:31,271 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 05:34:31,284 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 05:34:31,294 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 05:34:31,309 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 05:34:31,323 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 05:34:31,338 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 05:34:31,352 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 05:34:31,500 - INFO - Transforming validation data and creating sequences...
+2025-07-05 05:34:31,513 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 05:34:31,518 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 05:34:31,521 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 05:34:31,525 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 05:34:31,528 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 05:34:31,533 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 05:34:31,537 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 05:34:31,541 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 05:34:31,541 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 05:34:31,547 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 05:34:31,553 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 05:34:31,558 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 05:34:31,558 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 05:34:31,565 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 05:34:31,570 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 05:34:31,573 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 05:34:31,578 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 05:34:31,582 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 05:34:31,588 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 05:34:31,593 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 05:34:31,595 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 05:34:31,607 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 05:34:31,607 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 05:34:31,607 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 05:34:31,620 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 05:34:31,626 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 05:34:31,626 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 05:34:31,632 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 05:34:31,640 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 05:34:31,645 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 05:34:31,652 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 05:34:31,656 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 05:34:31,702 - INFO - Fitting separate scaler on test data and creating sequences...
+2025-07-05 05:34:31,733 - INFO - Creating sequences (sliding window) for stock: 'ABG.JO'
+2025-07-05 05:34:31,738 - INFO - Creating sequences (sliding window) for stock: 'AGL.JO'
+2025-07-05 05:34:31,745 - INFO - Creating sequences (sliding window) for stock: 'AMS.JO'
+2025-07-05 05:34:31,749 - INFO - Creating sequences (sliding window) for stock: 'APN.JO'
+2025-07-05 05:34:31,756 - INFO - Creating sequences (sliding window) for stock: 'BTI.JO'
+2025-07-05 05:34:31,760 - INFO - Creating sequences (sliding window) for stock: 'BVT.JO'
+2025-07-05 05:34:31,766 - INFO - Creating sequences (sliding window) for stock: 'CLS.JO'
+2025-07-05 05:34:31,770 - INFO - Creating sequences (sliding window) for stock: 'CPI.JO'
+2025-07-05 05:34:31,776 - INFO - Creating sequences (sliding window) for stock: 'DSY.JO'
+2025-07-05 05:34:31,776 - INFO - Creating sequences (sliding window) for stock: 'EXX.JO'
+2025-07-05 05:34:31,788 - INFO - Creating sequences (sliding window) for stock: 'FSR.JO'
+2025-07-05 05:34:31,793 - INFO - Creating sequences (sliding window) for stock: 'GFI.JO'
+2025-07-05 05:34:31,800 - INFO - Creating sequences (sliding window) for stock: 'GLN.JO'
+2025-07-05 05:34:31,803 - INFO - Creating sequences (sliding window) for stock: 'GRT.JO'
+2025-07-05 05:34:31,803 - INFO - Creating sequences (sliding window) for stock: 'HAR.JO'
+2025-07-05 05:34:31,816 - INFO - Creating sequences (sliding window) for stock: 'IMP.JO'
+2025-07-05 05:34:31,820 - INFO - Creating sequences (sliding window) for stock: 'INL.JO'
+2025-07-05 05:34:31,826 - INFO - Creating sequences (sliding window) for stock: 'INP.JO'
+2025-07-05 05:34:31,826 - INFO - Creating sequences (sliding window) for stock: 'KIO.JO'
+2025-07-05 05:34:31,837 - INFO - Creating sequences (sliding window) for stock: 'MNP.JO'
+2025-07-05 05:34:31,842 - INFO - Creating sequences (sliding window) for stock: 'MRP.JO'
+2025-07-05 05:34:31,848 - INFO - Creating sequences (sliding window) for stock: 'MTN.JO'
+2025-07-05 05:34:31,855 - INFO - Creating sequences (sliding window) for stock: 'NED.JO'
+2025-07-05 05:34:31,857 - INFO - Creating sequences (sliding window) for stock: 'NPN.JO'
+2025-07-05 05:34:31,862 - INFO - Creating sequences (sliding window) for stock: 'NRP.JO'
+2025-07-05 05:34:31,871 - INFO - Creating sequences (sliding window) for stock: 'REM.JO'
+2025-07-05 05:34:31,878 - INFO - Creating sequences (sliding window) for stock: 'RLO.JO'
+2025-07-05 05:34:31,884 - INFO - Creating sequences (sliding window) for stock: 'SBK.JO'
+2025-07-05 05:34:31,890 - INFO - Creating sequences (sliding window) for stock: 'SHP.JO'
+2025-07-05 05:34:31,893 - INFO - Creating sequences (sliding window) for stock: 'SLM.JO'
+2025-07-05 05:34:31,904 - INFO - Creating sequences (sliding window) for stock: 'SOL.JO'
+2025-07-05 05:34:31,906 - INFO - Creating sequences (sliding window) for stock: 'VOD.JO'
+2025-07-05 05:34:31,953 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-05 05:34:31,965 - INFO - Total processing time: 1.05s
+2025-07-05 05:34:31,965 - INFO - Train shapes: X=(51584, 60, 5), y=(51584, 1, 1)
+2025-07-05 05:34:31,965 - INFO - Val shapes:   X=(15904, 60, 5), y=(15904, 1, 1)
+2025-07-05 05:34:31,966 - INFO - Test shapes:  X=(15936, 60, 5), y=(15936, 1, 1)
+2025-07-05 05:34:31,966 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-05 05:34:31,966 - INFO - Total sequences generated: 83424
+2025-07-05 05:34:31,987 - INFO - Unique stocks in Train: 32, Val: 32, Test: 32
+2025-07-05 05:34:31,987 - INFO - Preprocessing completed successfully!
+2025-07-05 05:47:19,234 - INFO - Starting preprocessing with mode: POINT
+2025-07-05 05:47:19,234 - INFO - Timestamp: 2025-07-05 05:47:19
+2025-07-05 05:47:20,902 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-05 05:47:20,902 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-05 05:47:20,902 - INFO - Total sequences generated: 83424
+2025-07-05 05:47:20,919 - INFO - Unique stocks in Train: 32, Val: 32, Test: 32
+2025-07-05 05:47:20,919 - INFO - Preprocessing completed successfully!
+2025-07-05 14:52:56,254 - INFO - Starting preprocessing with mode: POINT
+2025-07-05 14:52:56,254 - INFO - Timestamp: 2025-07-05 14:52:56
+2025-07-05 14:52:56,940 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-05 14:52:56,940 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-05 14:52:56,940 - INFO - Total sequences generated: 83424
+2025-07-05 14:52:56,953 - INFO - Unique stocks in Train: 32, Val: 32, Test: 32
+2025-07-05 14:52:56,953 - INFO - Preprocessing completed successfully!
+2025-07-07 02:27:26,529 - INFO - Starting preprocessing with mode: POINT
+2025-07-07 02:27:26,532 - INFO - Timestamp: 2025-07-07 02:27:26
+2025-07-07 02:27:27,189 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-07 02:27:27,189 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 02:27:27,189 - INFO - Total sequences generated: 83424
+2025-07-07 02:27:27,200 - INFO - Unique stocks in Train: 32, Val: 32, Test: 32
+2025-07-07 02:27:27,201 - INFO - Preprocessing completed successfully!
+2025-07-07 02:28:30,442 - INFO - Starting preprocessing with mode: POINT
+2025-07-07 02:28:30,442 - INFO - Timestamp: 2025-07-07 02:28:30
+2025-07-07 02:28:31,097 - INFO - === POINT PREDICTION PREPROCESSING COMPLETE ===
+2025-07-07 02:28:31,097 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 02:28:31,099 - INFO - Total sequences generated: 83424
+2025-07-07 02:28:31,105 - INFO - Unique stocks in Train: 32, Val: 32, Test: 32
+2025-07-07 02:28:31,105 - INFO - Preprocessing completed successfully!
+2025-07-07 02:29:27,153 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 02:29:27,153 - INFO - Timestamp: 2025-07-07 02:29:27
+2025-07-07 02:29:27,442 - INFO - Starting parallel bottom-up segmentation for 32 stocks...
+2025-07-07 02:29:35,980 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:35,986 - ERROR - [Worker PID: 23320] Stock AGL.JO: Validation failed
+2025-07-07 02:29:36,006 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:36,010 - ERROR - [Worker PID: 6188] Stock ABG.JO: Validation failed
+2025-07-07 02:29:36,063 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:36,067 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:36,069 - ERROR - [Worker PID: 28392] Stock AMS.JO: Validation failed
+2025-07-07 02:29:36,075 - ERROR - [Worker PID: 24100] Stock BTI.JO: Validation failed
+2025-07-07 02:29:36,090 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:36,098 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:36,103 - ERROR - [Worker PID: 34620] Stock CLS.JO: Validation failed
+2025-07-07 02:29:36,107 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:36,107 - ERROR - [Worker PID: 2804] Stock BVT.JO: Validation failed
+2025-07-07 02:29:36,119 - ERROR - [Worker PID: 30428] Stock APN.JO: Validation failed
+2025-07-07 02:29:36,181 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:36,183 - ERROR - [Worker PID: 17292] Stock CPI.JO: Validation failed
+2025-07-07 02:29:37,843 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:37,851 - ERROR - [Worker PID: 34620] Stock GLN.JO: Validation failed
+2025-07-07 02:29:37,855 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:37,862 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:37,862 - ERROR - [Worker PID: 6188] Stock EXX.JO: Validation failed
+2025-07-07 02:29:37,868 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:37,881 - ERROR - [Worker PID: 23320] Stock DSY.JO: Validation failed
+2025-07-07 02:29:37,882 - ERROR - [Worker PID: 28392] Stock FSR.JO: Validation failed
+2025-07-07 02:29:37,885 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:37,896 - ERROR - [Worker PID: 30428] Stock HAR.JO: Validation failed
+2025-07-07 02:29:37,911 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:37,916 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:37,919 - ERROR - [Worker PID: 17292] Stock IMP.JO: Validation failed
+2025-07-07 02:29:37,920 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:37,920 - ERROR - [Worker PID: 24100] Stock GFI.JO: Validation failed
+2025-07-07 02:29:37,933 - ERROR - [Worker PID: 2804] Stock GRT.JO: Validation failed
+2025-07-07 02:29:39,609 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:39,629 - ERROR - [Worker PID: 23320] Stock KIO.JO: Validation failed
+2025-07-07 02:29:39,649 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:39,660 - ERROR - [Worker PID: 28392] Stock MNP.JO: Validation failed
+2025-07-07 02:29:39,670 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:39,672 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:39,678 - ERROR - [Worker PID: 6188] Stock INP.JO: Validation failed
+2025-07-07 02:29:39,682 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:39,687 - ERROR - [Worker PID: 30428] Stock MRP.JO: Validation failed
+2025-07-07 02:29:39,694 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:39,695 - ERROR - [Worker PID: 2804] Stock NED.JO: Validation failed
+2025-07-07 02:29:39,697 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:39,697 - ERROR - [Worker PID: 24100] Stock MTN.JO: Validation failed
+2025-07-07 02:29:39,708 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:39,712 - ERROR - [Worker PID: 34620] Stock INL.JO: Validation failed
+2025-07-07 02:29:39,722 - ERROR - [Worker PID: 17292] Stock NPN.JO: Validation failed
+2025-07-07 02:29:41,386 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:41,390 - ERROR - [Worker PID: 23320] Stock NRP.JO: Validation failed
+2025-07-07 02:29:41,413 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:41,417 - ERROR - [Worker PID: 28392] Stock REM.JO: Validation failed
+2025-07-07 02:29:41,420 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:41,420 - ERROR - [Worker PID: 30428] Stock SBK.JO: Validation failed
+2025-07-07 02:29:41,442 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:41,442 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:41,444 - ERROR - [Worker PID: 34620] Stock SOL.JO: Validation failed
+2025-07-07 02:29:41,444 - ERROR - [Worker PID: 6188] Stock RLO.JO: Validation failed
+2025-07-07 02:29:41,454 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:41,454 - ERROR - [Worker PID: 24100] Stock SLM.JO: Validation failed
+2025-07-07 02:29:41,462 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:41,462 - ERROR - [Worker PID: 2804] Stock SHP.JO: Validation failed
+2025-07-07 02:29:41,511 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:29:41,511 - ERROR - [Worker PID: 17292] Stock VOD.JO: Validation failed
+2025-07-07 02:29:41,627 - INFO - Successfully segmented 0/32 stocks
+2025-07-07 02:38:18,271 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 02:38:18,271 - INFO - Timestamp: 2025-07-07 02:38:18
+2025-07-07 02:38:18,595 - INFO - Starting parallel bottom-up segmentation for 32 stocks...
+2025-07-07 02:38:26,159 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:26,159 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:26,159 - ERROR - [Worker PID: 28868] Stock AGL.JO: Validation failed
+2025-07-07 02:38:26,161 - ERROR - [Worker PID: 21172] Stock ABG.JO: Validation failed
+2025-07-07 02:38:26,214 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:26,229 - ERROR - [Worker PID: 4820] Stock AMS.JO: Validation failed
+2025-07-07 02:38:26,276 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:26,283 - ERROR - [Worker PID: 33408] Stock APN.JO: Validation failed
+2025-07-07 02:38:26,341 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:26,347 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:26,348 - ERROR - [Worker PID: 31228] Stock BTI.JO: Validation failed
+2025-07-07 02:38:26,350 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:26,350 - ERROR - [Worker PID: 25352] Stock CPI.JO: Validation failed
+2025-07-07 02:38:26,355 - ERROR - [Worker PID: 1408] Stock BVT.JO: Validation failed
+2025-07-07 02:38:26,380 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:26,384 - ERROR - [Worker PID: 6212] Stock CLS.JO: Validation failed
+2025-07-07 02:38:27,521 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:27,521 - ERROR - [Worker PID: 28868] Stock DSY.JO: Validation failed
+2025-07-07 02:38:27,586 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:27,586 - ERROR - [Worker PID: 4820] Stock FSR.JO: Validation failed
+2025-07-07 02:38:27,600 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:27,602 - ERROR - [Worker PID: 21172] Stock EXX.JO: Validation failed
+2025-07-07 02:38:27,700 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:27,703 - ERROR - [Worker PID: 25352] Stock GRT.JO: Validation failed
+2025-07-07 02:38:27,712 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:27,713 - ERROR - [Worker PID: 1408] Stock HAR.JO: Validation failed
+2025-07-07 02:38:27,713 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:27,715 - ERROR - [Worker PID: 33408] Stock GFI.JO: Validation failed
+2025-07-07 02:38:27,792 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:27,795 - ERROR - [Worker PID: 31228] Stock GLN.JO: Validation failed
+2025-07-07 02:38:27,812 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:27,818 - ERROR - [Worker PID: 6212] Stock IMP.JO: Validation failed
+2025-07-07 02:38:28,940 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:28,947 - ERROR - [Worker PID: 28868] Stock INL.JO: Validation failed
+2025-07-07 02:38:29,099 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:29,105 - ERROR - [Worker PID: 4820] Stock INP.JO: Validation failed
+2025-07-07 02:38:29,111 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:29,112 - ERROR - [Worker PID: 21172] Stock KIO.JO: Validation failed
+2025-07-07 02:38:29,223 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:29,226 - ERROR - [Worker PID: 1408] Stock MRP.JO: Validation failed
+2025-07-07 02:38:29,249 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:29,262 - ERROR - [Worker PID: 33408] Stock MTN.JO: Validation failed
+2025-07-07 02:38:29,284 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:29,296 - ERROR - [Worker PID: 25352] Stock MNP.JO: Validation failed
+2025-07-07 02:38:29,412 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:29,413 - ERROR - [Worker PID: 31228] Stock NED.JO: Validation failed
+2025-07-07 02:38:29,446 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:29,449 - ERROR - [Worker PID: 6212] Stock NPN.JO: Validation failed
+2025-07-07 02:38:30,861 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:30,864 - ERROR - [Worker PID: 28868] Stock NRP.JO: Validation failed
+2025-07-07 02:38:30,956 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:30,958 - ERROR - [Worker PID: 4820] Stock REM.JO: Validation failed
+2025-07-07 02:38:30,960 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:30,962 - ERROR - [Worker PID: 21172] Stock RLO.JO: Validation failed
+2025-07-07 02:38:31,062 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:31,062 - ERROR - [Worker PID: 1408] Stock SBK.JO: Validation failed
+2025-07-07 02:38:31,087 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:31,088 - ERROR - [Worker PID: 33408] Stock SHP.JO: Validation failed
+2025-07-07 02:38:31,125 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:31,125 - ERROR - [Worker PID: 25352] Stock SLM.JO: Validation failed
+2025-07-07 02:38:31,151 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:31,151 - ERROR - [Worker PID: 31228] Stock SOL.JO: Validation failed
+2025-07-07 02:38:31,174 - ERROR - Validation failed: Gap or overlap between segments 0 and 1
+2025-07-07 02:38:31,174 - ERROR - [Worker PID: 6212] Stock VOD.JO: Validation failed
+2025-07-07 02:38:31,269 - INFO - Successfully segmented 0/32 stocks
+2025-07-07 02:42:06,027 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 02:42:06,028 - INFO - Timestamp: 2025-07-07 02:42:06
+2025-07-07 02:42:06,526 - INFO - Running parallel trend prediction preprocessing
+2025-07-07 02:43:09,341 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 02:43:09,342 - INFO - Timestamp: 2025-07-07 02:43:09
+2025-07-07 02:43:09,625 - INFO - Running parallel trend prediction preprocessing
+2025-07-07 02:49:41,342 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 02:49:41,342 - INFO - Timestamp: 2025-07-07 02:49:41
+2025-07-07 02:49:41,342 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-07-07 02:49:41,342 - INFO - Starting data cleaning process...
+2025-07-07 02:49:41,454 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-07 02:49:41,459 - INFO - Cleaned dataframe shape: (89184, 7), Unique stocks: 32
+2025-07-07 02:49:41,459 - INFO - Target for segmentation: close, Avg points/trend: 75, Window: 10
+2025-07-07 02:49:41,459 - INFO - Preparing training data subset for scaler fitting...
+2025-07-07 02:49:41,472 - INFO - Using 8 CPU cores for parallel processing.
+2025-07-07 02:49:41,480 - INFO - Segmenting training data portion (32 stocks) to fit scalers...
+2025-07-07 02:50:47,153 - INFO - Fitting global scalers for slope and duration on training data...
+2025-07-07 02:50:47,155 - INFO - Scalers created successfully from training data.
+2025-07-07 02:50:47,155 - INFO - Segmenting full dataset and creating sequences...
+2025-07-07 02:57:56,354 - INFO - === TREND PREDICTION PREPROCESSING COMPLETE ===
+2025-07-07 02:57:56,355 - INFO - Total processing time: 495.01s
+2025-07-07 02:57:56,355 - INFO - Final X shape: (864, 10, 2), Final y shape: (864, 2)
+2025-07-07 02:57:56,360 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 02:57:56,361 - INFO - Total sequences generated: 864
+2025-07-07 02:57:56,361 - INFO - Input sequences shape (X): (864, 10, 2)
+2025-07-07 02:57:56,362 - INFO - Target sequences shape (y): (864, 2)
+2025-07-07 02:57:56,363 - INFO - Unique stocks with data: 32
+2025-07-07 02:57:56,363 - INFO - Preprocessing completed successfully!
+2025-07-07 04:03:33,644 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 04:03:33,645 - INFO - Timestamp: 2025-07-07 04:03:33
+2025-07-07 04:03:33,645 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-07-07 04:03:33,646 - INFO - Starting data cleaning process...
+2025-07-07 04:03:33,861 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-07 04:03:33,866 - INFO - Cleaned dataframe shape: (89184, 7), Unique stocks: 32
+2025-07-07 04:03:33,866 - INFO - Target for segmentation: close, Avg points/trend: 75, Window: 10
+2025-07-07 04:03:33,866 - INFO - Preparing training data subset for scaler fitting...
+2025-07-07 04:03:33,884 - INFO - Using 8 CPU cores for parallel processing.
+2025-07-07 04:03:33,895 - INFO - Segmenting training data portion (32 stocks) to fit scalers...
+2025-07-07 04:04:48,599 - INFO - Fitting global scalers for slope and duration on training data...
+2025-07-07 04:04:48,602 - INFO - Scalers created successfully from training data.
+2025-07-07 04:04:48,602 - INFO - Segmenting full dataset and creating sequences...
+2025-07-07 04:11:39,369 - INFO - === TREND PREDICTION PREPROCESSING COMPLETE ===
+2025-07-07 04:11:39,369 - INFO - Total processing time: 485.72s
+2025-07-07 04:11:39,369 - INFO - Final X shape: (864, 10, 2), Final y shape: (864, 2)
+2025-07-07 04:11:39,377 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 04:11:39,377 - INFO - Total sequences generated: 864
+2025-07-07 04:11:39,379 - INFO - Input sequences shape (X): (864, 10, 2)
+2025-07-07 04:11:39,379 - INFO - Target sequences shape (y): (864, 2)
+2025-07-07 04:11:39,380 - INFO - Unique stocks with data: 32
+2025-07-07 04:11:39,381 - INFO - Preprocessing completed successfully!
+2025-07-07 04:37:58,465 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 04:37:58,465 - INFO - Timestamp: 2025-07-07 04:37:58
+2025-07-07 04:37:58,465 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-07-07 04:37:58,467 - INFO - Starting data cleaning process...
+2025-07-07 04:37:58,584 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-07 04:37:58,590 - INFO - Cleaned dataframe shape: (89184, 7), Unique stocks: 32
+2025-07-07 04:37:58,590 - INFO - Target for segmentation: close, Avg points/trend: 75, Window: 10
+2025-07-07 04:37:58,591 - INFO - Preparing training data subset for scaler fitting...
+2025-07-07 04:37:58,602 - INFO - Using 8 CPU cores for parallel processing.
+2025-07-07 04:37:58,612 - INFO - Segmenting training data portion (32 stocks) to fit scalers...
+2025-07-07 04:39:38,167 - INFO - Fitting global scalers for slope and duration on training data...
+2025-07-07 04:39:38,170 - INFO - Scalers created successfully from training data.
+2025-07-07 04:39:38,170 - INFO - Segmenting full dataset and creating sequences...
+2025-07-07 04:47:19,192 - INFO - === TREND PREDICTION PREPROCESSING COMPLETE ===
+2025-07-07 04:47:19,192 - INFO - Total processing time: 560.73s
+2025-07-07 04:47:19,193 - INFO - Final X shape: (864, 10, 2), Final y shape: (864, 2)
+2025-07-07 04:47:19,198 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 04:47:19,198 - INFO - Total sequences generated: 864
+2025-07-07 04:47:19,198 - INFO - Input sequences shape (X): (864, 10, 2)
+2025-07-07 04:47:19,200 - INFO - Target sequences shape (y): (864, 2)
+2025-07-07 04:47:19,202 - INFO - Unique stocks with data: 32
+2025-07-07 04:47:19,202 - INFO - Preprocessing completed successfully!
+2025-07-07 07:54:04,371 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 07:54:04,371 - INFO - Timestamp: 2025-07-07 07:54:04
+2025-07-07 07:54:04,371 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-07-07 07:54:04,371 - INFO - Starting data cleaning process...
+2025-07-07 07:54:04,502 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-07 07:54:04,504 - INFO - Cleaned dataframe shape: (89184, 7), Unique stocks: 32
+2025-07-07 07:54:04,505 - INFO - Target for segmentation: close, Avg points/trend: 75, Window: 10
+2025-07-07 07:54:04,505 - INFO - Preparing training data subset for scaler fitting...
+2025-07-07 07:54:04,517 - INFO - Using 8 CPU cores for parallel processing.
+2025-07-07 07:54:04,524 - INFO - Segmenting training data portion (32 stocks) to fit scalers...
+2025-07-07 07:55:02,492 - INFO - Fitting global scalers for slope and duration on training data...
+2025-07-07 07:55:02,496 - INFO - Scalers created successfully from training data.
+2025-07-07 07:55:02,496 - INFO - Segmenting full dataset and creating sequences...
+2025-07-07 08:00:41,794 - INFO - === TREND PREDICTION PREPROCESSING COMPLETE ===
+2025-07-07 08:00:41,795 - INFO - Total processing time: 397.42s
+2025-07-07 08:00:41,795 - INFO - Final X shape: (864, 10, 2), Final y shape: (864, 2)
+2025-07-07 08:00:41,799 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 08:00:41,799 - INFO - Total sequences generated: 864
+2025-07-07 08:00:41,799 - INFO - Input sequences shape (X): (864, 10, 2)
+2025-07-07 08:00:41,800 - INFO - Target sequences shape (y): (864, 2)
+2025-07-07 08:00:41,801 - INFO - Unique stocks with data: 32
+2025-07-07 08:00:41,802 - INFO - Preprocessing completed successfully!
+2025-07-07 08:12:06,650 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 08:12:06,650 - INFO - Timestamp: 2025-07-07 08:12:06
+2025-07-07 08:12:06,650 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-07-07 08:12:06,650 - INFO - Starting data cleaning process...
+2025-07-07 08:12:06,782 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-07 08:12:06,784 - INFO - Cleaned dataframe shape: (89184, 7), Unique stocks: 32
+2025-07-07 08:12:06,784 - INFO - Target for segmentation: close, Avg points/trend: 75, Window: 10
+2025-07-07 08:12:06,784 - INFO - Preparing training data subset for scaler fitting...
+2025-07-07 08:12:06,797 - INFO - Using 8 CPU cores for parallel processing.
+2025-07-07 08:12:06,807 - INFO - Segmenting training data portion (32 stocks) to fit scalers...
+2025-07-07 08:13:06,024 - INFO - Fitting global scalers for slope and duration on training data...
+2025-07-07 08:13:06,027 - INFO - Scalers created successfully from training data.
+2025-07-07 08:13:06,027 - INFO - Segmenting full dataset and creating sequences...
+2025-07-07 08:19:05,271 - INFO - === TREND PREDICTION PREPROCESSING COMPLETE ===
+2025-07-07 08:19:05,271 - INFO - Total processing time: 418.62s
+2025-07-07 08:19:05,272 - INFO - Final X shape: (864, 10, 2), Final y shape: (864, 2)
+2025-07-07 08:19:05,278 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 08:19:05,279 - INFO - Total sequences generated: 864
+2025-07-07 08:19:05,280 - INFO - Input sequences shape (X): (864, 10, 2)
+2025-07-07 08:19:05,280 - INFO - Target sequences shape (y): (864, 2)
+2025-07-07 08:19:05,281 - INFO - Unique stocks with data: 32
+2025-07-07 08:19:05,281 - INFO - Preprocessing completed successfully!
+2025-07-07 13:06:13,288 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 13:09:08,792 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 13:09:08,794 - INFO - === STARTING TREND PREDICTION PREPROCESSING ===
+2025-07-07 13:09:08,794 - INFO - Starting data cleaning process...
+2025-07-07 13:09:08,988 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-07 13:09:08,994 - INFO - Cleaned dataframe shape: (89184, 7), Unique stocks: 32
+2025-07-07 13:09:08,994 - INFO - Target for segmentation: close, Avg points/trend: 75, Window: 10
+2025-07-07 13:09:08,994 - INFO - Preparing training data subset for scaler fitting...
+2025-07-07 13:09:09,011 - INFO - Using 8 CPU cores for parallel processing.
+2025-07-07 13:09:09,014 - INFO - Segmenting training data portion (32 stocks) to fit scalers...
+2025-07-07 13:10:47,921 - INFO - Fitting global scalers for slope and duration on training data...
+2025-07-07 13:10:47,924 - INFO - Scalers created successfully from training data.
+2025-07-07 13:10:47,924 - INFO - Segmenting full dataset and creating sequences...
+2025-07-07 13:17:11,788 - INFO - === TREND PREDICTION PREPROCESSING COMPLETE ===
+2025-07-07 13:17:11,790 - INFO - Total processing time: 482.99s
+2025-07-07 13:17:11,791 - INFO - Final X shape: (864, 10, 2), Final y shape: (864, 2)
+2025-07-07 13:17:11,794 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 13:17:11,794 - INFO - Total sequences generated: 864
+2025-07-07 13:17:11,794 - INFO - Input sequences shape (X): (864, 10, 2)
+2025-07-07 13:17:11,794 - INFO - Target sequences shape (y): (864, 2)
+2025-07-07 13:17:11,797 - INFO - Unique stocks in final dataset: 32
+2025-07-07 13:17:48,086 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 13:17:48,088 - INFO - Starting data cleaning process...
+2025-07-07 13:17:48,194 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-07 13:17:48,196 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-07 13:23:29,486 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-07 13:23:29,773 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-07 13:23:29,794 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-07 13:23:29,794 - INFO - Scaling daily trend data...
+2025-07-07 13:23:29,807 - INFO - Creating graph-structured sequences from trend data...
+2025-07-07 13:23:29,824 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-07 13:23:29,828 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 13:23:29,829 - INFO - Total sequences generated: 2777
+2025-07-07 13:23:29,829 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-07 13:23:29,829 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-07 13:23:29,829 - INFO - Unique stocks in final dataset: 32
+2025-07-07 14:05:02,388 - INFO - Starting preprocessing with mode: TREND
+2025-07-07 14:05:02,388 - INFO - Starting data cleaning process...
+2025-07-07 14:05:02,499 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-07 14:05:02,499 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-07 14:10:16,703 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-07 14:10:17,100 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-07 14:10:17,122 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-07 14:10:17,122 - INFO - Scaling daily trend data...
+2025-07-07 14:10:17,135 - INFO - Creating graph-structured sequences from trend data...
+2025-07-07 14:10:17,155 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-07 14:10:17,157 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-07 14:10:17,157 - INFO - Total sequences generated: 2777
+2025-07-07 14:10:17,157 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-07 14:10:17,157 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-07 14:10:17,157 - INFO - Unique stocks in final dataset: 32
+2025-07-08 00:18:09,067 - INFO - Starting preprocessing with mode: TREND
+2025-07-08 00:18:09,081 - INFO - Starting data cleaning process...
+2025-07-08 00:18:09,224 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 00:18:09,225 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-08 00:23:41,037 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-08 00:23:41,391 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-08 00:23:41,547 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-08 00:23:41,547 - INFO - Scaling daily trend data...
+2025-07-08 00:23:41,562 - INFO - Creating graph-structured sequences from trend data...
+2025-07-08 00:23:41,583 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-08 00:23:41,589 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 00:23:41,589 - INFO - Total sequences generated: 2777
+2025-07-08 00:23:41,590 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-08 00:23:41,590 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-08 00:23:41,590 - INFO - Unique stocks in final dataset: 32
+2025-07-08 00:25:45,608 - INFO - Starting preprocessing with mode: TREND
+2025-07-08 00:25:45,608 - INFO - Starting data cleaning process...
+2025-07-08 00:25:45,717 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 00:25:45,717 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-08 00:32:29,805 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-08 00:32:30,180 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-08 00:32:30,194 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-08 00:32:30,194 - INFO - Scaling daily trend data...
+2025-07-08 00:32:30,207 - INFO - Creating graph-structured sequences from trend data...
+2025-07-08 00:32:30,233 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-08 00:32:30,238 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 00:32:30,238 - INFO - Total sequences generated: 2777
+2025-07-08 00:32:30,239 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-08 00:32:30,239 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-08 00:32:30,240 - INFO - Unique stocks in final dataset: 32
+2025-07-08 00:39:28,470 - INFO - Starting preprocessing with mode: TREND
+2025-07-08 00:39:28,470 - INFO - Starting data cleaning process...
+2025-07-08 00:39:28,591 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 00:39:28,591 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-08 00:45:44,224 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-08 00:45:44,715 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-08 00:45:44,770 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-08 00:45:44,772 - INFO - Scaling daily trend data...
+2025-07-08 00:45:44,797 - INFO - Creating graph-structured sequences from trend data...
+2025-07-08 00:45:44,832 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-08 00:45:44,839 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 00:45:44,840 - INFO - Total sequences generated: 2777
+2025-07-08 00:45:44,840 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-08 00:45:44,843 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-08 00:45:44,844 - INFO - Unique stocks in final dataset: 32
+2025-07-08 01:42:14,810 - INFO - Starting preprocessing with mode: TREND
+2025-07-08 01:42:14,810 - INFO - Starting data cleaning process...
+2025-07-08 01:42:14,949 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 01:42:14,949 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-08 01:49:33,581 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-08 01:49:33,892 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-08 01:49:33,933 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-08 01:49:33,933 - INFO - Scaling daily trend data...
+2025-07-08 01:49:33,950 - INFO - Creating graph-structured sequences from trend data...
+2025-07-08 01:49:33,969 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-08 01:49:33,972 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 01:49:33,973 - INFO - Total sequences generated: 2777
+2025-07-08 01:49:33,973 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-08 01:49:33,973 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-08 01:49:33,973 - INFO - Unique stocks in final dataset: 32
+2025-07-08 02:30:03,903 - INFO - Starting preprocessing with mode: TREND
+2025-07-08 02:30:03,904 - INFO - Starting data cleaning process...
+2025-07-08 02:30:04,018 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 02:30:04,018 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-08 02:36:27,313 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-08 02:36:27,628 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-08 02:36:27,701 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-08 02:36:27,711 - INFO - Scaling daily trend data...
+2025-07-08 02:36:27,721 - INFO - Creating graph-structured sequences from trend data...
+2025-07-08 02:36:27,754 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-08 02:36:27,762 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 02:36:27,763 - INFO - Total sequences generated: 2777
+2025-07-08 02:36:27,763 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-08 02:36:27,764 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-08 02:36:27,765 - INFO - Unique stocks in final dataset: 32
+2025-07-08 04:01:33,406 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 04:01:33,406 - INFO - Starting data cleaning process...
+2025-07-08 04:01:33,530 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 04:01:33,535 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 04:01:33,540 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 04:01:33,885 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32, 1)
+2025-07-08 04:01:33,925 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 04:01:33,925 - INFO - Total sequences generated: 2727
+2025-07-08 04:01:33,925 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 04:01:33,927 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-08 04:01:33,927 - INFO - Unique stocks in final dataset: 32
+2025-07-08 05:23:28,633 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 05:23:28,633 - INFO - Starting data cleaning process...
+2025-07-08 05:23:28,743 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 05:23:28,743 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 05:23:28,749 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 05:23:29,106 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32, 1)
+2025-07-08 05:23:29,157 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 05:23:29,157 - INFO - Total sequences generated: 2727
+2025-07-08 05:23:29,157 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 05:23:29,157 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-08 05:23:29,164 - INFO - Unique stocks in final dataset: 32
+2025-07-08 06:10:58,265 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 06:10:58,265 - INFO - Starting data cleaning process...
+2025-07-08 06:10:58,401 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 06:10:58,403 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 06:10:58,408 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 06:10:58,750 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32, 1)
+2025-07-08 06:10:58,780 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 06:10:58,780 - INFO - Total sequences generated: 2727
+2025-07-08 06:10:58,780 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 06:10:58,780 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-08 06:10:58,780 - INFO - Unique stocks in final dataset: 32
+2025-07-08 07:26:31,182 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 07:26:31,183 - INFO - Starting data cleaning process...
+2025-07-08 07:26:31,302 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 07:26:31,303 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 07:26:31,305 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 07:26:31,640 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32, 1)
+2025-07-08 07:26:31,686 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 07:26:31,686 - INFO - Total sequences generated: 2727
+2025-07-08 07:26:31,687 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 07:26:31,687 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-08 07:26:31,687 - INFO - Unique stocks in final dataset: 32
+2025-07-08 07:45:03,592 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 07:45:03,594 - INFO - Starting data cleaning process...
+2025-07-08 07:45:03,727 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 07:45:03,729 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 07:45:03,732 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 07:45:04,096 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32, 1)
+2025-07-08 07:45:04,135 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 07:45:04,135 - INFO - Total sequences generated: 2727
+2025-07-08 07:45:04,140 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 07:45:04,140 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-08 07:45:04,140 - INFO - Unique stocks in final dataset: 32
+2025-07-08 07:58:05,354 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 07:58:05,355 - INFO - Starting data cleaning process...
+2025-07-08 07:58:05,466 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 07:58:05,471 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 07:58:05,475 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 07:58:05,812 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32, 1)
+2025-07-08 07:58:05,844 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 07:58:05,844 - INFO - Total sequences generated: 2727
+2025-07-08 07:58:05,844 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 07:58:05,845 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-08 07:58:05,845 - INFO - Unique stocks in final dataset: 32
+2025-07-08 11:04:51,150 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 11:04:51,150 - INFO - Starting data cleaning process...
+2025-07-08 11:04:51,352 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 11:04:51,367 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 11:04:51,402 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 11:04:51,873 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32, 1)
+2025-07-08 11:04:51,937 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 11:04:51,937 - INFO - Total sequences generated: 2727
+2025-07-08 11:04:51,943 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 11:04:51,943 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-08 11:04:51,944 - INFO - Unique stocks in final dataset: 32
+2025-07-08 11:12:57,607 - INFO - Starting preprocessing with mode: TREND
+2025-07-08 11:12:57,607 - INFO - Starting data cleaning process...
+2025-07-08 11:12:57,852 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 11:12:57,859 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-08 11:18:49,302 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-08 11:18:49,702 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-08 11:18:49,726 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-08 11:18:49,726 - INFO - Scaling daily trend data...
+2025-07-08 11:18:49,743 - INFO - Creating graph-structured sequences from trend data...
+2025-07-08 11:18:49,774 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-08 11:18:49,778 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 11:18:49,778 - INFO - Total sequences generated: 2777
+2025-07-08 11:18:49,778 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-08 11:18:49,778 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-08 11:18:49,778 - INFO - Unique stocks in final dataset: 32
+2025-07-08 11:28:24,859 - INFO - Starting preprocessing with mode: TREND
+2025-07-08 11:28:24,859 - INFO - Starting data cleaning process...
+2025-07-08 11:28:24,970 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 11:28:24,970 - INFO - Segmenting all stocks to extract trend data with dates...
+2025-07-08 11:33:59,139 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-08 11:33:59,669 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-08 11:33:59,697 - INFO - Trend adjacency matrix created with shape: torch.Size([32, 32])
+2025-07-08 11:33:59,698 - INFO - Scaling daily trend data...
+2025-07-08 11:33:59,722 - INFO - Creating graph-structured sequences from trend data...
+2025-07-08 11:33:59,757 - INFO - Graph-based trend data created. X shape: (2777, 10, 32, 2), y shape: (2777, 32, 2)
+2025-07-08 11:33:59,762 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 11:33:59,762 - INFO - Total sequences generated: 2777
+2025-07-08 11:33:59,762 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-08 11:33:59,762 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-08 11:33:59,762 - INFO - Unique stocks in final dataset: 32
+2025-07-08 11:35:23,387 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 11:35:23,387 - INFO - Starting data cleaning process...
+2025-07-08 11:35:23,550 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 11:35:23,552 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 11:35:23,553 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 11:35:23,891 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32, 1)
+2025-07-08 11:35:23,923 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 11:35:23,923 - INFO - Total sequences generated: 2727
+2025-07-08 11:35:23,923 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 11:35:23,923 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-08 11:35:23,923 - INFO - Unique stocks in final dataset: 32
+2025-07-08 12:08:50,419 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 12:08:50,420 - INFO - Starting data cleaning process...
+2025-07-08 12:08:50,535 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 12:08:50,537 - INFO - Using standard sequence creation for TCN/MLP model.
+2025-07-08 12:08:50,912 - INFO - Standard data shapes created: X=(87264, 60, 5), y=(87264, 1, 1)
+2025-07-08 12:08:50,932 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 12:08:50,932 - INFO - Total sequences generated: 87264
+2025-07-08 12:08:50,933 - INFO - Input sequences shape (X): (87264, 60, 5)
+2025-07-08 12:08:50,933 - INFO - Target sequences shape (y): (87264, 1, 1)
+2025-07-08 12:08:50,934 - INFO - Unique stocks in final dataset: 32
+2025-07-08 12:31:11,869 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 12:31:11,870 - INFO - Starting data cleaning process...
+2025-07-08 12:31:11,976 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 12:31:11,977 - INFO - Using standard sequence creation for TCN/MLP model.
+2025-07-08 12:31:12,337 - INFO - Standard data shapes created: X=(87264, 60, 5), y=(87264, 1, 1)
+2025-07-08 12:31:12,355 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 12:31:12,355 - INFO - Total sequences generated: 87264
+2025-07-08 12:31:12,355 - INFO - Input sequences shape (X): (87264, 60, 5)
+2025-07-08 12:31:12,355 - INFO - Target sequences shape (y): (87264, 1, 1)
+2025-07-08 12:31:12,372 - INFO - Unique stocks in final dataset: 32
+2025-07-08 13:12:46,212 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 13:12:46,212 - INFO - Starting data cleaning process...
+2025-07-08 13:12:46,327 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 13:12:46,327 - INFO - Using standard sequence creation for TCN/MLP model.
+2025-07-08 13:12:46,779 - INFO - Standard data shapes created: X=(87264, 60, 5), y=(87264, 1, 1)
+2025-07-08 13:12:46,800 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 13:12:46,800 - INFO - Total sequences generated: 87264
+2025-07-08 13:12:46,800 - INFO - Input sequences shape (X): (87264, 60, 5)
+2025-07-08 13:12:46,800 - INFO - Target sequences shape (y): (87264, 1, 1)
+2025-07-08 13:12:46,809 - INFO - Unique stocks in final dataset: 32
+2025-07-08 13:27:45,711 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 13:27:45,711 - INFO - Starting data cleaning process...
+2025-07-08 13:27:45,886 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 13:27:45,887 - INFO - Using standard sequence creation for TCN/MLP model.
+2025-07-08 13:27:46,508 - INFO - Standard data shapes created: X=(87264, 60, 5), y=(87264, 1, 1)
+2025-07-08 13:27:46,531 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 13:27:46,531 - INFO - Total sequences generated: 87264
+2025-07-08 13:27:46,531 - INFO - Input sequences shape (X): (87264, 60, 5)
+2025-07-08 13:27:46,531 - INFO - Target sequences shape (y): (87264, 1, 1)
+2025-07-08 13:27:46,546 - INFO - Unique stocks in final dataset: 32
+2025-07-08 13:36:20,608 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 13:36:20,608 - INFO - Starting data cleaning process...
+2025-07-08 13:36:20,708 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 13:36:20,709 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 13:36:20,711 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 13:36:21,080 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32)
+2025-07-08 13:36:21,128 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 13:36:21,128 - INFO - Total sequences generated: 2727
+2025-07-08 13:36:21,128 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 13:36:21,128 - INFO - Target sequences shape (y): (2727, 1, 32)
+2025-07-08 13:36:21,128 - INFO - Unique stocks in final dataset: 32
+2025-07-08 13:38:01,993 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 13:38:01,994 - INFO - Starting data cleaning process...
+2025-07-08 13:38:02,091 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 13:38:02,092 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 13:38:02,095 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 13:38:02,467 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32)
+2025-07-08 13:38:02,499 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 13:38:02,500 - INFO - Total sequences generated: 2727
+2025-07-08 13:38:02,500 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 13:38:02,501 - INFO - Target sequences shape (y): (2727, 1, 32)
+2025-07-08 13:38:02,501 - INFO - Unique stocks in final dataset: 32
+2025-07-08 13:41:08,899 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 13:41:08,899 - INFO - Starting data cleaning process...
+2025-07-08 13:41:09,004 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 13:41:09,005 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 13:41:09,009 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 13:41:09,319 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32)
+2025-07-08 13:41:09,357 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 13:41:09,357 - INFO - Total sequences generated: 2727
+2025-07-08 13:41:09,357 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 13:41:09,357 - INFO - Target sequences shape (y): (2727, 1, 32)
+2025-07-08 13:41:09,357 - INFO - Unique stocks in final dataset: 32
+2025-07-08 13:44:19,694 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 13:44:19,694 - INFO - Starting data cleaning process...
+2025-07-08 13:44:19,793 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 13:44:19,794 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 13:44:19,796 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 13:44:20,119 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32)
+2025-07-08 13:44:20,147 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 13:44:20,153 - INFO - Total sequences generated: 2727
+2025-07-08 13:44:20,153 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 13:44:20,153 - INFO - Target sequences shape (y): (2727, 1, 32)
+2025-07-08 13:44:20,153 - INFO - Unique stocks in final dataset: 32
+2025-07-08 14:02:01,592 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 14:02:01,592 - INFO - Starting data cleaning process...
+2025-07-08 14:02:01,692 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 14:02:01,693 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 14:02:01,696 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 14:02:02,013 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32)
+2025-07-08 14:02:02,047 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 14:02:02,047 - INFO - Total sequences generated: 2727
+2025-07-08 14:02:02,047 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 14:02:02,052 - INFO - Target sequences shape (y): (2727, 1, 32)
+2025-07-08 14:02:02,052 - INFO - Unique stocks in final dataset: 32
+2025-07-08 14:06:03,432 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 14:06:03,432 - INFO - Starting data cleaning process...
+2025-07-08 14:06:03,525 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 14:06:03,526 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 14:06:03,529 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 14:06:03,837 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32)
+2025-07-08 14:06:03,879 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 14:06:03,879 - INFO - Total sequences generated: 2727
+2025-07-08 14:06:03,879 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 14:06:03,880 - INFO - Target sequences shape (y): (2727, 1, 32)
+2025-07-08 14:06:03,880 - INFO - Unique stocks in final dataset: 32
+2025-07-08 14:08:53,451 - INFO - Starting preprocessing with mode: POINT
+2025-07-08 14:08:53,451 - INFO - Starting data cleaning process...
+2025-07-08 14:08:53,551 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-08 14:08:53,551 - INFO - Starting graph-specific data preprocessing...
+2025-07-08 14:08:53,554 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-08 14:08:53,886 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32)
+2025-07-08 14:08:53,915 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-08 14:08:53,915 - INFO - Total sequences generated: 2727
+2025-07-08 14:08:53,915 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-08 14:08:53,915 - INFO - Target sequences shape (y): (2727, 1, 32)
+2025-07-08 14:08:53,917 - INFO - Unique stocks in final dataset: 32
+2025-07-09 06:52:46,362 - INFO - Starting preprocessing with mode: POINT
+2025-07-09 06:52:46,362 - INFO - Starting data cleaning process...
+2025-07-09 06:52:46,453 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-09 06:52:46,453 - INFO - Starting graph-specific data preprocessing...
+2025-07-09 06:52:46,453 - INFO - Processing data for 32 nodes in a fixed order.
+2025-07-09 06:52:46,816 - INFO - Graph data shapes created: X=(2727, 60, 32, 5), y=(2727, 1, 32)
+2025-07-09 06:52:46,868 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-09 06:52:46,868 - INFO - Total sequences generated: 2727
+2025-07-09 06:52:46,868 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-09 06:52:46,868 - INFO - Target sequences shape (y): (2727, 1, 32)
+2025-07-09 06:52:46,868 - INFO - Unique stocks in final dataset: 32
+2025-07-12 04:42:34,112 - INFO - Starting preprocessing with mode: POINT
+2025-07-12 04:42:34,112 - INFO - Starting data cleaning process...
+2025-07-12 04:42:34,211 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-12 04:42:34,211 - INFO - Using standard sequence creation for TCN/MLP model.
+2025-07-12 04:42:34,656 - INFO - Standard data shapes created: X=(87264, 60, 5), y=(87264, 1, 1)
+2025-07-12 04:42:34,660 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-12 04:42:34,660 - INFO - Total sequences generated: 87264
+2025-07-12 04:42:34,660 - INFO - Input sequences shape (X): (87264, 60, 5)
+2025-07-12 04:42:34,660 - INFO - Target sequences shape (y): (87264, 1, 1)
+2025-07-12 04:42:34,677 - INFO - Unique stocks in final dataset: 32
+2025-07-12 05:11:01,892 - INFO - Starting preprocessing with mode: TREND
+2025-07-12 05:11:01,893 - INFO - Using model type: TCN
+2025-07-12 05:16:08,514 - INFO - Starting preprocessing with mode: TREND
+2025-07-12 05:16:08,515 - INFO - Using model type: TCN
+2025-07-12 05:16:08,516 - INFO - Starting data cleaning process...
+2025-07-12 05:16:08,599 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-12 05:16:08,600 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-12 05:16:08,600 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-12 05:16:15,327 - INFO - Fitting global scalers for slope and duration...
+2025-07-12 05:16:15,331 - INFO - Creating sequences from trends...
+2025-07-12 05:16:22,106 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-12 05:16:22,107 - INFO - Total sequences generated: 17497
+2025-07-12 05:16:22,107 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-12 05:16:22,107 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-12 05:16:22,110 - INFO - Unique stocks in final dataset: 32
+2025-07-12 05:17:32,086 - INFO - Starting preprocessing with mode: TREND
+2025-07-12 05:17:32,086 - INFO - Using model type: MLP
+2025-07-12 05:17:32,086 - INFO - Starting data cleaning process...
+2025-07-12 05:17:32,177 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-12 05:17:32,192 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-12 05:17:32,192 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-12 05:17:38,985 - INFO - Fitting global scalers for slope and duration...
+2025-07-12 05:17:38,996 - INFO - Creating sequences from trends...
+2025-07-12 05:17:45,735 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-12 05:17:45,735 - INFO - Total sequences generated: 17497
+2025-07-12 05:17:45,735 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-12 05:17:45,735 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-12 05:17:45,749 - INFO - Unique stocks in final dataset: 32
+2025-07-12 13:02:04,213 - INFO - Starting preprocessing with mode: TREND
+2025-07-12 13:02:04,213 - INFO - Using model type: MLP
+2025-07-12 13:02:04,213 - INFO - Starting data cleaning process...
+2025-07-12 13:02:04,307 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-12 13:02:04,308 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-12 13:02:04,308 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-12 13:02:14,349 - ERROR - Stock ABG.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,351 - ERROR - Stock AGL.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,351 - ERROR - Stock AMS.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,354 - ERROR - Stock APN.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,354 - ERROR - Stock BTI.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,356 - ERROR - Stock BVT.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,358 - ERROR - Stock CLS.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,358 - ERROR - Stock CPI.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,359 - ERROR - Stock DSY.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,359 - ERROR - Stock EXX.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,360 - ERROR - Stock FSR.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,363 - ERROR - Stock GFI.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,363 - ERROR - Stock GLN.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,364 - ERROR - Stock GRT.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,364 - ERROR - Stock HAR.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,365 - ERROR - Stock IMP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,365 - ERROR - Stock INL.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,366 - ERROR - Stock INP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,370 - ERROR - Stock KIO.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,371 - ERROR - Stock MNP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,377 - ERROR - Stock MRP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,377 - ERROR - Stock MTN.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,379 - ERROR - Stock NED.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,381 - ERROR - Stock NPN.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,381 - ERROR - Stock NRP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,383 - ERROR - Stock REM.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,386 - ERROR - Stock RLO.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,397 - ERROR - Stock SBK.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,397 - ERROR - Stock SHP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,399 - ERROR - Stock SLM.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,400 - ERROR - Stock SOL.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:02:14,401 - ERROR - Stock VOD.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:17,505 - INFO - Starting preprocessing with mode: TREND
+2025-07-12 13:18:17,505 - INFO - Using model type: MLP
+2025-07-12 13:18:17,505 - INFO - Starting data cleaning process...
+2025-07-12 13:18:17,595 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-12 13:18:17,595 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-12 13:18:17,595 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-12 13:18:27,577 - ERROR - Stock ABG.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,579 - ERROR - Stock AGL.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,579 - ERROR - Stock AMS.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,583 - ERROR - Stock APN.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,585 - ERROR - Stock BTI.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,588 - ERROR - Stock BVT.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,590 - ERROR - Stock CLS.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,593 - ERROR - Stock CPI.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,597 - ERROR - Stock DSY.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,605 - ERROR - Stock EXX.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,612 - ERROR - Stock FSR.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,615 - ERROR - Stock GFI.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,616 - ERROR - Stock GLN.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,619 - ERROR - Stock GRT.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,626 - ERROR - Stock HAR.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,628 - ERROR - Stock IMP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,630 - ERROR - Stock INL.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,631 - ERROR - Stock INP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,633 - ERROR - Stock KIO.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,634 - ERROR - Stock MNP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,636 - ERROR - Stock MRP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,642 - ERROR - Stock MTN.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,643 - ERROR - Stock NED.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,644 - ERROR - Stock NPN.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,646 - ERROR - Stock NRP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,649 - ERROR - Stock REM.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,652 - ERROR - Stock RLO.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,677 - ERROR - Stock SBK.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,681 - ERROR - Stock SHP.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,697 - ERROR - Stock SLM.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,699 - ERROR - Stock SOL.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 13:18:27,700 - ERROR - Stock VOD.JO: Error during bottom-up segmentation: Not enough dimensions
+2025-07-12 14:02:41,569 - INFO - Starting preprocessing with mode: TREND
+2025-07-12 14:02:41,569 - INFO - Using model type: MLP
+2025-07-12 14:02:41,569 - INFO - Starting data cleaning process...
+2025-07-12 14:02:41,680 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-12 14:02:41,681 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-12 14:02:41,682 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-12 14:02:53,024 - INFO - Fitting global scalers for slope and duration...
+2025-07-12 14:02:53,028 - INFO - Creating sequences from trends...
+2025-07-12 14:03:03,996 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-12 14:03:03,996 - INFO - Total sequences generated: 17497
+2025-07-12 14:03:03,996 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-12 14:03:03,996 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-12 14:03:04,010 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:24:27,073 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:24:27,073 - INFO - Using model type: MLP
+2025-07-15 10:24:27,076 - INFO - Starting data cleaning process...
+2025-07-15 10:24:27,231 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:24:27,233 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-15 10:24:27,233 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-15 10:24:38,097 - INFO - Fitting global scalers for slope and duration...
+2025-07-15 10:24:38,103 - INFO - Creating sequences from trends...
+2025-07-15 10:24:49,330 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:24:49,332 - INFO - Total sequences generated: 17497
+2025-07-15 10:24:49,332 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-15 10:24:49,332 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-15 10:24:49,337 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:29:13,587 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:29:13,587 - INFO - Using model type: GraphWaveNet
+2025-07-15 10:29:13,587 - INFO - Starting data cleaning process...
+2025-07-15 10:29:13,695 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:29:13,695 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:29:22,287 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:29:24,964 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:29:24,980 - INFO - Scaling daily trend data...
+2025-07-15 10:29:24,997 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:29:25,018 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:29:25,018 - INFO - Total sequences generated: 2777
+2025-07-15 10:29:25,018 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:29:25,018 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:29:25,029 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:32:58,558 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:32:58,558 - INFO - Using model type: GraphWaveNet
+2025-07-15 10:32:58,574 - INFO - Starting data cleaning process...
+2025-07-15 10:32:58,709 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:32:58,709 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:33:07,253 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:33:09,895 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:33:09,898 - INFO - Scaling daily trend data...
+2025-07-15 10:33:09,911 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:33:09,947 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:33:09,952 - INFO - Total sequences generated: 2777
+2025-07-15 10:33:09,955 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:33:09,957 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:33:09,961 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:35:38,273 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:35:38,273 - INFO - Using model type: GraphWaveNet
+2025-07-15 10:35:38,273 - INFO - Starting data cleaning process...
+2025-07-15 10:35:38,519 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:35:38,519 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:35:48,840 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:35:56,493 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:35:56,503 - INFO - Scaling daily trend data...
+2025-07-15 10:35:56,517 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:35:56,560 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:35:56,562 - INFO - Total sequences generated: 2777
+2025-07-15 10:35:56,562 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:35:56,562 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:35:56,562 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:44:18,211 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:44:18,211 - INFO - Using model type: DSTAGNN
+2025-07-15 10:44:18,211 - INFO - Starting data cleaning process...
+2025-07-15 10:44:18,322 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:44:18,322 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:44:26,916 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:44:29,553 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:44:29,570 - INFO - Scaling daily trend data...
+2025-07-15 10:44:29,586 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:44:29,603 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:44:29,603 - INFO - Total sequences generated: 2777
+2025-07-15 10:44:29,603 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:44:29,603 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:44:29,603 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:49:07,874 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:49:07,874 - INFO - Using model type: DSTAGNN
+2025-07-15 10:49:07,874 - INFO - Starting data cleaning process...
+2025-07-15 10:49:07,995 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:49:07,995 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:49:18,787 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:49:22,057 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:49:22,059 - INFO - Scaling daily trend data...
+2025-07-15 10:49:22,074 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:49:22,092 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:49:22,092 - INFO - Total sequences generated: 2777
+2025-07-15 10:49:22,092 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:49:22,092 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:49:22,092 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:50:52,659 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:50:52,659 - INFO - Using model type: DSTAGNN
+2025-07-15 10:50:52,659 - INFO - Starting data cleaning process...
+2025-07-15 10:50:52,778 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:50:52,778 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:51:01,749 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:51:04,523 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:51:04,523 - INFO - Scaling daily trend data...
+2025-07-15 10:51:04,544 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:51:04,563 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:51:04,563 - INFO - Total sequences generated: 2777
+2025-07-15 10:51:04,563 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:51:04,563 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:51:04,563 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:53:11,086 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:53:11,086 - INFO - Using model type: DSTAGNN
+2025-07-15 10:53:11,100 - INFO - Starting data cleaning process...
+2025-07-15 10:53:11,211 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:53:11,211 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:53:20,474 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:53:23,211 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:53:23,221 - INFO - Scaling daily trend data...
+2025-07-15 10:53:23,229 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:53:23,251 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:53:23,251 - INFO - Total sequences generated: 2777
+2025-07-15 10:53:23,251 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:53:23,251 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:53:23,251 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:53:56,333 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:53:56,333 - INFO - Using model type: DSTAGNN
+2025-07-15 10:53:56,333 - INFO - Starting data cleaning process...
+2025-07-15 10:53:56,469 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:53:56,472 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:54:05,351 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:54:08,134 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:54:08,147 - INFO - Scaling daily trend data...
+2025-07-15 10:54:08,159 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:54:08,182 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:54:08,186 - INFO - Total sequences generated: 2777
+2025-07-15 10:54:08,186 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:54:08,186 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:54:08,187 - INFO - Unique stocks in final dataset: 32
+2025-07-15 10:57:02,653 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 10:57:02,653 - INFO - Using model type: DSTAGNN
+2025-07-15 10:57:02,653 - INFO - Starting data cleaning process...
+2025-07-15 10:57:02,788 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 10:57:02,798 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 10:57:11,244 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 10:57:13,967 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 10:57:13,970 - INFO - Scaling daily trend data...
+2025-07-15 10:57:13,982 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 10:57:14,004 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 10:57:14,004 - INFO - Total sequences generated: 2777
+2025-07-15 10:57:14,004 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 10:57:14,004 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 10:57:14,004 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:05:38,141 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:05:38,141 - INFO - Using model type: DSTAGNN
+2025-07-15 11:05:38,141 - INFO - Starting data cleaning process...
+2025-07-15 11:05:38,264 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:06:13,930 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:06:13,930 - INFO - Using model type: TCN
+2025-07-15 11:06:13,930 - INFO - Starting data cleaning process...
+2025-07-15 11:06:14,063 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:07:04,990 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 11:07:04,990 - INFO - Using model type: TCN
+2025-07-15 11:07:04,990 - INFO - Starting data cleaning process...
+2025-07-15 11:07:05,112 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:07:05,112 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-15 11:07:05,112 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-15 11:07:14,448 - INFO - Fitting global scalers for slope and duration...
+2025-07-15 11:07:14,454 - INFO - Creating sequences from trends...
+2025-07-15 11:07:23,625 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:07:23,625 - INFO - Total sequences generated: 17497
+2025-07-15 11:07:23,625 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-15 11:07:23,625 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-15 11:07:23,637 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:08:08,481 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 11:08:08,481 - INFO - Using model type: MLP
+2025-07-15 11:08:08,481 - INFO - Starting data cleaning process...
+2025-07-15 11:08:08,586 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:08:08,593 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-15 11:08:08,593 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-15 11:08:17,212 - INFO - Fitting global scalers for slope and duration...
+2025-07-15 11:08:17,215 - INFO - Creating sequences from trends...
+2025-07-15 11:08:24,925 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:08:24,926 - INFO - Total sequences generated: 17497
+2025-07-15 11:08:24,926 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-15 11:08:24,926 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-15 11:08:24,927 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:09:17,877 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:09:17,877 - INFO - Using model type: MLP
+2025-07-15 11:09:17,877 - INFO - Starting data cleaning process...
+2025-07-15 11:09:18,000 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:09:54,128 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:09:54,128 - INFO - Using model type: GraphWaveNet
+2025-07-15 11:09:54,142 - INFO - Starting data cleaning process...
+2025-07-15 11:09:54,271 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:10:29,380 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 11:10:29,380 - INFO - Using model type: GraphWaveNet
+2025-07-15 11:10:29,388 - INFO - Starting data cleaning process...
+2025-07-15 11:10:29,487 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:10:29,493 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 11:10:38,241 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 11:10:41,045 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 11:10:41,053 - INFO - Scaling daily trend data...
+2025-07-15 11:10:41,063 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 11:10:41,081 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:10:41,081 - INFO - Total sequences generated: 2777
+2025-07-15 11:10:41,081 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 11:10:41,081 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 11:10:41,088 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:16:17,013 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:16:17,013 - INFO - Using model type: TCN
+2025-07-15 11:16:17,013 - INFO - Starting data cleaning process...
+2025-07-15 11:16:17,135 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:16:17,135 - INFO - Processing data for standard point prediction (TCN/MLP)...
+2025-07-15 11:16:17,135 - INFO - Fitting scalers on training data for each stock...
+2025-07-15 11:16:55,966 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:16:55,966 - INFO - Using model type: MLP
+2025-07-15 11:16:55,966 - INFO - Starting data cleaning process...
+2025-07-15 11:16:56,134 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:16:56,142 - INFO - Processing data for standard point prediction (TCN/MLP)...
+2025-07-15 11:16:56,142 - INFO - Fitting scalers on training data for each stock...
+2025-07-15 11:17:39,832 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 11:17:39,832 - INFO - Using model type: MLP
+2025-07-15 11:17:39,832 - INFO - Starting data cleaning process...
+2025-07-15 11:17:39,997 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:17:39,997 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-15 11:17:39,997 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-15 11:17:49,544 - INFO - Fitting global scalers for slope and duration...
+2025-07-15 11:17:49,552 - INFO - Creating sequences from trends...
+2025-07-15 11:17:58,204 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:17:58,204 - INFO - Total sequences generated: 17497
+2025-07-15 11:17:58,206 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-15 11:17:58,206 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-15 11:17:58,206 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:18:29,537 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 11:18:29,537 - INFO - Using model type: TCN
+2025-07-15 11:18:29,537 - INFO - Starting data cleaning process...
+2025-07-15 11:18:29,697 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:18:29,699 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-15 11:18:29,700 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-15 11:18:38,568 - INFO - Fitting global scalers for slope and duration...
+2025-07-15 11:18:38,568 - INFO - Creating sequences from trends...
+2025-07-15 11:18:46,793 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:18:46,793 - INFO - Total sequences generated: 17497
+2025-07-15 11:18:46,793 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-15 11:18:46,793 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-15 11:18:46,809 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:19:32,935 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 11:19:32,935 - INFO - Using model type: GraphWaveNet
+2025-07-15 11:19:32,935 - INFO - Starting data cleaning process...
+2025-07-15 11:19:33,067 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:19:33,067 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 11:19:42,158 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 11:19:45,093 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 11:19:45,111 - INFO - Scaling daily trend data...
+2025-07-15 11:19:45,122 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 11:19:45,147 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:19:45,147 - INFO - Total sequences generated: 2777
+2025-07-15 11:19:45,147 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 11:19:45,147 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 11:19:45,147 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:20:57,729 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 11:20:57,729 - INFO - Using model type: DSTAGNN
+2025-07-15 11:20:57,729 - INFO - Starting data cleaning process...
+2025-07-15 11:20:57,841 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:20:57,841 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 11:21:06,825 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 11:21:09,806 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 11:21:09,809 - INFO - Scaling daily trend data...
+2025-07-15 11:21:09,816 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 11:21:09,840 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:21:09,840 - INFO - Total sequences generated: 2777
+2025-07-15 11:21:09,840 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 11:21:09,840 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 11:21:09,840 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:24:15,987 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:24:15,991 - INFO - Using model type: DSTAGNN
+2025-07-15 11:24:15,991 - INFO - Starting data cleaning process...
+2025-07-15 11:24:16,121 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:24:16,121 - INFO - Processing data for graph-based point prediction...
+2025-07-15 11:24:16,450 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:24:16,450 - INFO - Total sequences generated: 2727
+2025-07-15 11:24:16,450 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-15 11:24:16,450 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-15 11:24:16,450 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:27:02,558 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:27:02,558 - INFO - Using model type: DSTAGNN
+2025-07-15 11:27:02,558 - INFO - Starting data cleaning process...
+2025-07-15 11:27:02,694 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:27:02,699 - INFO - Processing data for graph-based point prediction...
+2025-07-15 11:27:03,001 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:27:03,001 - INFO - Total sequences generated: 2727
+2025-07-15 11:27:03,001 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-15 11:27:03,001 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-15 11:27:03,001 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:30:50,087 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:30:50,087 - INFO - Using model type: DSTAGNN
+2025-07-15 11:30:50,103 - INFO - Starting data cleaning process...
+2025-07-15 11:30:50,233 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:30:50,233 - INFO - Processing data for graph-based point prediction...
+2025-07-15 11:30:50,513 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:30:50,513 - INFO - Total sequences generated: 2727
+2025-07-15 11:30:50,513 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-15 11:30:50,516 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-15 11:30:50,516 - INFO - Unique stocks in final dataset: 32
+2025-07-15 11:43:02,204 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 11:43:02,204 - INFO - Using model type: DSTAGNN
+2025-07-15 11:43:02,204 - INFO - Starting data cleaning process...
+2025-07-15 11:43:02,327 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 11:43:02,329 - INFO - Processing data for graph-based point prediction...
+2025-07-15 11:43:02,509 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 11:43:02,509 - INFO - Total sequences generated: 2727
+2025-07-15 11:43:02,509 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-15 11:43:02,509 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-15 11:43:02,509 - INFO - Unique stocks in final dataset: 32
+2025-07-15 12:52:34,353 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 12:52:34,355 - INFO - Using model type: TCN
+2025-07-15 12:52:34,355 - INFO - Starting data cleaning process...
+2025-07-15 12:52:34,442 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 12:52:34,442 - INFO - Processing data for standard point prediction (TCN/MLP)...
+2025-07-15 12:52:34,442 - INFO - Fitting scalers on training data for each stock...
+2025-07-15 12:52:42,024 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 12:52:42,024 - INFO - Total sequences generated: 87264
+2025-07-15 12:52:42,024 - INFO - Input sequences shape (X): (87264, 60, 5)
+2025-07-15 12:52:42,024 - INFO - Target sequences shape (y): (87264, 1)
+2025-07-15 12:52:42,043 - INFO - Unique stocks in final dataset: 32
+2025-07-15 12:57:40,440 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 12:57:40,440 - INFO - Using model type: TCN
+2025-07-15 12:57:40,440 - INFO - Starting data cleaning process...
+2025-07-15 12:57:40,550 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 12:57:40,551 - INFO - Target for segmentation: close, Penalty: 1.0, Window: 10
+2025-07-15 12:57:40,551 - INFO - Segmenting full dataset using Bottom-Up approach...
+2025-07-15 12:57:47,679 - INFO - Fitting global scalers for slope and duration...
+2025-07-15 12:57:47,683 - INFO - Creating sequences from trends...
+2025-07-15 12:57:54,036 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 12:57:54,047 - INFO - Total sequences generated: 17497
+2025-07-15 12:57:54,047 - INFO - Input sequences shape (X): (17497, 10, 2)
+2025-07-15 12:57:54,047 - INFO - Target sequences shape (y): (17497, 2)
+2025-07-15 12:57:54,049 - INFO - Unique stocks in final dataset: 32
+2025-07-15 13:08:45,709 - INFO - Starting preprocessing with mode: TREND
+2025-07-15 13:08:45,709 - INFO - Using model type: GraphWaveNet
+2025-07-15 13:08:45,709 - INFO - Starting data cleaning process...
+2025-07-15 13:08:45,798 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 13:08:45,798 - INFO - Segmenting all stocks with Bottom-Up to extract trend data with dates...
+2025-07-15 13:08:53,440 - INFO - Creating daily trend state matrix for all stocks...
+2025-07-15 13:08:55,944 - INFO - Creating adjacency matrix from trend slope correlations...
+2025-07-15 13:08:55,944 - INFO - Scaling daily trend data...
+2025-07-15 13:08:55,961 - INFO - Creating graph-structured sequences from trend data...
+2025-07-15 13:08:55,973 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 13:08:55,973 - INFO - Total sequences generated: 2777
+2025-07-15 13:08:55,973 - INFO - Input sequences shape (X): (2777, 10, 32, 2)
+2025-07-15 13:08:55,973 - INFO - Target sequences shape (y): (2777, 32, 2)
+2025-07-15 13:08:55,973 - INFO - Unique stocks in final dataset: 32
+2025-07-15 13:22:19,073 - INFO - Starting preprocessing with mode: POINT
+2025-07-15 13:22:19,073 - INFO - Using model type: GraphWaveNet
+2025-07-15 13:22:19,073 - INFO - Starting data cleaning process...
+2025-07-15 13:22:19,165 - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-07-15 13:22:19,166 - INFO - Processing data for graph-based point prediction...
+2025-07-15 13:22:19,348 - INFO - === PREPROCESSING SUMMARY ===
+2025-07-15 13:22:19,348 - INFO - Total sequences generated: 2727
+2025-07-15 13:22:19,348 - INFO - Input sequences shape (X): (2727, 60, 32, 5)
+2025-07-15 13:22:19,348 - INFO - Target sequences shape (y): (2727, 1, 32, 1)
+2025-07-15 13:22:19,348 - INFO - Unique stocks in final dataset: 32

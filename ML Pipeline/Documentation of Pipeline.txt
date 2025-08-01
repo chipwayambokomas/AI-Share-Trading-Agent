@@ -1,0 +1,63 @@
+﻿Main.py 
+Stage 1: Feature Extraction
+* Module: stage_1_feature_extraction
+* Function: Loads and combines raw data into a unified DataFrame
+* Input: Configuration settings
+* Output: Combined dataset (combined_df)
+Stage 2: Data Preprocessing
+* Dynamic Module Loading: Automatically selects the appropriate preprocessing module based on prediction mode and model type
+* Supported Combinations:
+   * Point Prediction: DNN, GNN, STGNN preprocessing variants
+   * Trend Prediction: DNN, GNN, STGNN preprocessing variants
+* Output: Processed features (X), targets (y), stock identifiers, scalers, and adjacency matrix
+Stage 3: Data Partitioning
+* Module: stage_3_data_partitioning
+* Function: Splits data into training, validation, and test sets
+* Output: Data loaders and test datasets
+Stage 4: Model Development
+* Module: stage_4_model_development
+* Function: Trains the selected model architecture
+* Special Handling: Graph models receive adjacency matrix support
+* Output: Trained model and training time
+Stage 5: Model Evaluation
+* Module: stage_5_model_evaluation
+* Function: Evaluates model performance on test data
+* Input: Trained model, test data, scalers, and configuration
+Configuration
+The pipeline relies on a config module that should define:
+* PREDICTION_MODE: Either "POINT" or "TREND"
+* MODEL_TYPE: One of "TCN", "MLP", "GraphWaveNet", or "DSTAGNN"
+
+
+config.py 
+Configure the variables to run the experiments 
+
+
+utils.py 
+Prints the header to separate stages 
+Calculates the adjacency matrix and returns the adj_matrix_tensor
+
+
+Stage 1: 
+Process all the excel sheets and combines it into a single dataframe 
+
+
+Stage 2: 
+Takes the combined single dataframe 
+Checks to see if there are stocks with more than 10% data loss 
+For Point Prediction DNNS: creates the point sequences for X and Y 
+For Point Prediction GNNs: returns X, Y and the adjacency matrix 
+For Trend Prediction DNNs: creates the sequences using the bottom up piecewise segmentation process and returns the sequences just like Point Prediction
+For Trend Prediction GNNs: creates the sequences using the bottom up piecewise segmentation process and returns the sequences just like Point Prediction and returns the X, Y and the adjacency matrix
+
+
+Stage 3: 
+Takes the sequences, breaks it up into validation set, and prepares the dataloaders for the models 
+
+
+Stage 4: 
+Loads the model, loads the data, trains the model, and captures the validation loss and training loss. Returns the trained model. 
+
+
+Stage 5: 
+Tests the model on test data, descales the data and calculates the metrics, and gives out the metrics on how the model performed on the test data.

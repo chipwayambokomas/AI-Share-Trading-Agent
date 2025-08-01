@@ -1,0 +1,11 @@
+myenv/
+venv311/
+# .gitignore
+myenv/
+*/venv*/
+*.zip
+*.lib
+*.dll
+*.pkl
+*.csv
+*.xlsx

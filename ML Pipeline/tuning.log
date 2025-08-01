@@ -1,0 +1,16 @@
+--- Running Initial Data Preparation (Stages 1-3) ---
+--- Data Preparation Complete ---
+Starting study with 2 trials and a timeout of 3600 seconds.
+--- Starting Trial 0 ---
+Trial 0 Parameters: {'learning_rate': 0.00384307777819376, 'batch_size': 16, 'dstagnn_nb_block': 2, 'dstagnn_K': 4, 'dstagnn_nb_chev_filter': 64, 'dstagnn_d_model': 64, 'dstagnn_d_k': 32, 'dstagnn_d_v': 16, 'dstagnn_n_heads': 2}
+Trial 0 - Epoch 1: Validation Loss = 1.600769
+Trial 0 - Epoch 2: Validation Loss = 1.375650
+Trial 0 - Epoch 3: Validation Loss = 0.402177
+Trial 0 - Epoch 4: Validation Loss = 0.221548
+Trial 0 - Epoch 5: Validation Loss = 0.226705
+Trial 0 - Epoch 6: Validation Loss = 0.226701
+Trial 0 - Epoch 7: Validation Loss = 0.238122
+Trial 0 - Epoch 8: Validation Loss = 0.210939
+Trial 0 - Epoch 9: Validation Loss = 0.251228
+Trial 0 - Epoch 10: Validation Loss = 0.259750
+Trial 0 - Epoch 11: Validation Loss = 0.233251

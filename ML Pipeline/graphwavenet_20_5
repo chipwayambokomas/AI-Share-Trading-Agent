@@ -1,0 +1,213 @@
+(myenv) PS C:\Users\PIC\Desktop\ML pipeline\ML Pipeline> python main.py
+
+================================================================================
+## STAGE 1: FEATURE EXTRACTION ##
+================================================================================
+
+Purpose: Read data from all sheets in the Excel file, stack them into a single
+DataFrame, and add a 'StockID' to identify each security.
+Executing Code: Loading and concatenating data from all sheets...
+
+
+================================================================================
+## STAGE 2: PREPROCESSING (GNN POINT PREDICTION) ## 
+================================================================================
+
+================================================================================
+## ADJACENCY MATRIX CREATION ##
+================================================================================
+Creating adjacency matrix based on 'vwap' correlation...
+Correlation threshold: 0.75
+Adjacency matrix created with shape: torch.Size([32, 32])
+Number of nodes (stocks): 32
+Number of edges (connections): 51
+Scaling features per stoc 
+Creating graph sequences: 
+
+================================================================================
+## STAGE 3: DATA PARTITIONING ##
+================================================================================
+
+Purpose: Split data chronologically for all models. 
+- Method: Time-based split.
+- Train Split: First 60% of samples
+- Validation Split: Next 20% of samples
+- Test Split: Last 20% of samples
+Executing Code: Partitioning data and creating PyTorch DataLoaders...
+
+
+Data partitioning complete:
+  - Training set size:   1657
+  - Validation set size: 552
+  - Test set size:       554
+  - Test dates found:    554
+
+PyTorch DataLoaders created with batch size: 64     
+  - Training data shuffling: False
+
+
+Purpose: Train a model for POINT prediction.
+- Model Architecture: GraphWaveNet
+Executing Code: Initializing and training the GraphWaveNet model...
+
+
+Starting model training...
+Epoch  1/50: 100%|█| 26/2
+Epoch  1/50 Summary: Avg Train Loss: 0.046108, Avg Val Loss: 0.035374
+Epoch  2/50: 100%|█████████████████████████████████████| 26/26 [01:23<00:00,  3.21s/batch, loss=0.0152]
+Epoch  2/50 Summary: Avg Train Loss: 0.014341, Avg Val Loss: 0.032473
+Epoch  3/50: 100%|██████████████████████████████████████| 26/26 [01:13<00:00,  2.83s/batch, loss=0.018]
+Epoch  3/50 Summary: Avg Train Loss: 0.011729, Avg Val Loss: 0.038355
+Epoch  4/50: 100%|████████████████████████████████████| 26/26 [01:12<00:00,  2.77s/batch, loss=0.00995]
+Epoch  4/50 Summary: Avg Train Loss: 0.010431, Avg Val Loss: 0.029209
+Epoch  5/50: 100%|█████████████████████████████████████| 26/26 [01:13<00:00,  2.81s/batch, loss=0.0106]
+Epoch  5/50 Summary: Avg Train Loss: 0.008717, Avg Val Loss: 0.028806
+Epoch  6/50: 100%|█████████████████████████████████████| 26/26 [01:14<00:00,  2.87s/batch, loss=0.0101]
+Epoch  6/50 Summary: Avg Train Loss: 0.007930, Avg Val Loss: 0.029878
+Epoch  7/50: 100%|█████████████████████████████████████| 26/26 [01:12<00:00,  2.79s/batch, loss=0.0091]
+Epoch  7/50 Summary: Avg Train Loss: 0.006306, Avg Val Loss: 0.027166
+Epoch  8/50: 100%|████████████████████████████████████| 26/26 [01:15<00:00,  2.91s/batch, loss=0.00597]
+Epoch  8/50 Summary: Avg Train Loss: 0.004316, Avg Val Loss: 0.027771
+Epoch  9/50: 100%|████████████████████████████████████| 26/26 [01:14<00:00,  2.87s/batch, loss=0.00353]
+Epoch  9/50 Summary: Avg Train Loss: 0.002620, Avg Val Loss: 0.020036
+Epoch 10/50: 100%|████████████████████████████████████| 26/26 [01:15<00:00,  2.91s/batch, loss=0.00307]
+Epoch 10/50 Summary: Avg Train Loss: 0.001949, Avg Val Loss: 0.019439
+Epoch 11/50: 100%|████████████████████████████████████| 26/26 [01:15<00:00,  2.92s/batch, loss=0.00294]
+Epoch 11/50 Summary: Avg Train Loss: 0.001786, Avg Val Loss: 0.017121
+Epoch 12/50: 100%|████████████████████████████████████| 26/26 [01:14<00:00,  2.87s/batch, loss=0.00276]
+Epoch 12/50 Summary: Avg Train Loss: 0.001644, Avg Val Loss: 0.014832
+Epoch 13/50: 100%|████████████████████████████████████| 26/26 [01:16<00:00,  2.94s/batch, loss=0.00264]
+Epoch 13/50 Summary: Avg Train Loss: 0.001536, Avg Val Loss: 0.013041
+Epoch 14/50: 100%|████████████████████████████████████| 26/26 [01:18<00:00,  3.02s/batch, loss=0.00251]
+Epoch 14/50 Summary: Avg Train Loss: 0.001466, Avg Val Loss: 0.012107
+Epoch 15/50: 100%|████████████████████████████████████| 26/26 [01:19<00:00,  3.05s/batch, loss=0.00236]
+Epoch 15/50 Summary: Avg Train Loss: 0.001408, Avg Val Loss: 0.011098
+Epoch 16/50: 100%|████████████████████████████████████| 26/26 [01:18<00:00,  3.01s/batch, loss=0.00231]
+Epoch 16/50 Summary: Avg Train Loss: 0.001351, Avg Val Loss: 0.010522
+Epoch 17/50: 100%|████████████████████████████████████| 26/26 [01:18<00:00,  3.03s/batch, loss=0.00223]
+Epoch 17/50 Summary: Avg Train Loss: 0.001315, Avg Val Loss: 0.010000
+Epoch 18/50: 100%|████████████████████████████████████| 26/26 [01:17<00:00,  2.96s/batch, loss=0.00223]
+Epoch 18/50 Summary: Avg Train Loss: 0.001301, Avg Val Loss: 0.009446
+Epoch 19/50: 100%|█████████████████████████████████████| 26/26 [01:17<00:00,  2.97s/batch, loss=0.0022]
+Epoch 19/50 Summary: Avg Train Loss: 0.001269, Avg Val Loss: 0.009015
+Epoch 20/50: 100%|████████████████████████████████████| 26/26 [01:13<00:00,  2.81s/batch, loss=0.00218]
+Epoch 20/50 Summary: Avg Train Loss: 0.001245, Avg Val Loss: 0.008999
+Epoch 21/50: 100%|████████████████████████████████████| 26/26 [01:15<00:00,  2.90s/batch, loss=0.00211]
+Epoch 21/50 Summary: Avg Train Loss: 0.001231, Avg Val Loss: 0.008771
+Epoch 22/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.73s/batch, loss=0.00206]
+Epoch 22/50 Summary: Avg Train Loss: 0.001213, Avg Val Loss: 0.008391
+Epoch 23/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.73s/batch, loss=0.00207]
+Epoch 23/50 Summary: Avg Train Loss: 0.001198, Avg Val Loss: 0.008213
+Epoch 24/50: 100%|██████████████████████████████████████| 26/26 [01:11<00:00,  2.74s/batch, loss=0.002]
+Epoch 24/50 Summary: Avg Train Loss: 0.001189, Avg Val Loss: 0.007786
+Epoch 25/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.75s/batch, loss=0.00201]
+Epoch 25/50 Summary: Avg Train Loss: 0.001180, Avg Val Loss: 0.007448
+Epoch 26/50: 100%|██████████████████████████████████████| 26/26 [01:11<00:00,  2.73s/batch, loss=0.002]
+Epoch 26/50 Summary: Avg Train Loss: 0.001162, Avg Val Loss: 0.007442
+Epoch 27/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.75s/batch, loss=0.00196]
+Epoch 27/50 Summary: Avg Train Loss: 0.001154, Avg Val Loss: 0.007441
+Epoch 28/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.74s/batch, loss=0.00191]
+Epoch 28/50 Summary: Avg Train Loss: 0.001150, Avg Val Loss: 0.007173
+Epoch 29/50: 100%|█████████████████████████████████████| 26/26 [01:11<00:00,  2.75s/batch, loss=0.0019]
+Epoch 29/50 Summary: Avg Train Loss: 0.001138, Avg Val Loss: 0.006989
+Epoch 30/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.73s/batch, loss=0.00189]
+Epoch 30/50 Summary: Avg Train Loss: 0.001130, Avg Val Loss: 0.007024
+Epoch 31/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.75s/batch, loss=0.00187]
+Epoch 31/50 Summary: Avg Train Loss: 0.001112, Avg Val Loss: 0.007083
+Epoch 32/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.75s/batch, loss=0.00184]
+Epoch 32/50 Summary: Avg Train Loss: 0.001113, Avg Val Loss: 0.006857
+Epoch 33/50: 100%|████████████████████████████████████| 26/26 [01:11<00:00,  2.74s/batch, loss=0.00185]
+Epoch 33/50 Summary: Avg Train Loss: 0.001100, Avg Val Loss: 0.007244
+Epoch 34/50: 100%|████████████████████████████████████| 26/26 [01:14<00:00,  2.87s/batch, loss=0.00182]
+Epoch 34/50 Summary: Avg Train Loss: 0.001097, Avg Val Loss: 0.006924
+Epoch 35/50: 100%|████████████████████████████████████| 26/26 [01:17<00:00,  2.99s/batch, loss=0.00178]
+Epoch 35/50 Summary: Avg Train Loss: 0.001094, Avg Val Loss: 0.007043
+Epoch 36/50: 100%|█████████████████████████████████████| 26/26 [01:18<00:00,  3.01s/batch, loss=0.0018]
+Epoch 36/50 Summary: Avg Train Loss: 0.001086, Avg Val Loss: 0.006950
+Epoch 37/50: 100%|████████████████████████████████████| 26/26 [01:17<00:00,  3.00s/batch, loss=0.00176]
+Epoch 37/50 Summary: Avg Train Loss: 0.001076, Avg Val Loss: 0.006922
+Epoch 38/50: 100%|████████████████████████████████████| 26/26 [01:17<00:00,  2.97s/batch, loss=0.00174]
+Epoch 38/50 Summary: Avg Train Loss: 0.001070, Avg Val Loss: 0.006664
+Epoch 39/50: 100%|████████████████████████████████████| 26/26 [01:14<00:00,  2.88s/batch, loss=0.00175]
+Epoch 39/50 Summary: Avg Train Loss: 0.001063, Avg Val Loss: 0.006493
+Epoch 40/50: 100%|████████████████████████████████████| 26/26 [01:14<00:00,  2.85s/batch, loss=0.00172]
+Epoch 40/50 Summary: Avg Train Loss: 0.001060, Avg Val Loss: 0.006351
+Epoch 41/50: 100%|████████████████████████████████████| 26/26 [01:20<00:00,  3.08s/batch, loss=0.00172]
+Epoch 41/50 Summary: Avg Train Loss: 0.001053, Avg Val Loss: 0.006319
+Epoch 42/50: 100%|████████████████████████████████████| 26/26 [01:15<00:00,  2.90s/batch, loss=0.00169]
+Epoch 42/50 Summary: Avg Train Loss: 0.001045, Avg Val Loss: 0.006495
+Epoch 43/50: 100%|████████████████████████████████████| 26/26 [01:13<00:00,  2.85s/batch, loss=0.00169]
+Epoch 43/50 Summary: Avg Train Loss: 0.001045, Avg Val Loss: 0.006140
+Epoch 44/50: 100%|████████████████████████████████████| 26/26 [01:14<00:00,  2.85s/batch, loss=0.00166]
+Epoch 44/50 Summary: Avg Train Loss: 0.001039, Avg Val Loss: 0.006070
+Epoch 45/50: 100%|████████████████████████████████████| 26/26 [01:14<00:00,  2.88s/batch, loss=0.00166]
+Epoch 45/50 Summary: Avg Train Loss: 0.001032, Avg Val Loss: 0.006202
+Epoch 46/50: 100%|████████████████████████████████████| 26/26 [01:16<00:00,  2.93s/batch, loss=0.00165]
+Epoch 46/50 Summary: Avg Train Loss: 0.001027, Avg Val Loss: 0.006016
+Epoch 47/50: 100%|████████████████████████████████████| 26/26 [01:16<00:00,  2.95s/batch, loss=0.00164]
+Epoch 47/50 Summary: Avg Train Loss: 0.001020, Avg Val Loss: 0.006112
+Epoch 48/50: 100%|████████████████████████████████████| 26/26 [01:16<00:00,  2.95s/batch, loss=0.00164]
+Epoch 48/50 Summary: Avg Train Loss: 0.001027, Avg Val Loss: 0.006254
+Epoch 49/50: 100%|████████████████████████████████████| 26/26 [01:14<00:00,  2.87s/batch, loss=0.00159]
+Epoch 49/50 Summary: Avg Train Loss: 0.001032, Avg Val Loss: 0.005870
+Epoch 50/50: 100%|█████████████████████████████████████| 26/26 [01:18<00:00,  3.03s/batch, loss=0.0016]
+Epoch 50/50 Summary: Avg Train Loss: 0.001027, Avg Val Loss: 0.005922
+
+Model training complete in 4171.90 seconds.
+
+================================================================================
+## STAGE 5: MODEL EVALUATION ##
+================================================================================
+Purpose: Assess final model performance for POINT mode.
+
+Evaluating POINT prediction performance...
+Inverse-transforming prices: 100%|█████████████████████████████| 88640/88640 [00:11<00:00, 7742.32it/s]
+
+Quantitative Metrics on Combined Test Set (All Stocks):
+  - MSE: 74493862.28, RMSE: 8630.98, MAE: 2368.11, MAPE: 5.71%
+
+Point prediction evaluation results saved to 'evaluation_results_POINT_GraphWaveNet.csv'.
+
+================================================================================
+## STAGE 5: NETWORK ANALYSIS METRICS ##
+================================================================================
+Purpose: Evaluate the learned dependency structure using network theory.
+
+Calculating network centrality metrics...
+
+Detected 12 communities with a modularity score of: 0.4719
+
+--- Network Metrics per Stock ---
+       Degree Centrality Betweenness Centrality Eigenvector Centrality Clustering Coefficient
+ABG.JO            1.0000                 0.0000                 0.0008                 0.0000
+AGL.JO            9.0000                 0.1459                 0.3203                 0.3056
+AMS.JO            3.0000                 0.0000                 0.0815                 1.0000
+APN.JO            1.0000                 0.0000                 0.0000                 0.0000
+BTI.JO            0.0000                 0.0000                 0.0000                 0.0000
+BVT.JO            4.0000                 0.0167                 0.1997                 0.6667
+CLS.JO            7.0000                 0.0201                 0.3665                 0.6667
+CPI.JO            9.0000                 0.1291                 0.3974                 0.4167
+DSY.JO            0.0000                 0.0000                 0.0000                 0.0000
+EXX.JO            3.0000                 0.0073                 0.0868                 0.6667
+FSR.JO            3.0000                 0.0999                 0.1029                 0.3333
+GFI.JO            8.0000                 0.0416                 0.3882                 0.5357
+GLN.JO            5.0000                 0.0638                 0.1135                 0.4000
+GRT.JO            6.0000                 0.0096                 0.3383                 0.8000
+HAR.JO            3.0000                 0.0000                 0.1864                 1.0000
+IMP.JO            3.0000                 0.0000                 0.0815                 1.0000
+INL.JO            3.0000                 0.0000                 0.0560                 1.0000
+INP.JO            5.0000                 0.0444                 0.1669                 0.4000
+KIO.JO            4.0000                 0.0022                 0.0937                 0.6667
+MNP.JO            0.0000                 0.0000                 0.0000                 0.0000
+MRP.JO            0.0000                 0.0000                 0.0000                 0.0000
+MTN.JO            0.0000                 0.0000                 0.0000                 0.0000
+NED.JO            3.0000                 0.0882                 0.0049                 0.0000
+NPN.JO            7.0000                 0.0104                 0.3476                 0.6190
+NRP.JO            0.0000                 0.0000                 0.0000                 0.0000
+REM.JO            1.0000                 0.0000                 0.0000                 0.0000
+RLO.JO            1.0000                 0.0000                 0.0008                 0.0000
+SBK.JO            4.0000                 0.1663                 0.0284                 0.0000
+SHP.JO            4.0000                 0.0750                 0.0600                 0.5000
+SLM.JO            1.0000                 0.0000                 0.0047                 0.0000
+SOL.JO            4.0000                 0.0000                 0.2369                 1.0000
+VOD.JO            0.0000                 0.0000                 0.0000                 0.0000

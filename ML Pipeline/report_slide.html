@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Model Performance Results</title>
+<style>
+body {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+background-color: #f8f9fa;
+display: flex;
+justify-content: center;
+align-items: center;
+min-height: 100vh;
+margin: 0;
+padding: 20px;
+}
+Generated code
+.slide-container {
+        background-color: #ffffff;
+        width: 100%;
+        max-width: 1400px;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 32px;
+        color: #212529;
+        text-align: center;
+        margin-bottom: 20px;
+        border-bottom: 3px solid #007bff;
+        padding-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 24px;
+        color: #343a40;
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+    
+    h3 {
+        font-size: 20px;
+        color: #495057;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+    
+    .experiments-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .experiment {
+        flex: 1;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        border: 1px solid #dee2e6;
+        text-align: left;
+        padding: 12px 15px;
+        font-size: 16px;
+    }
+
+    thead th {
+        background-color: #343a40;
+        color: white;
+        font-weight: 600;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+    
+    .highlight-best {
+        background-color: #d1e7dd;
+        font-weight: bold;
+        color: #0f5132;
+    }
+    
+    .note {
+        font-style: italic;
+        color: #6c757d;
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+
+    .summary-text {
+        font-size: 18px;
+        margin-top: 15px;
+        padding: 15px;
+        background-color: #e9ecef;
+        border-left: 5px solid #007bff;
+        border-radius: 5px;
+    }
+    
+    .details-section {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px solid #e9ecef;
+    }
+
+    .details-section h2 {
+        border-bottom: none;
+    }
+
+    .details-section ul {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+    .details-section li {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
+
+</style>
+</head>
+<body>
+<div class="slide-container">
+    <h1>Model Performance in Time Series Prediction</h1>
+
+    <div class="experiments-wrapper">
+        <!-- EXPERIMENT 1: SINGLE STEP PREDICTION -->
+        <div class="experiment">
+            <h2>Experiment 1: Single Step Prediction</h2>
+            <p class="note">Configuration: 60 input window, 1 output window. Lower values indicate better performance.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>RMSE</th>
+                        <th>MAE</th>
+                        <th>MAPE (%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AGCRN</td>
+                        <td>32312.83</td>
+                        <td>14392.24</td>
+                        <td>39.86</td>
+                    </tr>
+                    <tr>
+                        <td>DSTAGNN</td>
+                        <td>11864.32</td>
+                        <td>3508.29</td>
+                        <td>8.77</td>
+                    </tr>
+                    <tr>
+                        <td>GraphWaveNet</td>
+                        <td>7048.51</td>
+                        <td>1627.10</td>
+                        <td>3.66</td>
+                    </tr>
+                    <tr>
+                        <td>HSDGNN</td>
+                        <td>9325.34</td>
+                        <td>2373.85</td>
+                        <td>5.53</td>
+                    </tr>
+                    <tr>
+                        <td>MLP</td>
+                        <td>7805.43</td>
+                        <td>4874.60</td>
+                        <td>33.57</td>
+                    </tr>
+                    <tr>
+                        <td>TCN</td>
+                        <td class="highlight-best">415.82</td>
+                        <td class="highlight-best">232.56</td>
+                        <td class="highlight-best">1.39</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="summary-text">
+                <strong>Best Model Summary:</strong> The <strong>TCN</strong> model demonstrated superior performance across all metrics in the single-step prediction task.
+            </div>
+        </div>
+
+        <!-- EXPERIMENT 2: TRENDLINE PREDICTION -->
+        <div class="experiment">
+            <h2>Experiment 2: Trendline Prediction</h2>
+            <p class="note">Configuration: 10 input window, 1 max segmentation penalty. Lower values indicate better performance.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Slope RMSE (°)</th>
+                        <th>Slope MAE (°)</th>
+                        <th>Duration RMSE (days)</th>
+                        <th>Duration MAE (days)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AGCRN</td>
+                        <td>100.31</td>
+                        <td>60.20</td>
+                        <td>0.49</td>
+                        <td>0.28</td>
+                    </tr>
+                    <tr>
+                        <td>DSTAGNN</td>
+                        <td class="highlight-best">71.65</td>
+                        <td class="highlight-best">31.68</td>
+                        <td>0.25</td>
+                        <td>0.04</td>
+                    </tr>
+                    <tr>
+                        <td>GraphWaveNet</td>
+                        <td>118.44</td>
+                        <td>81.82</td>
+                        <td>0.11</td>
+                        <td>0.02</td>
+                    </tr>
+                    <tr>
+                        <td>HSDGNN</td>
+                        <td>117.28</td>
+                        <td>82.15</td>
+                        <td>0.12</td>
+                        <td>0.02</td>
+                    </tr>
+                    <tr>
+                        <td>MLP</td>
+                        <td>119.62</td>
+                        <td>83.11</td>
+                        <td class="highlight-best">0.10</td>
+                        <td class="highlight-best">0.01</td>
+                    </tr>
+                    <tr>
+                        <td>TCN</td>
+                        <td>120.94</td>
+                        <td>84.53</td>
+                        <td class="highlight-best">0.10</td>
+                        <td class="highlight-best">0.01</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="summary-text">
+                <strong>Best Model Summary:</strong> For trendline prediction, <strong>DSTAGNN</strong> was the most accurate for predicting slope angles. <strong>TCN and MLP</strong> were the top performers for predicting the duration of trends.
+            </div>
+        </div>
+    </div>
+    
+    <div class="details-section">
+        <h2>Experimentation Details & Configurations</h2>
+        <ul>
+            <li>All experiments were conducted on a High-Performance Computing (HPC) cluster.</li>
+            <li><strong>Epochs:</strong> 40 epochs were used for the AGCRN model, while 50 epochs were used for DSTAGNN, GraphWaveNet, MLP, and TCN.</li>
+            <li><strong>Model Sources & Configurations:</strong>
+                <ul>
+                    <li><strong>AGCRN:</strong> Based on the paper by Bai et al.</li>
+                    <li><strong>DSTAGNN:</strong> Based on the paper by Lan et al.</li>
+                    <li><strong>GraphWaveNet:</strong> Utilized the vanilla implementation from its original repository.</li>
+                    <li><strong>HSDGNN:</strong> Based on the paper "Graph Neural Networks for multivariate time-series forecasting via learning hierarchical spatiotemporal dependencies" by Zhou et al.</li>
+                    <li><strong>MLP:</strong> Configuration inspired by the work of Niska et al. on forecasting air pollution time series.</li>
+                    <li><strong>TCN:</strong> Configuration influenced by the paper "Leveraging Hybrid Deep Learning Models for Enhanced Multivariate Time Series Forecasting" by Mahmoud and Mohammed.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
