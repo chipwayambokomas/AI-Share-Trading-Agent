@@ -190,7 +190,7 @@ def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_thresho
 
     # Make a copy of the matrix and zero out all values below the threshold
     pruned_adj_numpy = np.copy(adj_numpy)
-    pruned_adj_numpy[pruned_adj_numpy < threshold] = 0
+    pruned_adj_numpy[pruned_adj_numpy < 0.1] = 0
 
     # Build a directed graph (DiGraph) from the pruned adjacency matrix
     G = nx.from_numpy_array(pruned_adj_numpy, create_using=nx.DiGraph)

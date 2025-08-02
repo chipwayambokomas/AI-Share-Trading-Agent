@@ -9,20 +9,20 @@ RANDOM_SEED = 42
 PREDICTION_MODE = "TREND" # "POINT" or "TREND"
 
 # --- MASTER SWITCH: Choose the model type ---
-MODEL_TYPE = "DSTAGNN" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
+MODEL_TYPE = "AGCRN" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
 
 # --- Data & Preprocessing ---
 POINT_INPUT_WINDOW_SIZE = 60
 POINT_OUTPUT_WINDOW_SIZE = 1
 TREND_INPUT_WINDOW_SIZE = 10
-SEGMENTATION_PENALTY = 1.0
+SEGMENTATION_PENALTY = 60.0
 TRAIN_SPLIT = 0.60
 VAL_SPLIT = 0.20
 
 # --- Training Hyperparameters ---
-LEARNING_RATE = 0.01
+LEARNING_RATE = 0.001
 EPOCHS = 2
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 
 # --- Adjacency Matrix ---
 CORRELATION_THRESHOLD = 0.75 # For static adjacency matrix
