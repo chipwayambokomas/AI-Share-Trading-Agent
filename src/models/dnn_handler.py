@@ -3,19 +3,33 @@ from .architectures.tcn import TCN_Forecaster
 from .architectures.mlp import MLP_Forecaster
 import torch.nn as nn
 
+def _trend_loss_function(predicted, actual, mse_criterion):
+        """
+        Calculates a combined MSE loss for the two trend features: slope and duration.
+        This is specific to non-graph models in TREND mode.
+        """
+        # predicted/actual shape: (batch_size, 2) where columns are [slope, duration]
+        loss_slope = mse_criterion(predicted[:, 0], actual[:, 0])
+        loss_duration = mse_criterion(predicted[:, 1], actual[:, 1])
+        return (loss_slope + loss_duration) / 2.0
+
 class DNNHandler(BaseModelHandler):
     """Base handler for non-graph DNN models like TCN and MLP."""
     def is_graph_based(self) -> bool:
         return False
 
     def get_loss_function(self):
-        """Gets the appropriate loss function for DNN models."""
+        """
+        Gets the appropriate loss function for DNN models.
+        - For TREND mode, it returns the custom combined loss function.
+        - For POINT mode, it returns the standard MSE loss.
+        """
         if self.settings.PREDICTION_MODE == "TREND":
-            mse_criterion = nn.MSELoss()
-            # For TREND mode, we average the MSE across two outputs (e.g., trend and magnitude).
-            return lambda pred, act: (mse_criterion(pred[:, 0], act[:, 0]) + mse_criterion(pred[:, 1], act[:, 1])) / 2.0
+            # For TREND mode, we use the special combined loss function.
+            # We use a lambda function to wrap it with an nn.MSELoss instance.
+            return lambda pred, act: _trend_loss_function(pred, act, nn.MSELoss())
         else: # POINT mode
-            #the average of the squared differences between predicted and actual values
+            # For POINT mode, standard MSE is correct.
             return nn.MSELoss()
 
 class TCNHandler(DNNHandler):

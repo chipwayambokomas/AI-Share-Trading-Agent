@@ -1,7 +1,7 @@
 # --- Global Configuration ---
 FILE_PATH = "data/JSE_Top40_OHLCV_2014_2024.xlsx"
 RESULTS_DIR = "results"
-TARGET_COLUMN = 'close'
+TARGET_COLUMN = 'vwap'
 FEATURE_COLUMNS = ['open', 'high', 'low', 'close', 'vwap']
 RANDOM_SEED = 42
 
@@ -9,7 +9,7 @@ RANDOM_SEED = 42
 PREDICTION_MODE = "TREND" # "POINT" or "TREND"
 
 # --- MASTER SWITCH: Choose the model type ---
-MODEL_TYPE = "DSTAGNN" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
+MODEL_TYPE = "MLP" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
 
 # --- Data & Preprocessing ---
 POINT_INPUT_WINDOW_SIZE = 60
