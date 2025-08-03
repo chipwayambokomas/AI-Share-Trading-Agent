@@ -1,48 +1,46 @@
 import logging
 import pandas as pd
 import numpy as np
-import torch
 from sklearn.preprocessing import MinMaxScaler
 from tqdm import tqdm
-import ruptures as rpt
 from multiprocessing import Pool, cpu_count
 from .base_processor import BaseProcessor
 from ..utils import print_header, create_adjacency_matrix
-import matplotlib.pyplot as plt
-import seaborn as sns
+
+
+from .segmentation import (
+    bottomupsegment,
+    create_segment_least_squares,
+    compute_sum_of_squared_error
+)
 
 logger = logging.getLogger(__name__)
 
-def _segment_one_stock_with_dates_bottom_up(args):
-    """Worker function to segment a stock's time series and return trends with dates."""
-    stock_id, stock_df, target_column, penalty = args
+def _segment_one_stock_custom_bottom_up_with_dates(args):
+    """Worker to segment a stock's time series using the custom bottom-up algorithm and return dates."""
+    stock_id, stock_df, max_error, target_column = args
     price_values = stock_df[target_column].values
-    dates = stock_df['Date'].values
-    if len(price_values) < 2: return stock_id, []
+    if len(price_values) < 2: 
+        return None
+        
+    try:
+        segments = bottomupsegment(
+            price_values, 
+            create_segment_least_squares, 
+            compute_sum_of_squared_error, 
+            max_error
+        )
+        if not segments: return None
 
-    #initialize a change point detection algorithm using the Bottom-Up method, it starts with the entire time series and iteratively merges segments to find the best fit and by best fit we mean we stop when merging would lose too much accuracy. it uses the l2 model which uses least squares to measure the fit of the segments
-    algo = rpt.BottomUp(model="l2").fit(price_values)
+        slopes = [seg[3] for seg in segments]
+        durations = [seg[2] - seg[0] for seg in segments]
+        dates = [stock_df['Date'].iloc[int(seg[0])] for seg in segments]
+        
+        return (stock_id, np.array(slopes), np.array(durations), dates)
+    except Exception as e:
+        logger.error(f"Stock {stock_id}: Error during custom segmentation: {e}")
+        return None
     
-    #predict the breakpoints in the time series using the penalty value to control how many segments we want -> lower penalty means more segments
-    breakpoints = algo.predict(pen=penalty)
-    
-    #ensure start and end points are included
-    all_bps = sorted(list(set([0] + breakpoints + [len(price_values)])))
-
-    trends = []
-    #loop through pairs of breakpoints to calculate slopes and durations
-    for start, end in zip(all_bps[:-1], all_bps[1:]):
-        #if the segment has more than one point, calculate the slope and duration
-        if end - start > 1:
-            slope = np.polyfit(np.arange(end - start), price_values[start:end], 1)[0]
-            trends.append({
-                'start_date': dates[start],
-                'end_date': dates[end - 1],
-                'slope': slope,
-                'duration': end - start
-            })
-    return stock_id, trends
-
 class GraphProcessor(BaseProcessor):
     """Processor for all graph-based models (GNN, STGNN, etc.)."""
 
@@ -53,7 +51,7 @@ class GraphProcessor(BaseProcessor):
         if self.mode == "POINT":
             return self._process_point(cleaned_df)
         elif self.mode == "TREND":
-            return self._process_trend(cleaned_df)
+            return self._process_trend_custom(cleaned_df)
         else:
             raise ValueError(f"Invalid PREDICTION_MODE: {self.mode}")
 
@@ -85,63 +83,155 @@ class GraphProcessor(BaseProcessor):
 
         return np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), stock_ids, scalers, adj_matrix
 
-    def _process_trend(self, cleaned_df: pd.DataFrame):
+    def _process_trend_custom(self, cleaned_df: pd.DataFrame):
         """Handles trend prediction for graph models."""
-        #for each stock we get a tuple of stock id, sdf, target column, and segmentation penalty
-        task_args = [(sid, sdf, self.settings.TARGET_COLUMN, self.settings.SEGMENTATION_PENALTY) for sid, sdf in cleaned_df.groupby('StockID')]#group the cleaned df by stock id and start to work on that dataframe that was created
-        # Use multiprocessing to segment trends in parallel so results contains tuples of (stock_id, trends)
-        with Pool(processes=cpu_count()) as pool:
-            results = list(tqdm(pool.imap(_segment_one_stock_with_dates_bottom_up, task_args), total=len(task_args), desc="Segmenting Trends"))
+        # Segment each stock's time series into trend components using multiprocessing
+        task_args = [
+            (stock_id, stock_df.reset_index(drop=True), 
+            self.settings.MAX_SEGMENTATION_ERROR, 
+            self.settings.TARGET_COLUMN)
+            for stock_id, stock_df in cleaned_df.groupby('StockID')
+        ]
         
-        # create a dictionary of trends by stock ID, filtering out stocks with no trends
-        trends_by_stock = {sid: trends for sid, trends in results if trends}
-        if not trends_by_stock: raise ValueError("Trend segmentation failed for all stocks.")
-
-        # Create a DataFrame to hold daily slopes and durations for each stock
+        # Process all stocks in parallel for efficiency
+        with Pool(processes=cpu_count()) as pool:
+            results = list(tqdm(
+                pool.imap(_segment_one_stock_custom_bottom_up_with_dates, task_args), 
+                total=len(task_args), 
+                desc="Segmenting stock trends"
+            ))
+        
+        # Filter successful results and organize by stock ID
+        trends_by_stock = {
+            stock_id: {'slopes': slopes, 'durations': durations, 'dates': dates} 
+            for stock_id, slopes, durations, dates in results 
+            if slopes is not None  # Only include successful segmentations
+        }
+        
+        if not trends_by_stock:
+            raise ValueError("Trend segmentation failed for all stocks. Check input data quality.")
+        
+        print(f"Successfully segmented {len(trends_by_stock)} stocks")
+        
+        # Create temporal framework - get all unique dates and stock IDs
         all_dates = pd.to_datetime(np.unique(cleaned_df['Date'])).sort_values()
         stock_ids = sorted(trends_by_stock.keys())
-        daily_slopes = pd.DataFrame(index=all_dates, columns=stock_ids, dtype=float)
-        daily_durations = pd.DataFrame(index=all_dates, columns=stock_ids, dtype=float)
-
-
-        for stock_id, trends in trends_by_stock.items():
-            for trend in trends:
-                # for a given trend, fill the daily slopes and durations DataFrames -> basically go by and fill the slope and duration for each date in the trend
-                daily_slopes.loc[trend['start_date']:trend['end_date'], stock_id] = trend['slope']
-                daily_durations.loc[trend['start_date']:trend['end_date'], stock_id] = trend['duration']
         
-        # Fill NaN values with forward and backward fill to ensure continuity
-        daily_slopes.ffill(inplace=True); daily_slopes.bfill(inplace=True)
-        daily_durations.ffill(inplace=True); daily_durations.bfill(inplace=True)
+        # Initialize daily matrices for slopes and durations
+        # Each cell [date, stock] will contain the trend value for that stock on that date
+        daily_slopes = pd.DataFrame(
+            index=all_dates, 
+            columns=stock_ids, 
+            dtype=float
+        )
+        daily_durations = pd.DataFrame(
+            index=all_dates, 
+            columns=stock_ids, 
+            dtype=float
+        )
         
-        # Create adjacency matrix based on correlation of daily slopes and durations
-        slopes_correlation_matrix = daily_slopes.corr()
-        duration_correlation_matrix = daily_durations.corr()
-        combined_correlation_matrix = (slopes_correlation_matrix + duration_correlation_matrix) / 2
-        adj_matrix_np = (combined_correlation_matrix.abs() >= 0.5).astype(int).values
-        np.fill_diagonal(adj_matrix_np, 0)
-        adj_matrix = torch.tensor(adj_matrix_np, dtype=torch.float32)
-
-        # Scale slopes and durations globally
+        for stock_id, trends in tqdm(trends_by_stock.items(), desc="Filling daily matrices"):
+            # For each trend segment, fill the corresponding date range with constant values
+            for segment_idx in range(len(trends['slopes'])):
+                start_date = trends['dates'][segment_idx]
+                duration_days = trends['durations'][segment_idx]
+                end_date = start_date + pd.to_timedelta(duration_days - 1, unit='D')
+                
+                # Fill the entire segment period with the same slope and duration values
+                daily_slopes.loc[start_date:end_date, stock_id] = trends['slopes'][segment_idx]
+                daily_durations.loc[start_date:end_date, stock_id] = trends['durations'][segment_idx]
+        
+        # Handle any missing values by forward/backward filling
+        # This ensures no NaN values remain in the matrices
+        daily_slopes.ffill(inplace=True)
+        daily_slopes.bfill(inplace=True)
+        daily_durations.ffill(inplace=True) 
+        daily_durations.bfill(inplace=True)
+        
+        
+        # Convert slope matrix to long format for adjacency matrix computation
+        slopes_long = daily_slopes.reset_index().melt(
+            id_vars='index', 
+            var_name='StockID', 
+            value_name='slope'
+        )
+        slopes_long.rename(columns={'index': 'Date'}, inplace=True)
+        
+        # Convert duration matrix to long format
+        durations_long = daily_durations.reset_index().melt(
+            id_vars='index', 
+            var_name='StockID', 
+            value_name='duration'
+        )
+        durations_long.rename(columns={'index': 'Date'}, inplace=True)
+        
+        # Create separate adjacency matrices for slopes and durations
+        # These capture similarity between stocks based on their trend characteristics
+        slope_adj_matrix = create_adjacency_matrix(
+            slopes_long, 
+            target_column='slope', 
+            threshold=0.5
+        )
+        
+        duration_adj_matrix = create_adjacency_matrix(
+            durations_long, 
+            target_column='duration', 
+            threshold=0.5
+        )
+        
+        # Combine the two adjacency matrices by averaging
+        # This creates a unified similarity measure considering both slope and duration patterns
+        adj_matrix = (slope_adj_matrix + duration_adj_matrix) / 2.0
+        print(f"Created combined adjacency matrix of shape: {adj_matrix.shape}")
+        
+        # Determine training period for fitting scalers (avoid data leakage)
         train_end_idx = int(len(all_dates) * self.settings.TRAIN_SPLIT)
         train_dates = all_dates[:train_end_idx]
         
-        slope_scaler = MinMaxScaler(feature_range=(-1, 1)).fit(daily_slopes.loc[train_dates])
-        duration_scaler = MinMaxScaler(feature_range=(0, 1)).fit(daily_durations.loc[train_dates])
-        scalers = {'slope': slope_scaler, 'duration': duration_scaler}
-
+        # Fit scalers only on training data to prevent data leakage
+        # Slopes: scaled to [-1, 1] to preserve sign information (uptrend/downtrend)
+        # Durations: scaled to [0, 1] as they are always positive
+        slope_scaler = MinMaxScaler(feature_range=(-1, 1)).fit(
+            daily_slopes.loc[train_dates]
+        )
+        duration_scaler = MinMaxScaler(feature_range=(0, 1)).fit(
+            daily_durations.loc[train_dates]
+        )
+        
+        scalers = {
+            'slope': slope_scaler, 
+            'duration': duration_scaler
+        }
+        
+        # Apply scaling to entire dataset
         scaled_slopes = slope_scaler.transform(daily_slopes)
         scaled_durations = duration_scaler.transform(daily_durations)
-        #take multiple arrays of the same shape and combines them along a new dimension to create a 3D array
-        graph_data = np.stack([scaled_slopes, scaled_durations], axis=-1)
-
-        X, y = [], []
-        in_win = self.settings.TREND_INPUT_WINDOW_SIZE
-        for i in range(len(graph_data) - in_win):
-            X.append(graph_data[i : i + in_win, :, :])
-            y.append(graph_data[i + in_win, :, :])
         
-        return np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), stock_ids, scalers, adj_matrix
+        # Stack slopes and durations as separate features for each stock
+        # Shape: [time_steps, num_stocks, num_features]
+        graph_data = np.stack([scaled_slopes, scaled_durations], axis=-1)
+        print(f"Created graph data with shape: {graph_data.shape}")
+        
+        X, y = [], []
+        input_window = self.settings.TREND_INPUT_WINDOW_SIZE
+        total_sequence_length = input_window + 1  # input + 1 prediction step
+        
+        # Create overlapping sequences for time series prediction
+        for i in range(len(graph_data) - total_sequence_length + 1):
+            # Input: sequence of length 'input_window'
+            X.append(graph_data[i:i + input_window, :, :])
+            
+            # Target: next time step after the input sequence
+            y.append(graph_data[i + input_window, :, :])
+        
+        # Convert to numpy arrays with appropriate dtype for neural network training
+        X = np.array(X, dtype=np.float32)
+        y = np.array(y, dtype=np.float32)
+        
+        print(f"Created {len(X)} training sequences")
+        print(f"Input shape: {X.shape}, Target shape: {y.shape}")
+        
+        return X, y, stock_ids, scalers, adj_matrix
 
     def _scale_pivoted_data_point(self, pivoted_df: pd.DataFrame, stock_ids: list):
         """Scales pivoted data for each stock individually (POINT mode)."""
