@@ -25,7 +25,8 @@ def _create_point_sequences_for_stock(args):
 
     # we are scaling all the data but this is okay because if you remember the scaler is fitted on the training data only and so we are not leaking any information
     scaled_data = scaler.transform(stock_df[feature_cols])
-    X, y = [], []
+    dates = stock_df['Date'].values
+    X, y , sequence_dates= [], [],[]
     
     # Check if we have enough data points to create sequences
     if len(scaled_data) >= in_win + out_win:
@@ -34,11 +35,14 @@ def _create_point_sequences_for_stock(args):
             X.append(scaled_data[i : i + in_win, :])
             target_col_idx = feature_cols.index(target_col)
             y.append(scaled_data[i + in_win : i + in_win + out_win, target_col_idx])
+            # The date of the prediction corresponds to the first timestamp of the target `y`
+            sequence_dates.append(dates[i + in_win])
+            
     
     if not X:
         return stock_id, None, None
         
-    return stock_id, np.array(X, dtype=np.float32), np.array(y, dtype=np.float32)
+    return stock_id, np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), np.array(sequence_dates)
 
 def _segment_one_stock_custom_bottom_up(args):
     """Worker to segment a stock's time series using the custom bottom-up algorithm."""
@@ -122,22 +126,23 @@ class DNNProcessor(BaseProcessor):
             )
             task_args.append(args)
 
-        all_X, all_y, all_stock_ids = [], [], []
+        all_X, all_y, all_stock_ids, all_dates = [], [], [],[]
         with Pool(processes=cpu_count()) as pool:
             results = list(tqdm(pool.imap(_create_point_sequences_for_stock, task_args), total=len(task_args), desc="Creating sequences per stock"))
         
         # Collect results from all stocks
-        for stock_id, X_stock, y_stock in results:
+        for stock_id, X_stock, y_stock, dates_stock in results:
             # Only append if both X and y are not None
             if X_stock is not None and y_stock is not None:
                 # Append the sequences and stock IDs
                 all_X.append(X_stock)
                 all_y.append(y_stock)
                 all_stock_ids.extend([stock_id] * len(X_stock))
+                all_dates.append(dates_stock)
 
         if not all_X: raise ValueError("No sequences could be created from the data.")
         
-        return np.concatenate(all_X), np.concatenate(all_y), np.array(all_stock_ids), scalers, None
+        return np.concatenate(all_X), np.concatenate(all_y), np.array(all_stock_ids), np.concatenate(all_dates), scalers, None
 
     def _process_trend(self, cleaned_df: pd.DataFrame):
         """Handles trend prediction for DNN models."""

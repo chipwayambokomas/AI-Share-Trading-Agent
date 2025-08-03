@@ -8,7 +8,7 @@ from ..utils import print_header
 from ..models.base_handler import BaseModelHandler
 import community as community_louvain
 
-def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings):
+def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings):
     print("\nEvaluating POINT prediction performance...")
     model.eval()
 
@@ -42,6 +42,9 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
         predicted_flat = predicted_scaled.reshape(-1)
         # Tile stock IDs to match the flattened predictions -> this basically repeats the stock IDs for each sample in the flattened array
         stock_ids_tiled = np.tile(test_stock_ids, num_samples) # test_stock_ids is the ordered list
+        # The test_dates array has one date per sample. We need to repeat each date
+        # for every node (stock) in that sample to match the other arrays.
+        dates_tiled = np.repeat(test_dates, num_nodes)
         
         actual_prices, predicted_prices = [], []
         target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
@@ -80,6 +83,7 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
             actual_prices.append(scaler.inverse_transform(dummy_actual)[0, target_col_idx])
             predicted_prices.append(scaler.inverse_transform(dummy_predicted)[0, target_col_idx])
         stock_ids_tiled = test_stock_ids # For DataFrame consistency
+        dates_tiled = test_dates # For DataFrame consistency
 
     actual_prices = np.array(actual_prices)
     predicted_prices = np.array(predicted_prices)
@@ -95,10 +99,14 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
 
     # Save results
     results_df = pd.DataFrame({
+        'Date': dates_tiled,
         'StockID': stock_ids_tiled,
         'Actual_Price': actual_prices, 
         'Predicted_Price': predicted_prices
     })
+    
+    results_df.sort_values(by=['Date', 'StockID'], inplace=True)
+    
     save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_POINT_{settings.MODEL_TYPE}.csv"
     results_df.to_csv(save_path, index=False)
     print(f"\nPoint prediction evaluation results saved to '{save_path}'.")
@@ -246,14 +254,14 @@ def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_thresho
     analysis_df.to_csv(save_path, index=True)
     print(f"\nGRAPH evaluation results saved to '{save_path}'.")
 
-def run(model, X_test_t, y_test_t, test_stock_ids, scalers, handler: BaseModelHandler, settings, adj_matrix=None):
+def run(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler: BaseModelHandler, settings, adj_matrix=None):
     """
     Stage 5: Assesses final model performance and calculates network metrics if applicable.
     """
     print_header("Stage 5: Model Evaluation")
     
     if settings.PREDICTION_MODE == "POINT":
-        _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings)
+        _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings)
     elif settings.PREDICTION_MODE == "TREND":
         _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings)
           

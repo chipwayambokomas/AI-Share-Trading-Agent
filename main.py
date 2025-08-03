@@ -37,13 +37,13 @@ def main():
 
     # `preprocessor.process`: We call the `.process()` method on the processor object we got from the factory. The object itself contains all the complex logic for
     # either graph-based or DNN-based preprocessing.
-    X, y, stock_ids, scalers, adj_matrix = preprocessor.process(combined_df)
+    X, y, stock_ids,dates, scalers, adj_matrix = preprocessor.process(combined_df)
     
     # `data_partitioner.run`: This module now takes `model_handler.is_graph_based()`
     # as an argument. This tells the partitioner whether to do a chronological split
     # (for graphs) or a stratified split (for DNNs) without cluttering the partitioner
-    train_loader, val_loader, X_test_t, y_test_t, test_stock_ids = data_partitioner.run(
-        X, y, stock_ids, model_handler.is_graph_based(), settings
+    train_loader, val_loader, X_test_t, y_test_t, test_stock_ids,test_dates = data_partitioner.run(
+        X, y, stock_ids,dates, model_handler.is_graph_based(), settings
     )
     
     # `model_trainer.run`: The trainer module receives the `model_handler`. The trainer
@@ -60,7 +60,7 @@ def main():
     # It uses the handler to know how to process the model's output for evaluation
     # and whether to calculate graph-specific metrics.
     model_evaluator.run(
-        model, X_test_t, y_test_t, test_stock_ids, scalers, model_handler, settings, final_adj_matrix
+        model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, model_handler, settings, final_adj_matrix
     )
     
     # `visualizer.run_all`: This takes the path of the saved graph metrics of a model, the learned adjacency matrix, the directory of where the files are to be saved and finally the adjacency matrix threshold to be used in recreating the graph ->it creates informative visuals with these metrics that can be used for analysis    

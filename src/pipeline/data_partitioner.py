@@ -4,7 +4,7 @@ from torch.utils.data import TensorDataset, DataLoader
 from sklearn.model_selection import train_test_split
 from ..utils import print_header
 
-def run(X, y, stock_ids, is_graph_model: bool, settings):
+def run(X, y, stock_ids,dates, is_graph_model: bool, settings):
     """
     Partitions data into training, validation, and test sets.
     - Uses chronological split for graph models.
@@ -23,6 +23,8 @@ def run(X, y, stock_ids, is_graph_model: bool, settings):
         X_val, y_val = X[train_end_idx:val_end_idx], y[train_end_idx:val_end_idx]
         X_test, y_test = X[val_end_idx:], y[val_end_idx:]
         
+        dates_train, dates_val, dates_test = dates[:train_end_idx], dates[train_end_idx:val_end_idx], dates[val_end_idx:]
+        
         # For graph models, test_stock_ids is the full ordered list of nodes
         test_stock_ids = stock_ids
 
@@ -32,16 +34,16 @@ def run(X, y, stock_ids, is_graph_model: bool, settings):
         test_split_size = 1.0 - (settings.TRAIN_SPLIT + settings.VAL_SPLIT)
         
         #First, split the data into train+val and test, we stratify to ensures that all stock types are proportionally represented in both sets
-        X_train_val, X_test, y_train_val, y_test, stock_ids_train_val, test_stock_ids = train_test_split(
-            X, y, stock_ids,
+        X_train_val, X_test, y_train_val, y_test, stock_ids_train_val, test_stock_ids,dates_train_val,dates_test = train_test_split(
+            X, y, stock_ids,dates,
             test_size=test_split_size,
             random_state=settings.RANDOM_SEED,
             stratify=stock_ids
         )
         # Now split the train+val into train and validation sets
         relative_val_split = settings.VAL_SPLIT / (settings.TRAIN_SPLIT + settings.VAL_SPLIT)
-        X_train, X_val, y_train, y_val = train_test_split(
-            X_train_val, y_train_val,
+        X_train, X_val, y_train, y_val,dates_train,dates_val = train_test_split(
+            X_train_val, y_train_val, dates_train_val,
             test_size=relative_val_split,
             random_state=settings.RANDOM_SEED,
             stratify=stock_ids_train_val
@@ -77,4 +79,4 @@ def run(X, y, stock_ids, is_graph_model: bool, settings):
     print(f"\nPyTorch DataLoaders created with batch size: {settings.BATCH_SIZE}")
     print(f"  - Training data shuffling: {shuffle_train}")
 
-    return train_loader, val_loader, X_test_t, y_test_t, test_stock_ids
+    return train_loader, val_loader, X_test_t, y_test_t, test_stock_ids,dates_test
