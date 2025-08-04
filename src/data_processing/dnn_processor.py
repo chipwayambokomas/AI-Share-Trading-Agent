@@ -62,8 +62,9 @@ def _segment_one_stock_custom_bottom_up(args):
 
         slopes = [seg[3] for seg in segments]
         durations = [seg[2] - seg[0] for seg in segments]
+        dates = [stock_df['Date'].iloc[int(seg[0])] for seg in segments]
         
-        return (stock_id, np.array(slopes), np.array(durations))
+        return (stock_id, np.array(slopes), np.array(durations), dates)
     except Exception as e:
         logger.error(f"Stock {stock_id}: Error during custom segmentation: {e}")
         return None
@@ -73,17 +74,19 @@ def _create_trend_sequences_for_stock(args):
     stock_id, trends_data, slope_scaler, duration_scaler, window_size = args
     slopes = np.array(trends_data['slopes']).reshape(-1, 1)
     durations = np.array(trends_data['durations']).reshape(-1, 1)
+    dates = trends_data['dates']
     scaled_trends = np.column_stack([slope_scaler.transform(slopes), duration_scaler.transform(durations)])
     
-    X, y = [], []
+    X, y, sequence_dates = [], [], []
     if len(scaled_trends) > window_size:
         for i in range(len(scaled_trends) - window_size):
             X.append(scaled_trends[i:(i + window_size)])
             y.append(scaled_trends[i + window_size])
+            sequence_dates.append(dates[i + window_size])
     
     if len(X) > 0:
-        return stock_id, np.array(X, dtype=np.float32), np.array(y, dtype=np.float32)
-    return stock_id, None, None
+        return stock_id, np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), np.array(sequence_dates)
+    return stock_id, None, None, None
 
 
 
@@ -158,10 +161,10 @@ class DNNProcessor(BaseProcessor):
         all_slopes, all_durations, trends_by_stock = [], [], {}
         for res in results:
             if res:
-                stock_id, slopes, durations = res
+                stock_id, slopes, durations, dates = res
                 all_slopes.extend(slopes)
                 all_durations.extend(durations)
-                trends_by_stock[stock_id] = {'slopes': slopes, 'durations': durations}
+                trends_by_stock[stock_id] = {'slopes': slopes, 'durations': durations, 'dates': dates}
 
         if not trends_by_stock: raise ValueError("Segmentation failed.")
 
@@ -176,12 +179,13 @@ class DNNProcessor(BaseProcessor):
         with Pool(processes=cpu_count()) as pool:
             seq_results = list(tqdm(pool.imap(_create_trend_sequences_for_stock, seq_args), total=len(seq_args), desc="Creating Sequences"))
 
-        all_X, all_y, all_stock_ids = [], [], []
-        for stock_id, X_stock, y_stock in seq_results:
+        all_X, all_y, all_stock_ids, all_dates = [], [], [], []
+        for stock_id, X_stock, y_stock, dates_stock in seq_results:
             if X_stock is not None and y_stock is not None:
                 all_X.append(X_stock)
                 all_y.append(y_stock)
                 all_stock_ids.extend([stock_id] * len(X_stock))
+                all_dates.append(dates_stock)
         
         if not all_X: raise ValueError("Sequencing failed.")
         

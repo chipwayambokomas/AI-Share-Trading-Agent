@@ -71,6 +71,26 @@ class DSTAGNNHandler(BaseModelHandler):
         # 2. Create sparse STRG matrix from STAD
         adj_pa = self._create_strg_from_stad(adj_TMD, num_nodes)
         
+        # DEBUG: Print adjacency matrix information
+        print(f"\n=== DSTAGNN Adjacency Matrix Information ===")
+        print(f"Base adjacency (adj_mx) shape: {adj_mx.shape}")
+        print(f"Base adjacency connections: {np.count_nonzero(adj_mx)}")
+        print(f"STAD matrix (adj_TMD) shape: {adj_TMD.shape}")
+        print(f"STAD matrix connections: {np.count_nonzero(adj_TMD)}")
+        print(f"STRG matrix (adj_pa) shape: {adj_pa.shape}")
+        print(f"STRG matrix connections: {np.count_nonzero(adj_pa)}")
+        print(f"===============================================\n")
+        
+        # SAVE: Export adjacency matrices for inspection
+        import os
+        adj_dir = "adjacency_matrices"
+        os.makedirs(adj_dir, exist_ok=True)
+        
+        np.save(f"{adj_dir}/dstagnn_base_adj.npy", adj_mx)
+        np.save(f"{adj_dir}/dstagnn_stad_adj.npy", adj_TMD) 
+        np.save(f"{adj_dir}/dstagnn_strg_adj.npy", adj_pa)
+        print(f"Saved adjacency matrices to {adj_dir}/ directory")
+        
         # Build model parameters from settings
         model_params = {
             # Architecture from settings.py
