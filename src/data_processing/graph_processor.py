@@ -215,7 +215,7 @@ class GraphProcessor(BaseProcessor):
         graph_data = np.stack([scaled_slopes, scaled_durations], axis=-1)
         print(f"Created graph data with shape: {graph_data.shape}")
         
-        X, y = [], []
+        X, y, sequence_dates = [], [], []
         input_window = self.settings.TREND_INPUT_WINDOW_SIZE
         total_sequence_length = input_window + 1  # input + 1 prediction step
         
@@ -226,15 +226,19 @@ class GraphProcessor(BaseProcessor):
             
             # Target: next time step after the input sequence
             y.append(graph_data[i + input_window, :, :])
+            
+            # The date corresponds to the prediction date (start of the target period)
+            sequence_dates.append(all_dates[i + input_window])
         
         # Convert to numpy arrays with appropriate dtype for neural network training
         X = np.array(X, dtype=np.float32)
         y = np.array(y, dtype=np.float32)
+        sequence_dates = np.array(sequence_dates)
         
         print(f"Created {len(X)} training sequences")
         print(f"Input shape: {X.shape}, Target shape: {y.shape}")
         
-        return X, y, stock_ids, scalers, adj_matrix
+        return X, y, stock_ids, sequence_dates, scalers, adj_matrix
 
     def _scale_pivoted_data_point(self, pivoted_df: pd.DataFrame, stock_ids: list):
         """Scales pivoted data for each stock individually (POINT mode)."""
