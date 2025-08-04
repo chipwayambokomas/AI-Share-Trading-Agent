@@ -16,7 +16,7 @@ from .segmentation import (
 
 logger = logging.getLogger(__name__)
 
-def _create_point_sequences_for_stock(args):
+def _create_point_sequences_for_stock1(args):
     """Worker function for creating point prediction sequences for a single stock."""
     stock_id, stock_df, scalers, feature_cols, target_col, in_win, out_win = args
     scaler = scalers.get(stock_id)
@@ -43,6 +43,44 @@ def _create_point_sequences_for_stock(args):
         return stock_id, None, None
         
     return stock_id, np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), np.array(sequence_dates)
+
+#multistep changes
+def _create_point_sequences_for_stock(args):
+    """Worker function for creating point prediction sequences for a single stock."""
+    stock_id, stock_df, scalers, feature_cols, target_col, in_win, out_win = args
+    scaler = scalers.get(stock_id)
+    if not scaler:
+        return stock_id, None, None, None # Return None for all four expected values
+
+    # we are scaling all the data but this is okay because if you remember the scaler is fitted on the training data only and so we are not leaking any information
+    scaled_data = scaler.transform(stock_df[feature_cols])
+    dates = stock_df['Date'].values
+    X, y , sequence_dates= [], [],[]
+    
+    # Check if we have enough data points to create sequences
+    if len(scaled_data) >= in_win + out_win:
+        # Create sequences of input and target values
+        for i in range(len(scaled_data) - (in_win + out_win) + 1):
+            X.append(scaled_data[i : i + in_win, :])
+            target_col_idx = feature_cols.index(target_col)
+            y.append(scaled_data[i + in_win : i + in_win + out_win, target_col_idx])
+            
+            # --- START OF CHANGE ---
+            # Capture the entire slice of dates corresponding to the output window (y).
+            # This creates an array of dates for each multi-step prediction.
+            date_slice = dates[i + in_win : i + in_win + out_win]
+            sequence_dates.append(date_slice)
+            # --- END OF CHANGE ---
+            
+    
+    if not X:
+        return stock_id, None, None, None # Return None for all four expected values
+        
+    # --- START OF CHANGE ---
+    # Return the dates array, which now has a shape of (num_sequences, out_win)
+    return stock_id, np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), np.array(sequence_dates)
+    # --- END OF CHANGE ---
+
 
 def _segment_one_stock_custom_bottom_up(args):
     """Worker to segment a stock's time series using the custom bottom-up algorithm."""
@@ -103,7 +141,7 @@ class DNNProcessor(BaseProcessor):
             return self._process_trend(cleaned_df)
         else:
             raise ValueError(f"Invalid PREDICTION_MODE: {self.mode}")
-
+    
     def _process_point(self, cleaned_df: pd.DataFrame):
         """Handles point prediction for DNN models."""
         scalers = {}

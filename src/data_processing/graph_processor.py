@@ -55,7 +55,7 @@ class GraphProcessor(BaseProcessor):
         else:
             raise ValueError(f"Invalid PREDICTION_MODE: {self.mode}")
 
-    def _process_point(self, cleaned_df: pd.DataFrame):
+    def _process_point1(self, cleaned_df: pd.DataFrame):
         """Handles point prediction for graph models."""
         logger.info("Pivoting data to (dates, stocks, features) format...")
         #this line created a new df, a multi-indexed DataFrame with dates as index and stock ID paird with their respective features as columns, each column contains the feature value for that specific stock -> Date | PriceA | PriceB | VolumeA | VolumeB
@@ -85,7 +85,45 @@ class GraphProcessor(BaseProcessor):
             all_dates.append(prediction_date)
 
         return np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), stock_ids, np.array(all_dates), scalers, adj_matrix
+    #multi step point prediction
+    def _process_point(self, cleaned_df: pd.DataFrame):
+        """Handles point prediction for graph models."""
+        logger.info("Pivoting data to (dates, stocks, features) format...")
+        #this line created a new df, a multi-indexed DataFrame with dates as index and stock ID paird with their respective features as columns, each column contains the feature value for that specific stock -> Date | PriceA | PriceB | VolumeA | VolumeB
+        pivoted_df = cleaned_df.pivot(index='Date', columns='StockID', values=self.settings.FEATURE_COLUMNS)
+        pivoted_df.ffill(inplace=True); pivoted_df.bfill(inplace=True)
+        
+        stock_ids = pivoted_df.columns.get_level_values('StockID').unique().tolist()
+        
+        adj_matrix = create_adjacency_matrix(cleaned_df, self.settings.TARGET_COLUMN, self.settings.CORRELATION_THRESHOLD)
+        
+        scalers, scaled_array = self._scale_pivoted_data_point(pivoted_df, stock_ids)
+        
+        logger.info("Creating graph-structured sequences...")
+        dates_index = pivoted_df.index
+        X, y, all_dates = [], [],[]
+        in_win = self.settings.POINT_INPUT_WINDOW_SIZE
+        out_win = self.settings.POINT_OUTPUT_WINDOW_SIZE
+        target_col_idx = self.settings.FEATURE_COLUMNS.index(self.settings.TARGET_COLUMN)
 
+        #we want to slide a window over the scaled time series data and grab the input and output sequences
+        for i in tqdm(range(len(scaled_array) - (in_win + out_win) + 1), desc="Creating graph sequences"):
+            #take a window of inputs for all the stocks and for all the features
+            X.append(scaled_array[i : i + in_win, :, :])
+            #take the output for the target column for all the stocks
+            y.append(scaled_array[i + in_win : i + in_win + out_win, :, target_col_idx:target_col_idx+1])
+            
+            # --- START OF CHANGE ---
+            # Capture the entire slice of dates corresponding to the output window (y).
+            # This creates an array of dates for each multi-step prediction.
+            start_idx = i + in_win
+            end_idx = start_idx + out_win
+            date_slice = dates_index[start_idx:end_idx].to_numpy()
+            all_dates.append(date_slice)
+            # --- END OF CHANGE ---
+
+        return np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), stock_ids, np.array(all_dates), scalers, adj_matrix
+    
     def _process_trend_custom(self, cleaned_df: pd.DataFrame):
         """Handles trend prediction for graph models."""
         # Segment each stock's time series into trend components using multiprocessing
