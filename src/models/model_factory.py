@@ -3,6 +3,7 @@ from .dnn_handler import TCNHandler, MLPHandler
 from .gwn_handler import GraphWaveNetHandler
 from .agcrn_handler import AGCRNHandler
 from .dstagnn_handler import DSTAGNNHandler
+from .hsdgnn_handler import HSDGNNHandler
 # Import new handlers here when you add them.
 # from .new_stgnn_handler import NewSTGNNHandler
 
@@ -13,6 +14,7 @@ class ModelFactory:
         "GraphWaveNet": GraphWaveNetHandler,
         "AGCRN": AGCRNHandler,
         "DSTAGNN": DSTAGNNHandler,
+        "HSDGNN": HSDGNNHandler
         # IMPORTANT: Register new handlers here.
         # "NewSTGNN": NewSTGNNHandler,
     }

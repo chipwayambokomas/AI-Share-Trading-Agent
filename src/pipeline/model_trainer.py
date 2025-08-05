@@ -86,7 +86,7 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
     model.load_state_dict(best_model_state)
     
     final_adj_matrix = None
-    if model_handler.is_graph_based():
+    if model_handler.is_graph_based() and model_handler.name() != "HSDGNN":
         final_adj_matrix = model_handler.extract_adjacency_matrix(model)
         
     return model, training_time,final_adj_matrix

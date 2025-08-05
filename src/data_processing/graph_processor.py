@@ -86,8 +86,64 @@ class GraphProcessor(BaseProcessor):
 
         return np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), stock_ids, np.array(all_dates), scalers, adj_matrix
     #multi step point prediction
-    def _process_point(self, cleaned_df: pd.DataFrame):
+    def _process_point_hsdgnn_old(self, cleaned_df: pd.DataFrame):
         """Handles point prediction for graph models."""
+
+        # --- START OF HSDGNN-SPECIFIC LOGIC ---
+        if self.settings.MODEL_TYPE == 'HSDGNN':
+            logger.info("Applying HSDGNN-specific preprocessing...")
+            logger.info("Adding time-based features for HSDGNN...")
+            
+            # Add time features and expand the feature column list
+            df_with_time = cleaned_df.copy()
+            df_with_time['Date'] = pd.to_datetime(df_with_time['Date'])
+            df_with_time['time_of_day'] = (df_with_time['Date'].dt.hour * 60 + df_with_time['Date'].dt.minute) / (24 * 60)
+            df_with_time['day_of_week'] = df_with_time['Date'].dt.dayofweek
+            all_feature_cols = self.settings.FEATURE_COLUMNS + ['time_of_day', 'day_of_week']
+            
+            logger.info("Pivoting data to (dates, stocks, features) format...")
+            pivoted_df = df_with_time.pivot(index='Date', columns='StockID', values=all_feature_cols)
+            pivoted_df.ffill(inplace=True); pivoted_df.bfill(inplace=True)
+            stock_ids = pivoted_df.columns.get_level_values('StockID').unique().tolist()
+
+            # HSDGNN learns the graph, so no static matrix is needed.
+            adj_matrix = None
+            logger.info("Skipping static adjacency matrix creation for HSDGNN.")
+
+            # Custom scaling for HSDGNN: scale original features, but not time features.
+            scalers = {}
+            scaled_data_list = []
+            train_end_date = pivoted_df.index[int(len(pivoted_df) * self.settings.TRAIN_SPLIT)]
+
+            for stock_id in tqdm(stock_ids, desc="Scaling features per stock for HSDGNN"):
+                stock_df = pivoted_df.xs(stock_id, level='StockID', axis=1)
+                original_features_df = stock_df[self.settings.FEATURE_COLUMNS]
+                time_features_df = stock_df[['time_of_day', 'day_of_week']]
+
+                scaler = MinMaxScaler().fit(original_features_df.loc[:train_end_date])
+                scalers[stock_id] = scaler
+                
+                scaled_original_features = scaler.transform(original_features_df)
+                # Combine scaled price/volume features with unscaled time features
+                combined_features = np.hstack([scaled_original_features, time_features_df.values])
+                scaled_data_list.append(combined_features)
+
+            scaled_array = np.stack(scaled_data_list, axis=1)
+
+        else:
+            # --- ORIGINAL LOGIC FOR OTHER GRAPH MODELS ---
+            logger.info("Pivoting data to (dates, stocks, features) format...")
+            pivoted_df = cleaned_df.pivot(index='Date', columns='StockID', values=self.settings.FEATURE_COLUMNS)
+            pivoted_df.ffill(inplace=True); pivoted_df.bfill(inplace=True)
+            
+            stock_ids = pivoted_df.columns.get_level_values('StockID').unique().tolist()
+            
+            adj_matrix = create_adjacency_matrix(cleaned_df, self.settings.TARGET_COLUMN, self.settings.CORRELATION_THRESHOLD)
+            
+            scalers, scaled_array = self._scale_pivoted_data_point(pivoted_df, stock_ids)
+        # --- END OF HSDGNN-SPECIFIC LOGIC ---
+
+
         logger.info("Pivoting data to (dates, stocks, features) format...")
         #this line created a new df, a multi-indexed DataFrame with dates as index and stock ID paird with their respective features as columns, each column contains the feature value for that specific stock -> Date | PriceA | PriceB | VolumeA | VolumeB
         pivoted_df = cleaned_df.pivot(index='Date', columns='StockID', values=self.settings.FEATURE_COLUMNS)
@@ -124,6 +180,88 @@ class GraphProcessor(BaseProcessor):
 
         return np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), stock_ids, np.array(all_dates), scalers, adj_matrix
     
+    def _process_point(self, cleaned_df: pd.DataFrame):
+        """Handles point prediction for graph models."""
+
+        # =============================================================================
+        # --- START OF HSDGNN-SPECIFIC LOGIC ---
+        # =============================================================================
+        if self.settings.MODEL_TYPE == 'HSDGNN':
+            logger.info("Applying HSDGNN-specific preprocessing...")
+            logger.info("Adding time-based features for HSDGNN...")
+            
+            # 1. Add time features required by HSDGNN
+            df_with_time = cleaned_df.copy()
+            df_with_time['Date'] = pd.to_datetime(df_with_time['Date'])
+            df_with_time['time_of_day'] = (df_with_time['Date'].dt.hour * 60 + df_with_time['Date'].dt.minute) / (24 * 60)
+            df_with_time['day_of_week'] = df_with_time['Date'].dt.dayofweek
+            all_feature_cols = self.settings.FEATURE_COLUMNS + ['time_of_day', 'day_of_week']
+            
+            logger.info("Pivoting data to (dates, stocks, features) format...")
+            pivoted_df = df_with_time.pivot(index='Date', columns='StockID', values=all_feature_cols)
+            pivoted_df.ffill(inplace=True); pivoted_df.bfill(inplace=True)
+            stock_ids = pivoted_df.columns.get_level_values('StockID').unique().tolist()
+
+            # 2. Skip static adjacency matrix creation because HSDGNN learns it dynamically
+            adj_matrix = None
+            logger.info("Skipping static adjacency matrix creation for HSDGNN.")
+
+            # 3. Apply custom scaling: scale price/volume features but not time features
+            scalers = {}
+            scaled_data_list = []
+            train_end_date = pivoted_df.index[int(len(pivoted_df) * self.settings.TRAIN_SPLIT)]
+
+            for stock_id in tqdm(stock_ids, desc="Scaling features per stock for HSDGNN"):
+                stock_df = pivoted_df.xs(stock_id, level='StockID', axis=1)
+                original_features_df = stock_df[self.settings.FEATURE_COLUMNS]
+                time_features_df = stock_df[['time_of_day', 'day_of_week']]
+
+                scaler = MinMaxScaler().fit(original_features_df.loc[:train_end_date])
+                scalers[stock_id] = scaler
+                
+                scaled_original_features = scaler.transform(original_features_df)
+                # Combine scaled features with unscaled time features
+                combined_features = np.hstack([scaled_original_features, time_features_df.values])
+                scaled_data_list.append(combined_features)
+
+            scaled_array = np.stack(scaled_data_list, axis=1)
+
+        else:
+            # --- ORIGINAL LOGIC FOR ALL OTHER GRAPH MODELS ---
+            logger.info("Pivoting data to (dates, stocks, features) format...")
+            pivoted_df = cleaned_df.pivot(index='Date', columns='StockID', values=self.settings.FEATURE_COLUMNS)
+            pivoted_df.ffill(inplace=True); pivoted_df.bfill(inplace=True)
+            
+            stock_ids = pivoted_df.columns.get_level_values('StockID').unique().tolist()
+            
+            adj_matrix = create_adjacency_matrix(cleaned_df, self.settings.TARGET_COLUMN, self.settings.CORRELATION_THRESHOLD)
+            
+            scalers, scaled_array = self._scale_pivoted_data_point(pivoted_df, stock_ids)
+        # ===========================================================================
+        # --- END OF HSDGNN-SPECIFIC LOGIC ---
+        # ===========================================================================
+
+        # This final part is common to both HSDGNN and other models.
+        # It takes the `scaled_array` prepared by either of the blocks above
+        # and creates the final sequences for training.
+        logger.info("Creating graph-structured sequences...")
+        dates_index = pivoted_df.index
+        X, y, all_dates = [], [],[]
+        in_win = self.settings.POINT_INPUT_WINDOW_SIZE
+        out_win = self.settings.POINT_OUTPUT_WINDOW_SIZE
+        target_col_idx = self.settings.FEATURE_COLUMNS.index(self.settings.TARGET_COLUMN)
+
+        for i in tqdm(range(len(scaled_array) - (in_win + out_win) + 1), desc="Creating graph sequences"):
+            X.append(scaled_array[i : i + in_win, :, :])
+            y.append(scaled_array[i + in_win : i + in_win + out_win, :, target_col_idx:target_col_idx+1])
+            
+            start_idx = i + in_win
+            end_idx = start_idx + out_win
+            date_slice = dates_index[start_idx:end_idx].to_numpy()
+            all_dates.append(date_slice)
+
+        return np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), stock_ids, np.array(all_dates), scalers, adj_matrix
+
     def _process_trend_custom(self, cleaned_df: pd.DataFrame):
         """Handles trend prediction for graph models."""
         # Segment each stock's time series into trend components using multiprocessing

@@ -6,14 +6,14 @@ FEATURE_COLUMNS = ['open', 'high', 'low', 'close', 'vwap']
 RANDOM_SEED = 42
 
 # --- MASTER SWITCH: Choose the prediction mode ---
-PREDICTION_MODE = "POINT" # "POINT" or "TREND"
+PREDICTION_MODE = "TREND" # "POINT" or "TREND"
 
 # --- MASTER SWITCH: Choose the model type ---
-MODEL_TYPE = "GraphWaveNet" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
+MODEL_TYPE = "DSTAGNN" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN", "HSDGNN"
 
 # --- Data & Preprocessing ---
-POINT_INPUT_WINDOW_SIZE = 60
-POINT_OUTPUT_WINDOW_SIZE = 1
+POINT_INPUT_WINDOW_SIZE = 20
+POINT_OUTPUT_WINDOW_SIZE = 5
 TREND_INPUT_WINDOW_SIZE = 10
 MAX_SEGMENTATION_ERROR = 60.0
 TRAIN_SPLIT = 0.60
@@ -67,4 +67,16 @@ MODEL_ARGS = {
         "d_k": 16,               # Reduced from 32 to 16 (smaller attention dimensions)
         "d_model": 64,           # Drastically reduced from 512 to 64 (much more reasonable)
     },
+    "HSDGNN": {
+         # rnn_units: The number of hidden units in the GRU cells within the model.
+        'rnn_units': 64,
+        
+        # embed_dim: The dimensionality of the node and time embeddings. 10 
+        'embed_dim': 10,
+        
+        # steps_per_day: The number of time steps in a single day. This is crucial
+        # for creating the time-of-day embedding.
+        # Example: For 5-minute data, there are (24 hours * 60 minutes) / 5 = 288 steps per day.
+        'steps_per_day': 1 
+    }
 }
