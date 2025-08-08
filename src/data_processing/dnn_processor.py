@@ -185,4 +185,4 @@ class DNNProcessor(BaseProcessor):
         
         if not all_X: raise ValueError("Sequencing failed.")
         
-        return np.concatenate(all_X), np.concatenate(all_y), np.array(all_stock_ids), scalers, None
+        return np.concatenate(all_X), np.concatenate(all_y), np.array(all_stock_ids), None,scalers, None
