@@ -234,7 +234,7 @@ class GraphProcessor(BaseProcessor):
         print(f"Created {len(X)} training sequences")
         print(f"Input shape: {X.shape}, Target shape: {y.shape}")
         
-        return X, y, stock_ids, None, scalers, adj_matrix
+        return X, y, stock_ids, scalers, adj_matrix
 
     def _scale_pivoted_data_point(self, pivoted_df: pd.DataFrame, stock_ids: list):
         """Scales pivoted data for each stock individually (POINT mode)."""
