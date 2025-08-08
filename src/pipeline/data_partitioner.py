@@ -24,8 +24,9 @@ def run(X, y, stock_ids,dates, is_graph_model: bool, settings):
         X_train, y_train = X[:train_end_idx], y[:train_end_idx]
         X_val, y_val = X[train_end_idx:val_end_idx], y[train_end_idx:val_end_idx]
         X_test, y_test = X[val_end_idx:], y[val_end_idx:]
-        
-        if dates is not None:
+
+        if dates is not None: 
+          
             dates_train, dates_val, dates_test = dates[:train_end_idx], dates[train_end_idx:val_end_idx], dates[val_end_idx:]
         
         # For graph models, test_stock_ids is the full ordered list of nodes
@@ -35,8 +36,8 @@ def run(X, y, stock_ids,dates, is_graph_model: bool, settings):
         print("Method: Stratified split by StockID for non-graph model.")
         # Calculate the test split size based on the remaining data after train and validation splits
         test_split_size = 1.0 - (settings.TRAIN_SPLIT + settings.VAL_SPLIT)
-        
-        if dates is not None:
+
+        if dates is not None: 
             #First, split the data into train+val and test, we stratify to ensures that all stock types are proportionally represented in both sets
             X_train_val, X_test, y_train_val, y_test, stock_ids_train_val, test_stock_ids,dates_train_val,dates_test = train_test_split(
                 X, y, stock_ids,dates,
@@ -52,22 +53,28 @@ def run(X, y, stock_ids,dates, is_graph_model: bool, settings):
                 random_state=settings.RANDOM_SEED,
                 stratify=stock_ids_train_val
             )
-        else:
-                X_train_val, X_test, y_train_val, y_test, stock_ids_train_val, test_stock_ids, = train_test_split(
+            
+        else: 
+                #First, split the data into train+val and test, we stratify to ensures that all stock types are proportionally represented in both sets
+                X_train_val, X_test, y_train_val, y_test, stock_ids_train_val, test_stock_ids= train_test_split(
+                  
                 X, y, stock_ids,
                 test_size=test_split_size,
                 random_state=settings.RANDOM_SEED,
                 stratify=stock_ids
                 )
-            # Now split the train+val into train and validation sets
+
+                # Now split the train+val into train and validation sets
                 relative_val_split = settings.VAL_SPLIT / (settings.TRAIN_SPLIT + settings.VAL_SPLIT)
-                X_train, X_val, y_train, y_val, = train_test_split(
+                X_train, X_val, y_train, y_val= train_test_split(
+
                 X_train_val, y_train_val,
                 test_size=relative_val_split,
                 random_state=settings.RANDOM_SEED,
                 stratify=stock_ids_train_val
-                )
-            
+
+                ) 
+
 
     print(f"\nData partitioning complete:")
     print(f"  - Training set size:   {len(X_train)}")
