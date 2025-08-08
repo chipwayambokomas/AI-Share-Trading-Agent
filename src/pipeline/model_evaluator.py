@@ -8,7 +8,7 @@ from ..utils import print_header
 from ..models.base_handler import BaseModelHandler
 import community as community_louvain
 
-def _evaluate_point_prediction1(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings):
+def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings):
     print("\nEvaluating POINT prediction performance...")
     model.eval()
 
@@ -111,114 +111,6 @@ def _evaluate_point_prediction1(model, X_test_t, y_test_t, test_stock_ids, test_
     results_df.to_csv(save_path, index=False)
     print(f"\nPoint prediction evaluation results saved to '{save_path}'.")
 
-def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings):
-    print("\nEvaluating POINT prediction performance...")
-    model.eval()
-
-    # Create a DataLoader for the test set for batching
-    test_dataset = TensorDataset(X_test_t)
-    test_loader = DataLoader(test_dataset, batch_size=settings.BATCH_SIZE, shuffle=False)
-
-    all_predictions = []
-    #disable gradient calculation for inference
-    with torch.no_grad():
-        # Iterate through the test data in batches ->get the predictions per batch -> adjust the output shape if needed -> move predictions to CPU for further processing
-        for X_batch_test in test_loader:
-            pred_batch_raw = model(X_batch_test[0])
-            pred_batch, _ = handler.adapt_output_for_loss(pred_batch_raw, None)
-            all_predictions.append(pred_batch.cpu().numpy())
-
-    # Concatenate all predictions into a single array
-    predicted_scaled = np.concatenate(all_predictions, axis=0)
-    # Move test targets to CPU for further processing
-    actual_scaled = y_test_t.cpu().numpy()
-
-    # --- START OF CHANGE ---
-    
-    # Get dimensions for creating the final report
-    num_samples = actual_scaled.shape[0]
-    horizon = settings.POINT_OUTPUT_WINDOW_SIZE
-
-    # Flatten the multi-dimensional actual and predicted arrays into long 1D lists of values.
-    # This creates a single list of all individual predictions across all samples and horizons.
-    actual_flat = actual_scaled.flatten()
-    predicted_flat = predicted_scaled.flatten()
-
-    # Create corresponding Date, StockID, and Horizon Step arrays that align with the flattened prices.
-    if handler.is_graph_based():
-        num_nodes = actual_scaled.shape[2]
-        stock_ids_ordered = test_stock_ids  # This is the full list of nodes
-
-        # Each date corresponds to a sample and must be repeated for each node.
-        dates_tiled = np.repeat(test_dates.flatten(), num_nodes)
-        
-        # The list of stocks must be tiled to match the flattened structure.
-        stock_ids_tiled = np.tile(stock_ids_ordered, num_samples * horizon)
-        
-        # The horizon steps pattern must be created and tiled for each sample.
-        horizon_steps_pattern = np.repeat(np.arange(1, horizon + 1), num_nodes)
-        horizon_steps = np.tile(horizon_steps_pattern, num_samples)
-
-    else:  # Logic for TCN, MLP
-        # The dates array is already (num_samples, horizon), so just flatten it.
-        dates_tiled = test_dates.flatten()
-        
-        # Repeat each stock ID for every step in its prediction horizon.
-        stock_ids_tiled = np.repeat(test_stock_ids, horizon)
-        
-        # Tile the horizon steps for each sample.
-        horizon_steps = np.tile(np.arange(1, horizon + 1), num_samples)
-
-    # Inverse transform the prices one by one, using the correct scaler for each stock.
-    actual_prices, predicted_prices = [], []
-    target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
-    num_features = len(settings.FEATURE_COLUMNS)
-
-    # The loop now correctly iterates over every single prediction point.
-    for i in range(len(actual_flat)):
-        stock_id = stock_ids_tiled[i]
-        scaler = scalers.get(stock_id)
-        if scaler is None: continue
-
-        # Create dummy arrays with the shape the scaler expects (num_features,)
-        dummy_actual = np.zeros(num_features)
-        dummy_predicted = np.zeros(num_features)
-
-        # Place the scaled scalar value in the correct target column position
-        dummy_actual[target_col_idx] = actual_flat[i]
-        dummy_predicted[target_col_idx] = predicted_flat[i]
-
-        # Inverse transform and append the single price value
-        actual_prices.append(scaler.inverse_transform(dummy_actual.reshape(1, -1))[0, target_col_idx])
-        predicted_prices.append(scaler.inverse_transform(dummy_predicted.reshape(1, -1))[0, target_col_idx])
-
-    actual_prices = np.array(actual_prices)
-    predicted_prices = np.array(predicted_prices)
-
-    # Calculate metrics over all prediction points
-    mse = mean_squared_error(actual_prices, predicted_prices)
-    mae = mean_absolute_error(actual_prices, predicted_prices)
-    rmse = np.sqrt(mse)
-    mape = np.mean(np.abs((actual_prices - predicted_prices) / (actual_prices + 1e-8))) * 100
-
-    print("\nQuantitative Metrics (All Stocks, All Horizon Steps):")
-    print(f"  - RMSE: {rmse:.2f}, MAE: {mae:.2f}, MAPE: {mape:.2f}%")
-
-    # Save results to a detailed DataFrame
-    results_df = pd.DataFrame({
-        'Date': dates_tiled,
-        'StockID': stock_ids_tiled,
-        'Horizon_Step': horizon_steps,
-        'Actual_Price': actual_prices, 
-        'Predicted_Price': predicted_prices
-    })
-    
-    results_df.sort_values(by=['Date', 'StockID', 'Horizon_Step'], inplace=True)
-    
-    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_POINT_{settings.MODEL_TYPE}.csv"
-    results_df.to_csv(save_path, index=False)
-    print(f"\nPoint prediction evaluation results saved to '{save_path}'.")
-    # --- END OF CHANGE ---
 
 def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings):
     print("\nEvaluating TREND prediction performance...")
