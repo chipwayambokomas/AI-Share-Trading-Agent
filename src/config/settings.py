@@ -6,15 +6,16 @@ FEATURE_COLUMNS = ['open', 'high', 'low', 'close', 'vwap']
 RANDOM_SEED = 42
 
 # --- MASTER SWITCH: Choose the prediction mode ---
-PREDICTION_MODE = "POINT" # "POINT" or "TREND"
+PREDICTION_MODE = "TREND" # "POINT" or "TREND"
 
 # --- MASTER SWITCH: Choose the model type ---
-MODEL_TYPE = "MLP" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
+MODEL_TYPE = "DSTAGNN" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
 
 # --- Data & Preprocessing ---
 POINT_INPUT_WINDOW_SIZE = 60
-POINT_OUTPUT_WINDOW_SIZE = 1
+POINT_OUTPUT_WINDOW_SIZE = 5
 TREND_INPUT_WINDOW_SIZE = 60
+TREND_OUTPUT_WINDOW_SIZE = 1
 MAX_SEGMENTATION_ERROR = 60.0
 TRAIN_SPLIT = 0.60
 VAL_SPLIT = 0.20

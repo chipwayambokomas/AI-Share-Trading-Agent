@@ -21,77 +21,73 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
     with torch.no_grad():
         # Iterate through the test data in batches ->get the predictions per batch -> adjust the output shape if needed -> move predictions to CPU for further processing
         for X_batch_test in test_loader:
-            pred_batch_raw = model(X_batch_test[0])
+            X_batch_adapted = handler.adapt_input_for_model(X_batch_test[0])
+            pred_batch_raw = model(X_batch_adapted)
             pred_batch, _ = handler.adapt_output_for_loss(pred_batch_raw, None)
             all_predictions.append(pred_batch.cpu().numpy())
-
-    # Concatenate all predictions into a single array
-    predicted_scaled = np.concatenate(all_predictions, axis=0)
     # Move test targets to CPU for further processing
     actual_scaled = y_test_t.cpu().numpy()
+    num_samples = actual_scaled.shape[0]    
+    horizon = settings.POINT_OUTPUT_WINDOW_SIZE
+    # Concatenate all predictions into a single array
+    predicted_scaled = np.concatenate(all_predictions, axis=0)
+           
+    #A multi-step prediction tensor like (100 samples, 5 horizon, 32 nodes, 1 feature) is converted into a single, long 1D array of 100 * 5 * 32 * 1 = 16000 numbers. This makes it easy to iterate through every single predicted point.
+    actual_flat = actual_scaled.flatten()
+    predicted_flat = predicted_scaled.flatten()
 
     # Inverse transform predictions to get actual prices
     if handler.is_graph_based():
-        # Shape: (samples, nodes) or (samples, nodes, out_window) -> squeeze
-        if actual_scaled.ndim > 2: actual_scaled = actual_scaled.squeeze()
-        if predicted_scaled.ndim > 2: predicted_scaled = predicted_scaled.squeeze()
+        num_nodes = actual_scaled.shape[2]
+        stock_ids_ordered = test_stock_ids
         
-        # Reshape to (samples, num_nodes) for inverse transformation
-        num_samples, num_nodes = actual_scaled.shape
-        actual_flat = actual_scaled.reshape(-1)
-        predicted_flat = predicted_scaled.reshape(-1)
         # Tile stock IDs to match the flattened predictions -> this basically repeats the stock IDs for each sample in the flattened array
-        stock_ids_tiled = np.tile(test_stock_ids, num_samples) # test_stock_ids is the ordered list
-        # The test_dates array has one date per sample. We need to repeat each date
-        # for every node (stock) in that sample to match the other arrays.
-        dates_tiled = np.repeat(test_dates, num_nodes)
+        stock_ids_tiled = np.tile(stock_ids_ordered, num_samples*horizon) # test_stock_ids is the ordered list
         
-        actual_prices, predicted_prices = [], []
-        target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
-        num_features = len(settings.FEATURE_COLUMNS)
+        #the test dates ahve a shape of (num_samples, horizon) so we need to flatten it to match the stock IDs
+        dates_tiled = np.repeat(test_dates.flatten(), num_nodes, axis=0).flatten()
+    
+        # The horizon steps pattern must be created and tiled.
+        horizon_steps_pattern = np.arange(1, horizon + 1)
+        horizon_steps = np.tile(np.repeat(horizon_steps_pattern, num_nodes), num_samples)
 
-        # Iterate through each stock ID and apply the scaler
-        for i in range(len(actual_flat)):
-            # Get the stock ID and corresponding scaler
-            stock_id = stock_ids_tiled[i]
-            scaler = scalers[stock_id]
-            # Create dummy arrays to hold the actual and predicted values
-            dummy_actual = np.zeros((1, num_features))
-            dummy_predicted = np.zeros((1, num_features))
-            # Set the target column to the actual and predicted values
-            dummy_actual[0, target_col_idx] = actual_flat[i]
-            dummy_predicted[0, target_col_idx] = predicted_flat[i]
-            
-            # Inverse transform the dummy arrays to get actual prices and appedd to the lists -> goal is to get a list of actual and predicted prices for each stock ID
-            actual_prices.append(scaler.inverse_transform(dummy_actual)[0, target_col_idx])
-            predicted_prices.append(scaler.inverse_transform(dummy_predicted)[0, target_col_idx])
 
     else: # For TCN/MLP
-        actual_prices, predicted_prices = [], []
-        target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
-        num_features = len(settings.FEATURE_COLUMNS)
+        # The dates array is already (num_samples, horizon), so just flatten it.
+        dates_tiled = test_dates.flatten()
+        
+        # Repeat each stock ID for every step in its prediction horizon.
+        stock_ids_tiled = np.repeat(test_stock_ids, horizon)
+        
+        # Tile the horizon steps for each sample.
+        horizon_steps = np.tile(np.arange(1, horizon + 1), num_samples)
 
-        for i in range(len(test_stock_ids)):
-            stock_id = test_stock_ids[i]
-            scaler = scalers[stock_id]
-            
-            dummy_actual = np.zeros((1, num_features))
-            dummy_predicted = np.zeros((1, num_features))
-            dummy_actual[0, target_col_idx] = actual_scaled[i]
-            dummy_predicted[0, target_col_idx] = predicted_scaled[i]
-            
-            actual_prices.append(scaler.inverse_transform(dummy_actual)[0, target_col_idx])
-            predicted_prices.append(scaler.inverse_transform(dummy_predicted)[0, target_col_idx])
-        stock_ids_tiled = test_stock_ids # For DataFrame consistency
-        dates_tiled = test_dates # For DataFrame consistency
+        
+    actual_prices, predicted_prices = [], []
+    target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
+    num_features = len(settings.FEATURE_COLUMNS)
+
+    for i in range(len(actual_flat)):
+        stock_id = stock_ids_tiled[i]
+        scaler = scalers.get(stock_id)
+        if scaler is None: continue
+
+        # Create dummy arrays with the shape the scaler expects (num_features,)
+        dummy_actual = np.zeros(num_features)
+        dummy_predicted = np.zeros(num_features)
+
+        dummy_actual[target_col_idx] = actual_flat[i]
+        dummy_predicted[target_col_idx] = predicted_flat[i]
+
+        actual_prices.append(scaler.inverse_transform(dummy_actual.reshape(1, -1))[0, target_col_idx])
+        predicted_prices.append(scaler.inverse_transform(dummy_predicted.reshape(1, -1))[0, target_col_idx])
 
     actual_prices = np.array(actual_prices)
     predicted_prices = np.array(predicted_prices)
 
     # Calculate metrics
-    mse = mean_squared_error(actual_prices, predicted_prices)
     mae = mean_absolute_error(actual_prices, predicted_prices)
-    rmse = np.sqrt(mse)
+    rmse = np.sqrt(mean_squared_error(actual_prices, predicted_prices))
     mape = np.mean(np.abs((actual_prices - predicted_prices) / (actual_prices + 1e-8))) * 100
 
     print("\nQuantitative Metrics (All Stocks):")
@@ -101,11 +97,12 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
     results_df = pd.DataFrame({
         'Date': dates_tiled,
         'StockID': stock_ids_tiled,
+        'Horizon_Step': horizon_steps,
         'Actual_Price': actual_prices, 
         'Predicted_Price': predicted_prices
     })
     
-    results_df.sort_values(by=['Date', 'StockID'], inplace=True)
+    results_df.sort_values(by=['Date', 'StockID','Horizon_Step'], inplace=True)
     
     save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_POINT_{settings.MODEL_TYPE}.csv"
     results_df.to_csv(save_path, index=False)
@@ -122,7 +119,8 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     all_predictions, all_actuals = [], []
     with torch.no_grad():
         for X_batch, y_batch in test_loader:
-            pred_batch_raw = model(X_batch)
+            X_batch_adapted = handler.adapt_input_for_model(X_batch)
+            pred_batch_raw = model(X_batch_adapted)
             pred_batch, _ = handler.adapt_output_for_loss(pred_batch_raw, y_batch)
             all_predictions.append(pred_batch.cpu().numpy())
             all_actuals.append(y_batch.cpu().numpy())

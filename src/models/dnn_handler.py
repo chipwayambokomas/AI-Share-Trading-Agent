@@ -31,6 +31,15 @@ class DNNHandler(BaseModelHandler):
         else: # POINT mode
             # For POINT mode, standard MSE is correct.
             return nn.MSELoss()
+    def adapt_output_for_loss(self, y_pred, y_batch):
+        print_once_loss = getattr(self, 'print_once_loss', True)
+        if print_once_loss:
+            print("\n--- Loss Shape Alignment Verification ---")
+            print(f"Shape of y_pred (model output): {y_pred.shape}")
+            print(f"Shape of y_batch (target):    {y_batch.shape}")
+            setattr(self, 'print_once_loss', False)
+        # The base handler just passes them through, which should be correct for DNNs
+        return y_pred, y_batch
 
 class TCNHandler(DNNHandler):
     def name(self) -> str:

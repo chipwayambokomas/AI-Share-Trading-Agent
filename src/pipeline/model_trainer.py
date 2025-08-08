@@ -29,7 +29,7 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
     if verbose:
         print("\nStarting model training...")
     start_time = time.time()
-    
+    print_once = True
     for epoch in range(settings.EPOCHS):
         model.train()
         train_loss = 0.0
@@ -38,8 +38,14 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
         train_iterator = tqdm(train_loader, unit="batch", desc=f"Epoch {epoch+1:2d}/{settings.EPOCHS}", disable=not verbose)
         
         for X_batch, y_batch in train_iterator:
+            if print_once:
+                print(f"\n--- Data Shape Verification ---")
+                print(f"X_batch shape entering model: {X_batch.shape}")
+                print(f"y_batch shape from loader:  {y_batch.shape}")
+                print_once = False
             optimizer.zero_grad()
-            y_pred_raw = model(X_batch)
+            X_batch_adapted = model_handler.adapt_input_for_model(X_batch)
+            y_pred_raw = model(X_batch_adapted)
             y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
             y_pred, y_batch_adapted = model_handler.adapt_y_for_loss(y_pred, y_batch_adapted)
             loss = loss_fn(y_pred, y_batch_adapted)
@@ -58,7 +64,8 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
             val_loss = 0.0
             with torch.no_grad():
                 for X_batch, y_batch in val_loader:
-                    y_pred_raw = model(X_batch)
+                    X_batch_adapted = model_handler.adapt_input_for_model(X_batch)
+                    y_pred_raw = model(X_batch_adapted)
                     y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
                     val_loss += loss_fn(y_pred, y_batch_adapted).item()
             avg_val_loss = val_loss / len(val_loader)

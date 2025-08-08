@@ -4,7 +4,6 @@ import pandas as pd
 from multiprocessing import Pool, cpu_count
 from sklearn.preprocessing import MinMaxScaler
 from tqdm import tqdm
-import ruptures as rpt
 from .base_processor import BaseProcessor
 from ..utils import print_header
 
@@ -21,26 +20,27 @@ def _create_point_sequences_for_stock(args):
     stock_id, stock_df, scalers, feature_cols, target_col, in_win, out_win = args
     scaler = scalers.get(stock_id)
     if not scaler:
-        return stock_id, None, None
+        return stock_id, None, None, None
 
     # we are scaling all the data but this is okay because if you remember the scaler is fitted on the training data only and so we are not leaking any information
     scaled_data = scaler.transform(stock_df[feature_cols])
     dates = stock_df['Date'].values
     X, y , sequence_dates= [], [],[]
-    
+    total_len = in_win + out_win
     # Check if we have enough data points to create sequences
-    if len(scaled_data) >= in_win + out_win:
+    if len(scaled_data) >= total_len:
         # Create sequences of input and target values
-        for i in range(len(scaled_data) - (in_win + out_win) + 1):
+        for i in range(len(scaled_data) - total_len + 1):
             X.append(scaled_data[i : i + in_win, :])
             target_col_idx = feature_cols.index(target_col)
             y.append(scaled_data[i + in_win : i + in_win + out_win, target_col_idx])
             # The date of the prediction corresponds to the first timestamp of the target `y`
-            sequence_dates.append(dates[i + in_win])
+            date_slice = dates[i + in_win : i + in_win + out_win]
+            sequence_dates.append(date_slice)
             
     
     if not X:
-        return stock_id, None, None
+        return stock_id, None, None, None
         
     return stock_id, np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), np.array(sequence_dates)
 
