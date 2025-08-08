@@ -14,7 +14,7 @@ class DSTAGNNHandler(BaseModelHandler):
         return True
 
     def get_loss_function(self):
-        return nn.SmoothL1Loss()
+        return nn.MSELoss()
 
     def build_model(self, **kwargs):
         """

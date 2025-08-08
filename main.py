@@ -50,7 +50,7 @@ def main():
     # will then use the handler to build the model (`handler.build_model()`), get the
     # correct loss function (`handler.get_loss_function()`), and adapt data shapes
     # for training (`handler.adapt_output_for_loss()`).
-    model, training_time, final_adj_matrix = model_trainer.run(
+    model, training_time, final_adj_matrix, best_val_loss = model_trainer.run(
         train_loader, val_loader, model_handler, settings, supports=[adj_matrix] if adj_matrix is not None else None
     )
     

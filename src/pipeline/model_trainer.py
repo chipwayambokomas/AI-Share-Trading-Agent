@@ -1,92 +1,95 @@
+# src/pipeline/model_trainer.py
+
 import torch
 import time
 from tqdm import tqdm
 from ..utils import print_header
 from ..models.base_handler import BaseModelHandler
+import copy
+import optuna
 
-def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, supports=None):
+def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, supports=None, verbose=True, trial = None):
     """
     Stage 4: Initializes, trains, and validates the specified model.
     """
-    print_header("Stage 4: Model Development")
-    print(f"Training {model_handler.name()} for {settings.PREDICTION_MODE} prediction...")
+    if verbose:
+        print_header("Stage 4: Model Development")
+        print(f"Training {model_handler.name()} for {settings.PREDICTION_MODE} prediction...")
     
-    # Determine the number of nodes for models that need it.
-    # We can inspect the shape of the data from the loader.
     sample_x, _ = next(iter(train_loader))
-    # Input shape is either (B, T, N, F) for graph models or (B, T, F) for DNNs.
     num_nodes = sample_x.shape[2] if model_handler.is_graph_based() else None
 
-    # Build the model using the handler
     model = model_handler.build_model(supports=supports, num_nodes=num_nodes)
     optimizer = torch.optim.Adam(model.parameters(), lr=settings.LEARNING_RATE)
-    
-    # Get the loss function from the handler
     loss_fn = model_handler.get_loss_function()
     
     best_val_loss = float('inf')
     best_model_state = None
 
-    print("\nStarting model training...")
+    if verbose:
+        print("\nStarting model training...")
     start_time = time.time()
+    
     for epoch in range(settings.EPOCHS):
         model.train()
         train_loss = 0.0
         
-        with tqdm(train_loader, unit="batch", desc=f"Epoch {epoch+1:2d}/{settings.EPOCHS}") as tepoch:
-            #we will iterate through each batch in the train_loader
-            for X_batch, y_batch in tepoch:
-                # Reset gradients
-                optimizer.zero_grad()
-                
-                # Forward pass
-                y_pred_raw = model(X_batch)
-                
-                # Let handler adapt output and/or ground truth for loss calculation -> remeber in the model handler for example for graph wavenet trend, the output is (batch, nodes, features, time_steps) and we need to adapt it to (batch, nodes, features) -> GWN the only one that uses this right now, rest of the models use the same output shape as the ground truth and use the abstract class method and pass through
-                y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
-                y_pred, y_batch_adapted = model_handler.adapt_y_for_loss(y_pred, y_batch_adapted)
-
-                # Calculate loss and backpropagate -> adjust the model weights
-                loss = loss_fn(y_pred, y_batch_adapted)
-                loss.backward()
-                
-                #This clips the gradients so that their norm (magnitude) does not exceed 5. Sometimes gradients can explode and become too large, causing training to become unstable. Clipping them helps keep training stable and prevents “exploding gradients.”
-
-                torch.nn.utils.clip_grad_norm_(model.parameters(), 5) # Gradient clipping
-                
-                #apply updates to the model parameters
-                optimizer.step()
-                # Accumulate training loss
-                train_loss += loss.item()
-                
-                tepoch.set_postfix(loss=loss.item())
-
-        model.eval()
-        val_loss = 0.0
-        # this tells the model to not calculate gradients, which saves memory and speeds up validation
-        with torch.no_grad():
-            # Iterate through validation data and do the same as above
-            for X_batch, y_batch in val_loader:
-                y_pred_raw = model(X_batch)
-                
-                y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
-                y_pred, y_batch_adapted = model_handler.adapt_y_for_loss(y_pred, y_batch_adapted)
-                
-                val_loss += loss_fn(y_pred, y_batch_adapted).item()
+        # Use the verbose flag to disable tqdm progress bar during HPO
+        train_iterator = tqdm(train_loader, unit="batch", desc=f"Epoch {epoch+1:2d}/{settings.EPOCHS}", disable=not verbose)
         
+        for X_batch, y_batch in train_iterator:
+            optimizer.zero_grad()
+            y_pred_raw = model(X_batch)
+            y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
+            y_pred, y_batch_adapted = model_handler.adapt_y_for_loss(y_pred, y_batch_adapted)
+            loss = loss_fn(y_pred, y_batch_adapted)
+            loss.backward()
+            torch.nn.utils.clip_grad_norm_(model.parameters(), 5)
+            optimizer.step()
+            train_loss += loss.item()
+            if verbose:
+                train_iterator.set_postfix(loss=loss.item())
+
         avg_train_loss = train_loss / len(train_loader)
-        avg_val_loss = val_loss / len(val_loader)
-        if avg_val_loss < best_val_loss:
-            best_val_loss = avg_val_loss
-            best_model_state = model.state_dict()
-        print(f"Epoch {epoch+1:2d}/{settings.EPOCHS} Summary: Avg Train Loss: {avg_train_loss:.6f}, Avg Val Loss: {avg_val_loss:.6f}")
+        
+        avg_val_loss = float('inf')
+        if val_loader:
+            model.eval()
+            val_loss = 0.0
+            with torch.no_grad():
+                for X_batch, y_batch in val_loader:
+                    y_pred_raw = model(X_batch)
+                    y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
+                    val_loss += loss_fn(y_pred, y_batch_adapted).item()
+            avg_val_loss = val_loss / len(val_loader)
+            
+            if avg_val_loss < best_val_loss:
+                best_val_loss = avg_val_loss
+                best_model_state = copy.deepcopy(model.state_dict())
+        
+        if verbose:
+            print(f"Epoch {epoch+1:2d}/{settings.EPOCHS} Summary: Avg Train Loss: {avg_train_loss:.6f}, Avg Val Loss: {avg_val_loss:.6f}")
+            
+            if trial:
+                # Report the validation loss of the current epoch to Optuna
+                trial.report(avg_val_loss, epoch)
+
+                # Check if the trial should be pruned
+                if trial.should_prune():
+                    print(f"Trial pruned at epoch {epoch+1} due to poor performance.")
+                    # Raise a special exception that Optuna catches to stop the trial
+                    raise optuna.exceptions.TrialPruned()
     
     training_time = time.time() - start_time
-    print(f"\nModel training complete in {training_time:.2f} seconds.")
-    model.load_state_dict(best_model_state)
+    if verbose:
+        print(f"\nModel training complete in {training_time:.2f} seconds.")
+    
+    if best_model_state:
+        model.load_state_dict(best_model_state)
     
     final_adj_matrix = None
     if model_handler.is_graph_based():
         final_adj_matrix = model_handler.extract_adjacency_matrix(model)
         
-    return model, training_time,final_adj_matrix
+    # --- MODIFICATION: Return the best_val_loss ---
+    return model, training_time, final_adj_matrix, best_val_loss
