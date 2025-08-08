@@ -12,7 +12,7 @@ from src.data_processing.preprocessor_factory import PreprocessorFactory
 from src.analysis.graph_visualizer import GraphVisualizer
 
 
-def main1():
+def main():
     """Main execution pipeline."""
 
     # `setup_logging()`: Initializes the logger to write to a file and the console.
@@ -76,50 +76,6 @@ def main1():
 
     print_header("Pipeline Finished")
 
-def main():
-    """Main execution pipeline."""
-    # ... (setup and data loading logic is correct) ...
-    setup_logging()
-    print_header("Project Setup")
-    print(f"MODEL: {settings.MODEL_TYPE}, MODE: {settings.PREDICTION_MODE}")
-
-    model_handler = ModelFactory.create(settings.MODEL_TYPE, settings)
-    preprocessor = PreprocessorFactory.create(model_handler, settings)
-    combined_df = data_loader.run(settings)
-    X, y, stock_ids,dates, scalers, adj_matrix = preprocessor.process(combined_df)
-    
-    train_loader, val_loader, X_test_t, y_test_t, test_stock_ids,test_dates = data_partitioner.run(
-        X, y, stock_ids,dates, model_handler.is_graph_based(), settings
-    )
-    # --- START OF FIX ---
-    
-    # Trainer returns `None` for HSDGNN's matrix.
-    model, training_time, final_adj_matrix_from_trainer = model_trainer.run(
-        train_loader, val_loader, model_handler, settings, supports=[adj_matrix] if adj_matrix is not None else None
-    )
-    
-    # Evaluator receives the `None` matrix, generates the dynamic one, and returns it.
-    # We capture this definitive matrix in `final_adj_for_viz`.
-    final_adj_for_viz = model_evaluator.run(
-        model, X_test_t, y_test_t, test_stock_ids, test_dates, scalers, model_handler, settings, final_adj_matrix_from_trainer
-    )
-    
-    # Visualizer receives the correct matrix from the evaluator.
-    if model_handler.is_graph_based():
-        # Add a safety check in case no matrix was produced for any reason.
-        if final_adj_for_viz is not None:
-            visualizer = GraphVisualizer(
-                metrics_csv_path = os.path.join(settings.RESULTS_DIR,settings.MODEL_TYPE, f"evaluation_GRAPH_{settings.PREDICTION_MODE}__{settings.MODEL_TYPE}.csv"),
-                adj_matrix = final_adj_for_viz,
-                save_dir=os.path.join(settings.RESULTS_DIR, settings.MODEL_TYPE, f"{settings.PREDICTION_MODE}_visualizations"),
-                percentile_threshold=settings.EVAL_THRESHOLD
-            )
-            visualizer.run_all()
-        else:
-            print("\nSkipping graph visualization because no final adjacency matrix was available.")
-            
-    # --- END OF FIX ---
-    print_header("Pipeline Finished")
 # Standard Python construct to ensure the `main` function is called only when
 # the script is executed directly.
 if __name__ == "__main__":

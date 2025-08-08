@@ -372,21 +372,6 @@ def run(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler: 
         _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings)
     elif settings.PREDICTION_MODE == "TREND":
         _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings)
-
-    """      
+          
     if handler.is_graph_based() and adj_matrix is not None:
             _calculate_graph_metrics(adj_matrix, test_stock_ids,settings,settings.EVAL_THRESHOLD)
-    """
-    
-    if handler.is_graph_based():
-        final_adj_for_metrics = adj_matrix
-        
-        # If the model is HSDGNN, the matrix must be extracted dynamically now using the test data.
-        if handler.name() == "HSDGNN":
-            final_adj_for_metrics = handler.extract_adjacency_matrix(model, X_test_t)
-
-        # Proceed with metrics calculation if a matrix is available (either static or dynamic)
-        if final_adj_for_metrics is not None:
-            _calculate_graph_metrics(final_adj_for_metrics, test_stock_ids, settings, settings.EVAL_THRESHOLD)
-    
-    return final_adj_for_metrics
