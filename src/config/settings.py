@@ -6,7 +6,7 @@ FEATURE_COLUMNS = ['open', 'high', 'low', 'close', 'vwap']
 RANDOM_SEED = 42
 
 # --- MASTER SWITCH: Choose the prediction mode ---
-PREDICTION_MODE = "TREND" # "POINT" or "TREND"
+PREDICTION_MODE = "POINT" # "POINT" or "TREND"
 
 # --- MASTER SWITCH: Choose the model type ---
 MODEL_TYPE = "DSTAGNN" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
@@ -23,7 +23,7 @@ VAL_SPLIT = 0.20
 # --- Training Hyperparameters ---
 LEARNING_RATE = 0.001
 EPOCHS = 1
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 
 # --- Adjacency Matrix ---
 CORRELATION_THRESHOLD = 0.75 # For static adjacency matrix
@@ -60,12 +60,22 @@ MODEL_ARGS = {
         "embed_dim": 10       
     },
      "DSTAGNN": {
-        "nb_block": 2,           # Reduced from 4 - less blocks for 60 timesteps to avoid overfitting
-        "K": 3,                  # Keep as 3 (good for spatial attention heads)
-        "nb_chev_filter": 16,    # Increased from 5 to 16 (more stable)
-        "nb_time_filter": 16,    # Increased from 5 to 16 (matches chev_filter)
-        "n_heads": 4,            # Changed from 3 to 4 (divides evenly into d_model)
-        "d_k": 16,               # Reduced from 32 to 16 (smaller attention dimensions)
-        "d_model": 64,           # Drastically reduced from 512 to 64 (much more reasonable)
+         
+        "nb_block": 4,           # Paper value (you had 2)
+        "K": 3,                  # Paper value  
+        "nb_chev_filter": 32,    # Paper value (you had 16)
+        "nb_time_filter": 32,    # Paper value (you had 16)
+        "n_heads": 3,            # Paper value (you had 4)
+        "d_k": 32,               # Paper value (you had 16)
+        "d_model": 512,          # Compromise (you had 64, paper has 512) 
+        # "nb_block": 2,           # Reduced from 4 - less blocks for 60 timesteps to avoid overfitting
+        # "K": 3,                  # Keep as 3 (good for spatial attention heads)
+        # "nb_chev_filter": 16,    # Increased from 5 to 16 (more stable)
+        # "nb_time_filter": 16,    # Increased from 5 to 16 (matches chev_filter)
+        # "n_heads": 4,            # Changed from 3 to 4 (divides evenly into d_model)
+        # "d_k": 16,               # Reduced from 32 to 16 (smaller attention dimensions)
+        # "d_model": 64,           # Drastically reduced from 512 to 64 (much more reasonable)
     },
 }
+
+print(f"🎯 PREDICTION MODE: {PREDICTION_MODE} with {POINT_OUTPUT_WINDOW_SIZE}-step horizon")
