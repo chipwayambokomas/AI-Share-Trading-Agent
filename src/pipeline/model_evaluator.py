@@ -106,8 +106,6 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
         'Predicted_Price': predicted_prices
     })
     
-    results_df.sort_values(by=['Date', 'StockID'], inplace=True)
-    
     # UPDATED: Include input/output window sizes in filename
     if settings.PREDICTION_MODE == "POINT":
         filename = f"evaluation_POINT_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
@@ -117,6 +115,25 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
     save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{filename}"
     results_df.to_csv(save_path, index=False)
     print(f"\nPoint prediction evaluation results saved to '{save_path}'.")
+    
+    metrics_summary = {
+        'Model': [settings.MODEL_TYPE],
+        'Prediction_Mode': [settings.PREDICTION_MODE],
+        'Input_Window_Size': [settings.POINT_INPUT_WINDOW_SIZE],
+        'Output_Window_Size': [settings.POINT_OUTPUT_WINDOW_SIZE],
+        'Target_Column': [settings.TARGET_COLUMN],
+        'Total_Predictions': [len(actual_prices)],
+        'RMSE': [rmse],
+        'MAE': [mae],
+        'MSE': [mse],
+        'MAPE': [mape]
+    }
+    
+    metrics_df = pd.DataFrame(metrics_summary)
+    metrics_filename = f"metrics_summary_POINT_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    metrics_save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{metrics_filename}"
+    metrics_df.to_csv(metrics_save_path, index=False)
+    print(f"Point prediction metrics summary saved to '{metrics_save_path}'.")
 
 
 def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings):
@@ -182,6 +199,24 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{filename}"
     results_df.to_csv(save_path, index=False)
     print(f"\nTrend evaluation results saved to '{save_path}'.")
+    
+    metrics_summary = {
+        'Model': [settings.MODEL_TYPE],
+        'Prediction_Mode': [settings.PREDICTION_MODE],
+        'Input_Window_Size': [settings.TREND_INPUT_WINDOW_SIZE],
+        'Target_Features': ['slope_angle, duration'],
+        'Total_Predictions': [len(actual_angles)],
+        'Slope_RMSE': [rmse_angle],
+        'Slope_MAE': [mae_angle],
+        'Duration_RMSE': [rmse_duration],
+        'Duration_MAE': [mae_duration],
+    }
+    
+    metrics_df = pd.DataFrame(metrics_summary)
+    metrics_filename = f"metrics_summary_TREND_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    metrics_save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{metrics_filename}"
+    metrics_df.to_csv(metrics_save_path, index=False)
+    print(f"Trend prediction metrics summary saved to '{metrics_save_path}'.")
 
 def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_threshold):
     """
