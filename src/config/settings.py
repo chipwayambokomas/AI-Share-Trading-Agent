@@ -12,12 +12,12 @@ RANDOM_SEED = 42
 
 # --- MASTER SWITCHES: Can be overridden by HPC job environment variables ---
 PREDICTION_MODE = os.getenv("PREDICTION_MODE", "POINT")  # "POINT" or "TREND"
-MODEL_TYPE = os.getenv("MODEL_TYPE", "DSTAGNN")  # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
+MODEL_TYPE = os.getenv("MODEL_TYPE", "AGCRN")  # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
 
 # --- Data & Preprocessing ---
 # Point prediction windows - can be overridden by environment variables
 POINT_INPUT_WINDOW_SIZE = int(os.getenv("POINT_INPUT_WINDOW_SIZE", "60"))
-POINT_OUTPUT_WINDOW_SIZE = int(os.getenv("POINT_OUTPUT_WINDOW_SIZE", "1"))
+POINT_OUTPUT_WINDOW_SIZE = int(os.getenv("POINT_OUTPUT_WINDOW_SIZE", "5"))
 
 # Trend prediction windows - can be overridden by environment variables  
 TREND_INPUT_WINDOW_SIZE = int(os.getenv("TREND_INPUT_WINDOW_SIZE", "60"))
