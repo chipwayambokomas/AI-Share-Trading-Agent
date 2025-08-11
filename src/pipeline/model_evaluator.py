@@ -101,9 +101,7 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
         'Actual_Price': actual_prices, 
         'Predicted_Price': predicted_prices
     })
-    
-    results_df.sort_values(by=['Date', 'StockID','Horizon_Step'], inplace=True)
-    
+
     save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_POINT_{settings.MODEL_TYPE}.csv"
     results_df.to_csv(save_path, index=False)
     print(f"\nPoint prediction evaluation results saved to '{save_path}'.")
