@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 import pandas as pd
+import os
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from torch.utils.data import TensorDataset, DataLoader
 import networkx as nx
@@ -8,7 +9,7 @@ from ..utils import print_header
 from ..models.base_handler import BaseModelHandler
 import community as community_louvain
 
-def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings):
+def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates, scalers, handler, settings):
     print("\nEvaluating POINT prediction performance...")
     model.eval()
 
@@ -21,88 +22,99 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
     with torch.no_grad():
         # Iterate through the test data in batches ->get the predictions per batch -> adjust the output shape if needed -> move predictions to CPU for further processing
         for X_batch_test in test_loader:
-            X_batch_adapted = handler.adapt_input_for_model(X_batch_test[0])
-            pred_batch_raw = model(X_batch_adapted)
+            pred_batch_raw = model(X_batch_test[0])
             pred_batch, _ = handler.adapt_output_for_loss(pred_batch_raw, None)
             all_predictions.append(pred_batch.cpu().numpy())
-    # Move test targets to CPU for further processing
-    actual_scaled = y_test_t.cpu().numpy()
-    num_samples = actual_scaled.shape[0]    
-    horizon = settings.POINT_OUTPUT_WINDOW_SIZE
+
     # Concatenate all predictions into a single array
     predicted_scaled = np.concatenate(all_predictions, axis=0)
-           
-    #A multi-step prediction tensor like (100 samples, 5 horizon, 32 nodes, 1 feature) is converted into a single, long 1D array of 100 * 5 * 32 * 1 = 16000 numbers. This makes it easy to iterate through every single predicted point.
-    actual_flat = actual_scaled.flatten()
-    predicted_flat = predicted_scaled.flatten()
+    # Move test targets to CPU for further processing
+    actual_scaled = y_test_t.cpu().numpy()
 
     # Inverse transform predictions to get actual prices
     if handler.is_graph_based():
-        num_nodes = actual_scaled.shape[2]
-        stock_ids_ordered = test_stock_ids
+        # Shape: (samples, nodes) or (samples, nodes, out_window) -> squeeze
+        if actual_scaled.ndim > 2: actual_scaled = actual_scaled.squeeze()
+        if predicted_scaled.ndim > 2: predicted_scaled = predicted_scaled.squeeze()
         
+        # Reshape to (samples, num_nodes) for inverse transformation
+        num_samples, num_nodes = actual_scaled.shape
+        actual_flat = actual_scaled.reshape(-1)
+        predicted_flat = predicted_scaled.reshape(-1)
         # Tile stock IDs to match the flattened predictions -> this basically repeats the stock IDs for each sample in the flattened array
-        stock_ids_tiled = np.tile(stock_ids_ordered, num_samples*horizon) # test_stock_ids is the ordered list
+        stock_ids_tiled = np.tile(test_stock_ids, num_samples) # test_stock_ids is the ordered list
+        # The test_dates array has one date per sample. We need to repeat each date
+        # for every node (stock) in that sample to match the other arrays.
+        dates_tiled = np.repeat(test_dates, num_nodes)
         
-        #the test dates ahve a shape of (num_samples, horizon) so we need to flatten it to match the stock IDs
-        dates_tiled = np.repeat(test_dates.flatten(), num_nodes, axis=0).flatten()
-    
-        # The horizon steps pattern must be created and tiled.
-        horizon_steps_pattern = np.arange(1, horizon + 1)
-        horizon_steps = np.tile(np.repeat(horizon_steps_pattern, num_nodes), num_samples)
+        actual_prices, predicted_prices = [], []
+        target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
+        num_features = len(settings.FEATURE_COLUMNS)
 
+        # Iterate through each stock ID and apply the scaler
+        for i in range(len(actual_flat)):
+            # Get the stock ID and corresponding scaler
+            stock_id = stock_ids_tiled[i]
+            scaler = scalers[stock_id]
+            # Create dummy arrays to hold the actual and predicted values
+            dummy_actual = np.zeros((1, num_features))
+            dummy_predicted = np.zeros((1, num_features))
+            # Set the target column to the actual and predicted values
+            dummy_actual[0, target_col_idx] = actual_flat[i]
+            dummy_predicted[0, target_col_idx] = predicted_flat[i]
+            
+            # Inverse transform the dummy arrays to get actual prices and appedd to the lists -> goal is to get a list of actual and predicted prices for each stock ID
+            actual_prices.append(scaler.inverse_transform(dummy_actual)[0, target_col_idx])
+            predicted_prices.append(scaler.inverse_transform(dummy_predicted)[0, target_col_idx])
 
     else: # For TCN/MLP
-        # The dates array is already (num_samples, horizon), so just flatten it.
-        dates_tiled = test_dates.flatten()
-        
-        # Repeat each stock ID for every step in its prediction horizon.
-        stock_ids_tiled = np.repeat(test_stock_ids, horizon)
-        
-        # Tile the horizon steps for each sample.
-        horizon_steps = np.tile(np.arange(1, horizon + 1), num_samples)
+        actual_prices, predicted_prices = [], []
+        target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
+        num_features = len(settings.FEATURE_COLUMNS)
 
-        
-    actual_prices, predicted_prices = [], []
-    target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
-    num_features = len(settings.FEATURE_COLUMNS)
-
-    for i in range(len(actual_flat)):
-        stock_id = stock_ids_tiled[i]
-        scaler = scalers.get(stock_id)
-        if scaler is None: continue
-
-        # Create dummy arrays with the shape the scaler expects (num_features,)
-        dummy_actual = np.zeros(num_features)
-        dummy_predicted = np.zeros(num_features)
-
-        dummy_actual[target_col_idx] = actual_flat[i]
-        dummy_predicted[target_col_idx] = predicted_flat[i]
-
-        actual_prices.append(scaler.inverse_transform(dummy_actual.reshape(1, -1))[0, target_col_idx])
-        predicted_prices.append(scaler.inverse_transform(dummy_predicted.reshape(1, -1))[0, target_col_idx])
+        for i in range(len(test_stock_ids)):
+            stock_id = test_stock_ids[i]
+            scaler = scalers[stock_id]
+            
+            dummy_actual = np.zeros((1, num_features))
+            dummy_predicted = np.zeros((1, num_features))
+            dummy_actual[0, target_col_idx] = actual_scaled[i]
+            dummy_predicted[0, target_col_idx] = predicted_scaled[i]
+            
+            actual_prices.append(scaler.inverse_transform(dummy_actual)[0, target_col_idx])
+            predicted_prices.append(scaler.inverse_transform(dummy_predicted)[0, target_col_idx])
+        stock_ids_tiled = test_stock_ids # For DataFrame consistency
+        dates_tiled = test_dates # For DataFrame consistency
 
     actual_prices = np.array(actual_prices)
     predicted_prices = np.array(predicted_prices)
 
     # Calculate metrics
+    mse = mean_squared_error(actual_prices, predicted_prices)
     mae = mean_absolute_error(actual_prices, predicted_prices)
-    rmse = np.sqrt(mean_squared_error(actual_prices, predicted_prices))
+    rmse = np.sqrt(mse)
     mape = np.mean(np.abs((actual_prices - predicted_prices) / (actual_prices + 1e-8))) * 100
 
     print("\nQuantitative Metrics (All Stocks):")
     print(f"  - RMSE: {rmse:.2f}, MAE: {mae:.2f}, MAPE: {mape:.2f}%")
 
-    # Save results
+    # Save results with UNIQUE FILENAME to prevent overwrites
     results_df = pd.DataFrame({
         'Date': dates_tiled,
         'StockID': stock_ids_tiled,
-        'Horizon_Step': horizon_steps,
         'Actual_Price': actual_prices, 
         'Predicted_Price': predicted_prices
     })
-
-    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_POINT_{settings.MODEL_TYPE}.csv"
+    
+    results_df.sort_values(by=['Date', 'StockID'], inplace=True)
+    
+    # UPDATED: Include input/output window sizes in filename
+    if settings.PREDICTION_MODE == "POINT":
+        filename = f"evaluation_POINT_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    else:
+        filename = f"evaluation_{settings.PREDICTION_MODE}_{settings.MODEL_TYPE}.csv"
+    
+    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{filename}"
     results_df.to_csv(save_path, index=False)
     print(f"\nPoint prediction evaluation results saved to '{save_path}'.")
 
@@ -117,8 +129,7 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     all_predictions, all_actuals = [], []
     with torch.no_grad():
         for X_batch, y_batch in test_loader:
-            X_batch_adapted = handler.adapt_input_for_model(X_batch)
-            pred_batch_raw = model(X_batch_adapted)
+            pred_batch_raw = model(X_batch)
             pred_batch, _ = handler.adapt_output_for_loss(pred_batch_raw, y_batch)
             all_predictions.append(pred_batch.cpu().numpy())
             all_actuals.append(y_batch.cpu().numpy())
@@ -157,7 +168,7 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     print(f"\n  --- Duration Prediction (days) ---")
     print(f"  - RMSE: {rmse_duration:.2f}, MAE: {mae_duration:.2f}")
 
-    # Save results
+    # Save results with UNIQUE FILENAME to prevent overwrites
     results_df = pd.DataFrame({
         'StockID': stock_ids_flat,
         'Actual_Slope_Angle': actual_angles,
@@ -165,7 +176,10 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
         'Actual_Duration': actual_durations,
         'Predicted_Duration': predicted_durations
     })
-    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_TREND_{settings.MODEL_TYPE}.csv"
+    
+    # UPDATED: Include input window size in filename
+    filename = f"evaluation_TREND_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{filename}"
     results_df.to_csv(save_path, index=False)
     print(f"\nTrend evaluation results saved to '{save_path}'.")
 
@@ -187,14 +201,80 @@ def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_thresho
     else:
         adj_numpy = adj_matrix  # Already a numpy array
     
+    # Create directory for raw adjacency matrices if it doesn't exist
+    raw_matrices_dir = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/raw_adjacency_matrices"
+    os.makedirs(raw_matrices_dir, exist_ok=True)
+    
+    # Save the original (unprocessed) adjacency matrix to CSV
+    if settings.PREDICTION_MODE == "POINT":
+        original_filename = f"adjacency_matrix_ORIGINAL_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    else:
+        original_filename = f"adjacency_matrix_ORIGINAL_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    
+    original_matrix_df = pd.DataFrame(adj_numpy, index=stock_ids, columns=stock_ids)
+    original_save_path = f"{raw_matrices_dir}/{original_filename}"
+    original_matrix_df.to_csv(original_save_path, index=True)
+    print(f"✓ Original adjacency matrix saved to: {original_save_path}")
+    print(f"  Contains: Raw learned edge weights from the neural network")
+    
     # Compute the weight threshold: all values below this percentile will be removed
     threshold = np.percentile(adj_numpy, percentile_threshold)
-    print(f"Pruning graph: Keeping top {100 - percentile_threshold}% of edges.")
-    print(f"Calculated threshold value: {threshold:.6f}")
 
     # Make a copy of the matrix and zero out all values below the threshold
     pruned_adj_numpy = np.copy(adj_numpy)
     pruned_adj_numpy[pruned_adj_numpy < 0.1] = 0
+    
+    # Save the pruned adjacency matrix to CSV
+    if settings.PREDICTION_MODE == "POINT":
+        pruned_filename = f"adjacency_matrix_PRUNED_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    else:
+        pruned_filename = f"adjacency_matrix_PRUNED_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    
+    pruned_matrix_df = pd.DataFrame(pruned_adj_numpy, index=stock_ids, columns=stock_ids)
+    pruned_save_path = f"{raw_matrices_dir}/{pruned_filename}"
+    pruned_matrix_df.to_csv(pruned_save_path, index=True)
+    print(f"✓ Pruned adjacency matrix saved to: {pruned_save_path}")
+    print(f"  Contains: Adjacency matrix after removing edges below {percentile_threshold}th percentile (threshold: {threshold:.6f})")
+    
+    print(f"\nPruning info: Keeping top {100 - percentile_threshold}% of edges (threshold: {threshold:.6f})")
+    
+    # Print summary statistics about the saved matrices
+    print(f"\n--- Adjacency Matrix Summary ---")
+    print(f"Matrix dimensions: {len(stock_ids)} x {len(stock_ids)} ({len(stock_ids)} stocks)")
+    print(f"Original matrix - Non-zero edges: {np.count_nonzero(adj_numpy)}, Density: {np.count_nonzero(adj_numpy)/(len(stock_ids)**2):.4f}")
+    print(f"Pruned matrix - Non-zero edges: {np.count_nonzero(pruned_adj_numpy)}, Density: {np.count_nonzero(pruned_adj_numpy)/(len(stock_ids)**2):.4f}")
+    print(f"Original matrix - Min: {adj_numpy.min():.6f}, Max: {adj_numpy.max():.6f}, Mean: {adj_numpy.mean():.6f}")
+    print(f"Pruned matrix - Min: {pruned_adj_numpy.min():.6f}, Max: {pruned_adj_numpy.max():.6f}, Mean: {pruned_adj_numpy.mean():.6f}")
+    
+    # Save experiment metadata for future reference
+    if settings.PREDICTION_MODE == "POINT":
+        metadata_filename = f"experiment_metadata_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.txt"
+    else:
+        metadata_filename = f"experiment_metadata_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.txt"
+    
+    metadata_path = f"{raw_matrices_dir}/{metadata_filename}"
+    with open(metadata_path, 'w') as f:
+        f.write(f"Experiment Configuration\n")
+        f.write(f"========================\n")
+        f.write(f"Model: {settings.MODEL_TYPE}\n")
+        f.write(f"Prediction Mode: {settings.PREDICTION_MODE}\n")
+        if settings.PREDICTION_MODE == "POINT":
+            f.write(f"Input Window Size: {settings.POINT_INPUT_WINDOW_SIZE}\n")
+            f.write(f"Output Window Size: {settings.POINT_OUTPUT_WINDOW_SIZE}\n")
+        else:
+            f.write(f"Input Window Size: {settings.TREND_INPUT_WINDOW_SIZE}\n")
+        f.write(f"Target Column: {settings.TARGET_COLUMN}\n")
+        f.write(f"Feature Columns: {', '.join(settings.FEATURE_COLUMNS)}\n")
+        f.write(f"Number of Stocks: {len(stock_ids)}\n")
+        f.write(f"Stock IDs: {', '.join(stock_ids)}\n")
+        f.write(f"Pruning Threshold: {percentile_threshold}th percentile ({threshold:.6f})\n")
+        f.write(f"\nMatrix Statistics:\n")
+        f.write(f"Original edges: {np.count_nonzero(adj_numpy)}\n")
+        f.write(f"Pruned edges: {np.count_nonzero(pruned_adj_numpy)}\n")
+        f.write(f"Edge reduction: {((np.count_nonzero(adj_numpy) - np.count_nonzero(pruned_adj_numpy)) / np.count_nonzero(adj_numpy) * 100):.1f}%\n")
+    
+    print(f"✓ Experiment metadata saved to: {metadata_path}")
+    print("=" * 50)
 
     # Build a directed graph (DiGraph) from the pruned adjacency matrix
     G = nx.from_numpy_array(pruned_adj_numpy, create_using=nx.DiGraph)
@@ -245,21 +325,27 @@ def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_thresho
     print("\n--- Network Metrics per Stock (on Pruned Graph) ---")
     print(analysis_df)
 
-    # Save the results to a CSV file
-    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_GRAPH_{settings.PREDICTION_MODE}__{settings.MODEL_TYPE}.csv"
+    # Save the results to a CSV file with UNIQUE FILENAME to prevent overwrites
+    # UPDATED: Include window sizes in filename
+    if settings.PREDICTION_MODE == "POINT":
+        filename = f"evaluation_GRAPH_POINT_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    else:
+        filename = f"evaluation_GRAPH_TREND_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    
+    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{filename}"
     analysis_df.to_csv(save_path, index=True)
     print(f"\nGRAPH evaluation results saved to '{save_path}'.")
 
-def run(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler: BaseModelHandler, settings, adj_matrix=None):
+def run(model, X_test_t, y_test_t, test_stock_ids, test_dates, scalers, handler: BaseModelHandler, settings, adj_matrix=None):
     """
     Stage 5: Assesses final model performance and calculates network metrics if applicable.
     """
     print_header("Stage 5: Model Evaluation")
     
     if settings.PREDICTION_MODE == "POINT":
-        _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings)
+        _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates, scalers, handler, settings)
     elif settings.PREDICTION_MODE == "TREND":
         _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings)
           
     if handler.is_graph_based() and adj_matrix is not None:
-            _calculate_graph_metrics(adj_matrix, test_stock_ids,settings,settings.EVAL_THRESHOLD)
+        _calculate_graph_metrics(adj_matrix, test_stock_ids, settings, settings.EVAL_THRESHOLD)
