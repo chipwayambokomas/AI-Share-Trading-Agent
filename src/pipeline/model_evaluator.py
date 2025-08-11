@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 import pandas as pd
+import os
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 from torch.utils.data import TensorDataset, DataLoader
 import networkx as nx
@@ -8,7 +9,7 @@ from ..utils import print_header
 from ..models.base_handler import BaseModelHandler
 import community as community_louvain
 
-def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings):
+def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates, scalers, handler, settings):
     print("\nEvaluating POINT prediction performance...")
     model.eval()
 
@@ -97,7 +98,7 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
     print("\nQuantitative Metrics (All Stocks):")
     print(f"  - RMSE: {rmse:.2f}, MAE: {mae:.2f}, MAPE: {mape:.2f}%")
 
-    # Save results
+    # Save results with UNIQUE FILENAME to prevent overwrites
     results_df = pd.DataFrame({
         'Date': dates_tiled,
         'StockID': stock_ids_tiled,
@@ -107,7 +108,13 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
     
     results_df.sort_values(by=['Date', 'StockID'], inplace=True)
     
-    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_POINT_{settings.MODEL_TYPE}.csv"
+    # UPDATED: Include input/output window sizes in filename
+    if settings.PREDICTION_MODE == "POINT":
+        filename = f"evaluation_POINT_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    else:
+        filename = f"evaluation_{settings.PREDICTION_MODE}_{settings.MODEL_TYPE}.csv"
+    
+    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{filename}"
     results_df.to_csv(save_path, index=False)
     print(f"\nPoint prediction evaluation results saved to '{save_path}'.")
 
@@ -161,7 +168,7 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     print(f"\n  --- Duration Prediction (days) ---")
     print(f"  - RMSE: {rmse_duration:.2f}, MAE: {mae_duration:.2f}")
 
-    # Save results
+    # Save results with UNIQUE FILENAME to prevent overwrites
     results_df = pd.DataFrame({
         'StockID': stock_ids_flat,
         'Actual_Slope_Angle': actual_angles,
@@ -169,7 +176,10 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
         'Actual_Duration': actual_durations,
         'Predicted_Duration': predicted_durations
     })
-    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_TREND_{settings.MODEL_TYPE}.csv"
+    
+    # UPDATED: Include input window size in filename
+    filename = f"evaluation_TREND_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{filename}"
     results_df.to_csv(save_path, index=False)
     print(f"\nTrend evaluation results saved to '{save_path}'.")
 
@@ -191,14 +201,80 @@ def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_thresho
     else:
         adj_numpy = adj_matrix  # Already a numpy array
     
+    # Create directory for raw adjacency matrices if it doesn't exist
+    raw_matrices_dir = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/raw_adjacency_matrices"
+    os.makedirs(raw_matrices_dir, exist_ok=True)
+    
+    # Save the original (unprocessed) adjacency matrix to CSV
+    if settings.PREDICTION_MODE == "POINT":
+        original_filename = f"adjacency_matrix_ORIGINAL_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    else:
+        original_filename = f"adjacency_matrix_ORIGINAL_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    
+    original_matrix_df = pd.DataFrame(adj_numpy, index=stock_ids, columns=stock_ids)
+    original_save_path = f"{raw_matrices_dir}/{original_filename}"
+    original_matrix_df.to_csv(original_save_path, index=True)
+    print(f"✓ Original adjacency matrix saved to: {original_save_path}")
+    print(f"  Contains: Raw learned edge weights from the neural network")
+    
     # Compute the weight threshold: all values below this percentile will be removed
     threshold = np.percentile(adj_numpy, percentile_threshold)
-    print(f"Pruning graph: Keeping top {100 - percentile_threshold}% of edges.")
-    print(f"Calculated threshold value: {threshold:.6f}")
 
     # Make a copy of the matrix and zero out all values below the threshold
     pruned_adj_numpy = np.copy(adj_numpy)
     pruned_adj_numpy[pruned_adj_numpy < 0.1] = 0
+    
+    # Save the pruned adjacency matrix to CSV
+    if settings.PREDICTION_MODE == "POINT":
+        pruned_filename = f"adjacency_matrix_PRUNED_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    else:
+        pruned_filename = f"adjacency_matrix_PRUNED_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    
+    pruned_matrix_df = pd.DataFrame(pruned_adj_numpy, index=stock_ids, columns=stock_ids)
+    pruned_save_path = f"{raw_matrices_dir}/{pruned_filename}"
+    pruned_matrix_df.to_csv(pruned_save_path, index=True)
+    print(f"✓ Pruned adjacency matrix saved to: {pruned_save_path}")
+    print(f"  Contains: Adjacency matrix after removing edges below {percentile_threshold}th percentile (threshold: {threshold:.6f})")
+    
+    print(f"\nPruning info: Keeping top {100 - percentile_threshold}% of edges (threshold: {threshold:.6f})")
+    
+    # Print summary statistics about the saved matrices
+    print(f"\n--- Adjacency Matrix Summary ---")
+    print(f"Matrix dimensions: {len(stock_ids)} x {len(stock_ids)} ({len(stock_ids)} stocks)")
+    print(f"Original matrix - Non-zero edges: {np.count_nonzero(adj_numpy)}, Density: {np.count_nonzero(adj_numpy)/(len(stock_ids)**2):.4f}")
+    print(f"Pruned matrix - Non-zero edges: {np.count_nonzero(pruned_adj_numpy)}, Density: {np.count_nonzero(pruned_adj_numpy)/(len(stock_ids)**2):.4f}")
+    print(f"Original matrix - Min: {adj_numpy.min():.6f}, Max: {adj_numpy.max():.6f}, Mean: {adj_numpy.mean():.6f}")
+    print(f"Pruned matrix - Min: {pruned_adj_numpy.min():.6f}, Max: {pruned_adj_numpy.max():.6f}, Mean: {pruned_adj_numpy.mean():.6f}")
+    
+    # Save experiment metadata for future reference
+    if settings.PREDICTION_MODE == "POINT":
+        metadata_filename = f"experiment_metadata_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.txt"
+    else:
+        metadata_filename = f"experiment_metadata_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.txt"
+    
+    metadata_path = f"{raw_matrices_dir}/{metadata_filename}"
+    with open(metadata_path, 'w') as f:
+        f.write(f"Experiment Configuration\n")
+        f.write(f"========================\n")
+        f.write(f"Model: {settings.MODEL_TYPE}\n")
+        f.write(f"Prediction Mode: {settings.PREDICTION_MODE}\n")
+        if settings.PREDICTION_MODE == "POINT":
+            f.write(f"Input Window Size: {settings.POINT_INPUT_WINDOW_SIZE}\n")
+            f.write(f"Output Window Size: {settings.POINT_OUTPUT_WINDOW_SIZE}\n")
+        else:
+            f.write(f"Input Window Size: {settings.TREND_INPUT_WINDOW_SIZE}\n")
+        f.write(f"Target Column: {settings.TARGET_COLUMN}\n")
+        f.write(f"Feature Columns: {', '.join(settings.FEATURE_COLUMNS)}\n")
+        f.write(f"Number of Stocks: {len(stock_ids)}\n")
+        f.write(f"Stock IDs: {', '.join(stock_ids)}\n")
+        f.write(f"Pruning Threshold: {percentile_threshold}th percentile ({threshold:.6f})\n")
+        f.write(f"\nMatrix Statistics:\n")
+        f.write(f"Original edges: {np.count_nonzero(adj_numpy)}\n")
+        f.write(f"Pruned edges: {np.count_nonzero(pruned_adj_numpy)}\n")
+        f.write(f"Edge reduction: {((np.count_nonzero(adj_numpy) - np.count_nonzero(pruned_adj_numpy)) / np.count_nonzero(adj_numpy) * 100):.1f}%\n")
+    
+    print(f"✓ Experiment metadata saved to: {metadata_path}")
+    print("=" * 50)
 
     # Build a directed graph (DiGraph) from the pruned adjacency matrix
     G = nx.from_numpy_array(pruned_adj_numpy, create_using=nx.DiGraph)
@@ -249,21 +325,27 @@ def _calculate_graph_metrics(adj_matrix, stock_ids, settings, percentile_thresho
     print("\n--- Network Metrics per Stock (on Pruned Graph) ---")
     print(analysis_df)
 
-    # Save the results to a CSV file
-    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/evaluation_GRAPH_{settings.PREDICTION_MODE}__{settings.MODEL_TYPE}.csv"
+    # Save the results to a CSV file with UNIQUE FILENAME to prevent overwrites
+    # UPDATED: Include window sizes in filename
+    if settings.PREDICTION_MODE == "POINT":
+        filename = f"evaluation_GRAPH_POINT_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+    else:
+        filename = f"evaluation_GRAPH_TREND_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+    
+    save_path = f"{settings.RESULTS_DIR}/{settings.MODEL_TYPE}/{filename}"
     analysis_df.to_csv(save_path, index=True)
     print(f"\nGRAPH evaluation results saved to '{save_path}'.")
 
-def run(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler: BaseModelHandler, settings, adj_matrix=None):
+def run(model, X_test_t, y_test_t, test_stock_ids, test_dates, scalers, handler: BaseModelHandler, settings, adj_matrix=None):
     """
     Stage 5: Assesses final model performance and calculates network metrics if applicable.
     """
     print_header("Stage 5: Model Evaluation")
     
     if settings.PREDICTION_MODE == "POINT":
-        _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, handler, settings)
+        _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_dates, scalers, handler, settings)
     elif settings.PREDICTION_MODE == "TREND":
         _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scalers, handler, settings)
           
     if handler.is_graph_based() and adj_matrix is not None:
-            _calculate_graph_metrics(adj_matrix, test_stock_ids,settings,settings.EVAL_THRESHOLD)
+        _calculate_graph_metrics(adj_matrix, test_stock_ids, settings, settings.EVAL_THRESHOLD)

@@ -1,27 +1,35 @@
+import os
+
 # --- Global Configuration ---
 FILE_PATH = "data/JSE_Top40_OHLCV_2014_2024.xlsx"
-RESULTS_DIR = "results"
+
+# Results directory - can be overridden by environment variable for unique job outputs
+RESULTS_DIR = os.getenv("RESULTS_DIR", "results")
+
 TARGET_COLUMN = 'vwap'
 FEATURE_COLUMNS = ['open', 'high', 'low', 'close', 'vwap']
 RANDOM_SEED = 42
 
-# --- MASTER SWITCH: Choose the prediction mode ---
-PREDICTION_MODE = "POINT" # "POINT" or "TREND"
-
-# --- MASTER SWITCH: Choose the model type ---
-MODEL_TYPE = "DSTAGNN" # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
+# --- MASTER SWITCHES: Can be overridden by HPC job environment variables ---
+PREDICTION_MODE = os.getenv("PREDICTION_MODE", "POINT")  # "POINT" or "TREND"
+MODEL_TYPE = os.getenv("MODEL_TYPE", "DSTAGNN")  # "TCN", "MLP", "GraphWaveNet", "AGCRN", "DSTAGNN"
 
 # --- Data & Preprocessing ---
-POINT_INPUT_WINDOW_SIZE = 60
-POINT_OUTPUT_WINDOW_SIZE = 1
-TREND_INPUT_WINDOW_SIZE = 60
+# Point prediction windows - can be overridden by environment variables
+POINT_INPUT_WINDOW_SIZE = int(os.getenv("POINT_INPUT_WINDOW_SIZE", "60"))
+POINT_OUTPUT_WINDOW_SIZE = int(os.getenv("POINT_OUTPUT_WINDOW_SIZE", "1"))
+
+# Trend prediction windows - can be overridden by environment variables  
+TREND_INPUT_WINDOW_SIZE = int(os.getenv("TREND_INPUT_WINDOW_SIZE", "60"))
+
+# Other preprocessing parameters
 MAX_SEGMENTATION_ERROR = 60.0
 TRAIN_SPLIT = 0.60
 VAL_SPLIT = 0.20
 
 # --- Training Hyperparameters ---
 LEARNING_RATE = 0.001
-EPOCHS = 50
+EPOCHS = int(os.getenv("EPOCHS", "50"))  # Can be overridden by environment variable
 BATCH_SIZE = 64
 
 # --- Adjacency Matrix ---
@@ -59,20 +67,24 @@ MODEL_ARGS = {
         "embed_dim": 10       
     },
      "DSTAGNN": {
-         
-        "nb_block": 4,           # Paper value (you had 2)
+        "nb_block": 4,           # Paper value
         "K": 3,                  # Paper value  
-        "nb_chev_filter": 32,    # Paper value (you had 16)
-        "nb_time_filter": 32,    # Paper value (you had 16)
-        "n_heads": 3,            # Paper value (you had 4)
-        "d_k": 32,               # Paper value (you had 16)
-        "d_model": 512,          # Compromise (you had 64, paper has 512)
-        # "nb_block": 2,           # Reduced from 4 - less blocks for 60 timesteps to avoid overfitting
-        # "K": 3,                  # Keep as 3 (good for spatial attention heads)
-        # "nb_chev_filter": 16,    # Increased from 5 to 16 (more stable)
-        # "nb_time_filter": 16,    # Increased from 5 to 16 (matches chev_filter)
-        # "n_heads": 4,            # Changed from 3 to 4 (divides evenly into d_model)
-        # "d_k": 16,               # Reduced from 32 to 16 (smaller attention dimensions)
-        # "d_model": 64,           # Drastically reduced from 512 to 64 (much more reasonable)
+        "nb_chev_filter": 32,    # Paper value
+        "nb_time_filter": 32,    # Paper value
+        "n_heads": 3,            # Paper value
+        "d_k": 32,               # Paper value
+        "d_model": 512,          # Paper value
     },
 }
+
+# --- Debug information for HPC runs ---
+if __name__ == "__main__":
+    print("=== Current Configuration ===")
+    print(f"MODEL_TYPE: {MODEL_TYPE}")
+    print(f"PREDICTION_MODE: {PREDICTION_MODE}")
+    print(f"EPOCHS: {EPOCHS}")
+    print(f"POINT_INPUT_WINDOW_SIZE: {POINT_INPUT_WINDOW_SIZE}")
+    print(f"POINT_OUTPUT_WINDOW_SIZE: {POINT_OUTPUT_WINDOW_SIZE}")
+    print(f"TREND_INPUT_WINDOW_SIZE: {TREND_INPUT_WINDOW_SIZE}")
+    print(f"RESULTS_DIR: {RESULTS_DIR}")
+    print("=============================")
