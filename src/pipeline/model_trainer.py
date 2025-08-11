@@ -39,15 +39,27 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
         
         for X_batch, y_batch in train_iterator:
             if print_once:
-                print(f"\n--- Data Shape Verification ---")
-                print(f"X_batch shape entering model: {X_batch.shape}")
+                print("\n" + "="*40)
+                print("--- SANITY CHECK 1: Data Shape Verification ---")
+                print(f"X_batch shape from loader: {X_batch.shape}")
                 print(f"y_batch shape from loader:  {y_batch.shape}")
-                print_once = False
+                print("="*40)
             optimizer.zero_grad()
             X_batch_adapted = model_handler.adapt_input_for_model(X_batch)
             y_pred_raw = model(X_batch_adapted)
             y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
             y_pred, y_batch_adapted = model_handler.adapt_y_for_loss(y_pred, y_batch_adapted)
+            if print_once:
+                print("\n" + "="*40)
+                print("--- SANITY CHECK 2: Loss Calculation Alignment ---")
+                print(f"Shape of y_pred (prediction) for loss: {y_pred.shape}")
+                print(f"Shape of y_batch (target) for loss:    {y_batch_adapted.shape}")
+                if y_pred.shape != y_batch_adapted.shape:
+                    print("\n!!!!!! WARNING: Shapes for loss function do NOT match! !!!!!!\n")
+                else:
+                    print("Shapes are correctly aligned for loss calculation.")
+                print("="*40)
+                print_once = False # Ensure this only runs on the first batch
             loss = loss_fn(y_pred, y_batch_adapted)
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 5)
