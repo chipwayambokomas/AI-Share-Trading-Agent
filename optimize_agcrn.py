@@ -1,5 +1,3 @@
-# optimize_agcrn.py
-
 import optuna
 import torch
 from src.config import settings
@@ -84,7 +82,7 @@ if __name__ == "__main__":
     
     # The HPO is fixed for AGCRN POINT mode. The input window is taken from settings.py
     settings.MODEL_TYPE = "AGCRN"
-    settings.PREDICTION_MODE = "TREND"
+    settings.PREDICTION_MODE = "POINT"
     
     model_handler = ModelFactory.create(settings.MODEL_TYPE, settings)
     preprocessor = PreprocessorFactory.create(model_handler, settings)

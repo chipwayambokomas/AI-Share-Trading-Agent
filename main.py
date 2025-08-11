@@ -63,15 +63,30 @@ def main():
         model, X_test_t, y_test_t, test_stock_ids, test_dates,scalers, model_handler, settings, final_adj_matrix
     )
     
-    # `visualizer.run_all`: This takes the path of the saved graph metrics of a model, the learned adjacency matrix, the directory of where the files are to be saved and finally the adjacency matrix threshold to be used in recreating the graph ->it creates informative visuals with these metrics that can be used for analysis    
+    # Updated visualization section for main.py
+    # `visualizer.run_all`: This takes the path of the saved graph metrics of a model, the learned adjacency matrix, 
+    # the directory of where the files are to be saved and finally the adjacency matrix threshold to be used in 
+    # recreating the graph -> it creates informative visuals with these metrics that can be used for analysis    
     if model_handler.is_graph_based():
+        # Build the correct metrics CSV path using new naming convention
+        if settings.PREDICTION_MODE == "POINT":
+            metrics_filename = f"evaluation_GRAPH_POINT_{settings.MODEL_TYPE}_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}.csv"
+            viz_dir_name = f"POINT_IN{settings.POINT_INPUT_WINDOW_SIZE}_OUT{settings.POINT_OUTPUT_WINDOW_SIZE}_visualizations"
+        else:  # TREND
+            metrics_filename = f"evaluation_GRAPH_TREND_{settings.MODEL_TYPE}_IN{settings.TREND_INPUT_WINDOW_SIZE}.csv"
+            viz_dir_name = f"TREND_IN{settings.TREND_INPUT_WINDOW_SIZE}_visualizations"
+        
+        metrics_csv_path = os.path.join(settings.RESULTS_DIR, settings.MODEL_TYPE, metrics_filename)
+        save_dir = os.path.join(settings.RESULTS_DIR, settings.MODEL_TYPE, viz_dir_name)
+        
         visualizer = GraphVisualizer(
-            metrics_csv_path = os.path.join(settings.RESULTS_DIR,settings.MODEL_TYPE, f"evaluation_GRAPH_{settings.PREDICTION_MODE}__{settings.MODEL_TYPE}.csv"),
-            adj_matrix = final_adj_matrix,
-            save_dir=os.path.join(settings.RESULTS_DIR, settings.MODEL_TYPE, f"{settings.PREDICTION_MODE}_visualizations"),
+            metrics_csv_path=metrics_csv_path,
+            adj_matrix=final_adj_matrix,
+            save_dir=save_dir,
             percentile_threshold=settings.EVAL_THRESHOLD
         )
         visualizer.run_all()
+        print(f"✓ Graph visualizations saved to: {save_dir}")
         
 
     print_header("Pipeline Finished")

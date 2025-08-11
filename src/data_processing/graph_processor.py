@@ -74,15 +74,15 @@ class GraphProcessor(BaseProcessor):
         in_win = self.settings.POINT_INPUT_WINDOW_SIZE
         out_win = self.settings.POINT_OUTPUT_WINDOW_SIZE
         target_col_idx = self.settings.FEATURE_COLUMNS.index(self.settings.TARGET_COLUMN)
-
+        total_len = in_win + out_win
         #we want to slide a window over the scaled time series data and grab the input and output sequences
-        for i in tqdm(range(len(scaled_array) - (in_win + out_win) + 1), desc="Creating graph sequences"):
+        for i in tqdm(range(len(scaled_array) - total_len + 1), desc="Creating graph sequences"):
             #take a window of inputs for all the stocks and for all the features
             X.append(scaled_array[i : i + in_win, :, :])
             #take the output for the target column for all the stocks
             y.append(scaled_array[i + in_win : i + in_win + out_win, :, target_col_idx:target_col_idx+1])
-            prediction_date = dates_index[i + in_win]
-            all_dates.append(prediction_date)
+            date_slice = dates_index[i + in_win : i + in_win + out_win].to_numpy()
+            all_dates.append(date_slice)
 
         return np.array(X, dtype=np.float32), np.array(y, dtype=np.float32), stock_ids, np.array(all_dates), scalers, adj_matrix
 

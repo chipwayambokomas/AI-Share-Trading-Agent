@@ -55,3 +55,10 @@ class BaseModelHandler(ABC):
         
     def adapt_y_for_loss(self, y_pred, y_batch):
         return y_pred, y_batch
+    
+    def adapt_input_for_model(self, X_batch):
+        """
+        Adapts the input batch to the shape expected by the specific model's forward pass.
+        The default implementation does nothing.
+        """
+        return X_batch

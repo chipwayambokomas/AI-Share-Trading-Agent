@@ -29,7 +29,7 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
     if verbose:
         print("\nStarting model training...")
     start_time = time.time()
-    
+    print_once = True
     for epoch in range(settings.EPOCHS):
         model.train()
         train_loss = 0.0
@@ -38,10 +38,28 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
         train_iterator = tqdm(train_loader, unit="batch", desc=f"Epoch {epoch+1:2d}/{settings.EPOCHS}", disable=not verbose)
         
         for X_batch, y_batch in train_iterator:
+            if print_once:
+                print("\n" + "="*40)
+                print("--- SANITY CHECK 1: Data Shape Verification ---")
+                print(f"X_batch shape from loader: {X_batch.shape}")
+                print(f"y_batch shape from loader:  {y_batch.shape}")
+                print("="*40)
             optimizer.zero_grad()
-            y_pred_raw = model(X_batch)
+            X_batch_adapted = model_handler.adapt_input_for_model(X_batch)
+            y_pred_raw = model(X_batch_adapted)
             y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
             y_pred, y_batch_adapted = model_handler.adapt_y_for_loss(y_pred, y_batch_adapted)
+            if print_once:
+                print("\n" + "="*40)
+                print("--- SANITY CHECK 2: Loss Calculation Alignment ---")
+                print(f"Shape of y_pred (prediction) for loss: {y_pred.shape}")
+                print(f"Shape of y_batch (target) for loss:    {y_batch_adapted.shape}")
+                if y_pred.shape != y_batch_adapted.shape:
+                    print("\n!!!!!! WARNING: Shapes for loss function do NOT match! !!!!!!\n")
+                else:
+                    print("Shapes are correctly aligned for loss calculation.")
+                print("="*40)
+                print_once = False # Ensure this only runs on the first batch
             loss = loss_fn(y_pred, y_batch_adapted)
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 5)
@@ -58,7 +76,8 @@ def run(train_loader, val_loader, model_handler: BaseModelHandler, settings, sup
             val_loss = 0.0
             with torch.no_grad():
                 for X_batch, y_batch in val_loader:
-                    y_pred_raw = model(X_batch)
+                    X_batch_adapted = model_handler.adapt_input_for_model(X_batch)
+                    y_pred_raw = model(X_batch_adapted)
                     y_pred, y_batch_adapted = model_handler.adapt_output_for_loss(y_pred_raw, y_batch)
                     val_loss += loss_fn(y_pred, y_batch_adapted).item()
             avg_val_loss = val_loss / len(val_loader)

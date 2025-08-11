@@ -25,17 +25,25 @@ class AGCRNHandler(BaseModelHandler):
         # It learns the graph structure via node embeddings.
         
         # Get generic dimensions
-        input_features, output_size = self.get_input_dims()
+        input_features, _ = self.get_input_dims()
+        
+        if self.settings.PREDICTION_MODE == "POINT":
+            horizon = self.settings.POINT_OUTPUT_WINDOW_SIZE
+            output_dim = 1 # We are predicting 1 feature (e.g., close price)
+        else: # TREND mode
+            horizon = self.settings.TREND_OUTPUT_WINDOW_SIZE
+            output_dim = 2 # We are predicting 2 features (slope, duration)
         
         # Add all necessary arguments from settings.py for the model's __init__ method
         # The `num_nodes` will be determined during data preprocessing.
         # We pass it in via kwargs from the trainer.
         self.model_args['num_nodes'] = kwargs['num_nodes']
         self.model_args['input_dim'] = input_features
-        self.model_args['output_dim'] = output_size
+        self.model_args['output_dim'] = output_dim
         
-        # AGCRN's output horizon is determined by our POINT_OUTPUT_WINDOW_SIZE
-        self.model_args['horizon'] = self.settings.POINT_OUTPUT_WINDOW_SIZE
+        
+        # AGCRN's output horizon is determined by our POINT_OUTPUT_WINDOW_SIZE and TREND_OUTPUT_WINDOW_SIZE settings.
+        self.model_args['horizon'] = horizon
         
         print("Building AGCRN model with args:", self.model_args)
         return AGCRN(**self.model_args)
