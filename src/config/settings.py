@@ -17,7 +17,7 @@ MODEL_TYPE = os.getenv("MODEL_TYPE", "AGCRN")  # "TCN", "MLP", "GraphWaveNet", "
 # --- Data & Preprocessing ---
 # Point prediction windows - can be overridden by environment variables
 POINT_INPUT_WINDOW_SIZE = int(os.getenv("POINT_INPUT_WINDOW_SIZE", "60"))
-POINT_OUTPUT_WINDOW_SIZE = int(os.getenv("POINT_OUTPUT_WINDOW_SIZE", "5"))
+POINT_OUTPUT_WINDOW_SIZE = int(os.getenv("POINT_OUTPUT_WINDOW_SIZE", "1"))
 
 # Trend prediction windows - can be overridden by environment variables  
 TREND_INPUT_WINDOW_SIZE = int(os.getenv("TREND_INPUT_WINDOW_SIZE", "60"))
