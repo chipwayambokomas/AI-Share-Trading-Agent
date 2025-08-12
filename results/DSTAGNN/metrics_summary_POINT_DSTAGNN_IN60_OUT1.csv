@@ -1,0 +1,2 @@
+Model,Prediction_Mode,Input_Window_Size,Output_Window_Size,Target_Column,Total_Predictions,RMSE,MAE,MSE,MAPE
+DSTAGNN,POINT,60,1,vwap,17472,679662.41330676,376089.1024043363,461940996061.9691,1201.5572748089785

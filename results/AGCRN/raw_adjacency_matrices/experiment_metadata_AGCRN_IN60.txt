@@ -7,9 +7,9 @@ Target Column: vwap
 Feature Columns: open, high, low, close, vwap
 Number of Stocks: 32
 Stock IDs: ABG.JO, AGL.JO, AMS.JO, APN.JO, BTI.JO, BVT.JO, CLS.JO, CPI.JO, DSY.JO, EXX.JO, FSR.JO, GFI.JO, GLN.JO, GRT.JO, HAR.JO, IMP.JO, INL.JO, INP.JO, KIO.JO, MNP.JO, MRP.JO, MTN.JO, NED.JO, NPN.JO, NRP.JO, REM.JO, RLO.JO, SBK.JO, SHP.JO, SLM.JO, SOL.JO, VOD.JO
-Pruning Threshold: 90th percentile (0.014991)
+Pruning Threshold: 90th percentile (0.015327)
 
 Matrix Statistics:
 Original edges: 1024
-Pruned edges: 43
-Edge reduction: 95.8%
+Pruned edges: 54
+Edge reduction: 94.7%

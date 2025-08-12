@@ -27,13 +27,11 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
             pred_batch, _ = handler.adapt_output_for_loss(pred_batch_raw, None)
             all_predictions.append(pred_batch.cpu().numpy())
 
-
     # Concatenate all predictions into a single array
     predicted_scaled = np.concatenate(all_predictions, axis=0)
     # Move test targets to CPU for further processing
     actual_scaled = y_test_t.cpu().numpy()
 
-    # --- START OF ROBUST FIX ---
     horizon = settings.POINT_OUTPUT_WINDOW_SIZE
     
     actual_flat = actual_scaled.flatten()
@@ -133,7 +131,8 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     all_predictions, all_actuals = [], []
     with torch.no_grad():
         for X_batch, y_batch in test_loader:
-            pred_batch_raw = model(X_batch)
+            X_batch_adapted = handler.adapt_input_for_model(X_batch)
+            pred_batch_raw = model(X_batch_adapted)
             pred_batch, _ = handler.adapt_output_for_loss(pred_batch_raw, y_batch)
             all_predictions.append(pred_batch.cpu().numpy())
             all_actuals.append(y_batch.cpu().numpy())
@@ -163,16 +162,14 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     predicted_angles = np.degrees(np.arctan(predicted_slopes))
     rmse_angle = np.sqrt(mean_squared_error(actual_angles, predicted_angles))
     mae_angle = mean_absolute_error(actual_angles, predicted_angles)
-    mape_angle = np.mean(np.abs((actual_angles - predicted_angles) / (actual_angles + 1e-8))) * 100
     print(f"\n  --- Slope Angle Prediction (degrees) ---")
-    print(f"  - RMSE: {rmse_angle:.4f}, MAE: {mae_angle:.4f}, MAPE: {mape_angle:.2f}%")
+    print(f"  - RMSE: {rmse_angle:.4f}, MAE: {mae_angle:.4f}")
 
     # Duration metrics
     rmse_duration = np.sqrt(mean_squared_error(actual_durations, predicted_durations))
     mae_duration = mean_absolute_error(actual_durations, predicted_durations)
-    mape_duration = np.mean(np.abs((actual_durations - predicted_durations) / (actual_durations + 1e-8))) * 100
     print(f"\n  --- Duration Prediction (days) ---")
-    print(f"  - RMSE: {rmse_duration:.2f}, MAE: {mae_duration:.2f}, MAPE: {mape_duration:.2f}%")
+    print(f"  - RMSE: {rmse_duration:.2f}, MAE: {mae_duration:.2f}")
 
     # Save results with UNIQUE FILENAME to prevent overwrites
     results_df = pd.DataFrame({
@@ -199,8 +196,6 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
         'Slope_MAE': [mae_angle],
         'Duration_RMSE': [rmse_duration],
         'Duration_MAE': [mae_duration],
-        'Slope_MAPE': [mape_angle],
-        'Duration_MAPE': [mape_duration]
     }
     
     metrics_df = pd.DataFrame(metrics_summary)

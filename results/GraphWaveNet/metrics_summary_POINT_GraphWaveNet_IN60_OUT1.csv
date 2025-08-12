@@ -1,0 +1,2 @@
+Model,Prediction_Mode,Input_Window_Size,Output_Window_Size,Target_Column,Total_Predictions,RMSE,MAE,MSE,MAPE
+GraphWaveNet,POINT,60,1,vwap,17472,29683.50720799155,10316.002554780787,881110600.1668864,18.55393841413368

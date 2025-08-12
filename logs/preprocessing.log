@@ -1,3 +1,3 @@
-2025-08-12 16:22:50,065 - root - INFO - Logging configured.
-2025-08-12 16:22:59,732 - src.data_processing.base_processor - INFO - Starting data cleaning process...
-2025-08-12 16:22:59,890 - src.data_processing.base_processor - INFO - Data cleaning complete. Kept 32/32 stocks.
+2025-08-12 18:12:28,100 - root - INFO - Logging configured.
+2025-08-12 18:12:53,502 - src.data_processing.base_processor - INFO - Starting data cleaning process...
+2025-08-12 18:12:53,749 - src.data_processing.base_processor - INFO - Data cleaning complete. Kept 32/32 stocks.

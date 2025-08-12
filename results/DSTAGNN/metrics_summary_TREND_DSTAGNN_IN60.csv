@@ -1,0 +1,2 @@
+Model,Prediction_Mode,Input_Window_Size,Target_Features,Total_Predictions,Slope_RMSE,Slope_MAE,Duration_RMSE,Duration_MAE,Slope_MAPE,Duration_MAPE
+DSTAGNN,TREND,60,"slope_angle, duration",17472,127.4969707054348,91.92914581298828,6.850028445887846,6.220764636993408,2136.2925,564.9561
