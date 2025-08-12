@@ -12,13 +12,13 @@ FEATURE_COLUMNS = ['open', 'high', 'low', 'close', 'vwap']
 RANDOM_SEED = 42
 
 # --- MASTER SWITCHES: Can be overridden by HPC job environment variables ---
-PREDICTION_MODE = os.getenv("PREDICTION_MODE", "POINT")
+PREDICTION_MODE = os.getenv("PREDICTION_MODE", "TREND")
 MODEL_TYPE = os.getenv("MODEL_TYPE", "AGCRN")
 
 # --- Data & Preprocessing ---
 # Point prediction windows - can be overridden by environment variables
 POINT_INPUT_WINDOW_SIZE = int(os.getenv("POINT_INPUT_WINDOW_SIZE", "60"))
-POINT_OUTPUT_WINDOW_SIZE = int(os.getenv("POINT_OUTPUT_WINDOW_SIZE", "5"))
+POINT_OUTPUT_WINDOW_SIZE = int(os.getenv("POINT_OUTPUT_WINDOW_SIZE", "10"))
 
 # Trend prediction windows - can be overridden by environment variables  
 TREND_INPUT_WINDOW_SIZE = int(os.getenv("TREND_INPUT_WINDOW_SIZE", "60"))
@@ -32,7 +32,7 @@ VAL_SPLIT = 0.20
 # --- Training Hyperparameters ---
 # These can be overridden by the HPC job script
 LEARNING_RATE = float(os.getenv("LEARNING_RATE", "0.001"))
-EPOCHS = int(os.getenv("EPOCHS", "1"))
+EPOCHS = int(os.getenv("EPOCHS", "50"))
 BATCH_SIZE = int(os.getenv("BATCH_SIZE", "64"))
 
 # --- Adjacency Matrix ---
@@ -53,7 +53,7 @@ MODEL_ARGS = {
         "end_channels": 512, "kernel_size": 2, "blocks": 4, "layers": 2,
     },
      "AGCRN": {
-        "rnn_units": 64, "num_layers": 2, "cheb_k": 2, "embed_dim": 10       
+        "rnn_units": 128, "num_layers": 1, "cheb_k": 2, "embed_dim": 10       
     },
      "DSTAGNN": {
         "nb_block": 4, "K": 3, "nb_chev_filter": 32, "nb_time_filter": 32,

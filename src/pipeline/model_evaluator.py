@@ -22,69 +22,56 @@ def _evaluate_point_prediction(model, X_test_t, y_test_t, test_stock_ids, test_d
     with torch.no_grad():
         # Iterate through the test data in batches ->get the predictions per batch -> adjust the output shape if needed -> move predictions to CPU for further processing
         for X_batch_test in test_loader:
-            pred_batch_raw = model(X_batch_test[0])
+            X_batch_adapted = handler.adapt_input_for_model(X_batch_test[0])
+            pred_batch_raw = model(X_batch_adapted)
             pred_batch, _ = handler.adapt_output_for_loss(pred_batch_raw, None)
             all_predictions.append(pred_batch.cpu().numpy())
+
 
     # Concatenate all predictions into a single array
     predicted_scaled = np.concatenate(all_predictions, axis=0)
     # Move test targets to CPU for further processing
     actual_scaled = y_test_t.cpu().numpy()
 
-    # Inverse transform predictions to get actual prices
+    # --- START OF ROBUST FIX ---
+    horizon = settings.POINT_OUTPUT_WINDOW_SIZE
+    
+    actual_flat = actual_scaled.flatten()
+    predicted_flat = predicted_scaled.flatten()
+
     if handler.is_graph_based():
-        # Shape: (samples, nodes) or (samples, nodes, out_window) -> squeeze
-        if actual_scaled.ndim > 2: actual_scaled = actual_scaled.squeeze()
-        if predicted_scaled.ndim > 2: predicted_scaled = predicted_scaled.squeeze()
-        
-        # Reshape to (samples, num_nodes) for inverse transformation
-        num_samples, num_nodes = actual_scaled.shape
-        actual_flat = actual_scaled.reshape(-1)
-        predicted_flat = predicted_scaled.reshape(-1)
-        # Tile stock IDs to match the flattened predictions -> this basically repeats the stock IDs for each sample in the flattened array
-        stock_ids_tiled = np.tile(test_stock_ids, num_samples) # test_stock_ids is the ordered list
-        # The test_dates array has one date per sample. We need to repeat each date
-        # for every node (stock) in that sample to match the other arrays.
-        dates_tiled = np.repeat(test_dates, num_nodes)
-        
-        actual_prices, predicted_prices = [], []
-        target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
-        num_features = len(settings.FEATURE_COLUMNS)
+        # Get dimensions safely from the 4D tensor shape (samples, horizon, nodes, features)
+        num_samples = actual_scaled.shape[0]
+        num_nodes = actual_scaled.shape[2]
+        stock_ids_ordered = test_stock_ids
 
-        # Iterate through each stock ID and apply the scaler
-        for i in range(len(actual_flat)):
-            # Get the stock ID and corresponding scaler
-            stock_id = stock_ids_tiled[i]
-            scaler = scalers[stock_id]
-            # Create dummy arrays to hold the actual and predicted values
-            dummy_actual = np.zeros((1, num_features))
-            dummy_predicted = np.zeros((1, num_features))
-            # Set the target column to the actual and predicted values
-            dummy_actual[0, target_col_idx] = actual_flat[i]
-            dummy_predicted[0, target_col_idx] = predicted_flat[i]
-            
-            # Inverse transform the dummy arrays to get actual prices and appedd to the lists -> goal is to get a list of actual and predicted prices for each stock ID
-            actual_prices.append(scaler.inverse_transform(dummy_actual)[0, target_col_idx])
-            predicted_prices.append(scaler.inverse_transform(dummy_predicted)[0, target_col_idx])
-
+        dates_tiled = np.repeat(test_dates.flatten(), num_nodes)
+        stock_ids_tiled = np.tile(stock_ids_ordered, num_samples * horizon)
+        horizon_steps_pattern = np.repeat(np.arange(1, horizon + 1), num_nodes)
+        horizon_steps = np.tile(horizon_steps_pattern, num_samples)
     else: # For TCN/MLP
-        actual_prices, predicted_prices = [], []
-        target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
-        num_features = len(settings.FEATURE_COLUMNS)
+        num_samples = actual_scaled.shape[0]
+        dates_tiled = test_dates.flatten()
+        stock_ids_tiled = np.repeat(test_stock_ids, horizon)
+        horizon_steps = np.tile(np.arange(1, horizon + 1), num_samples)
+    # --- END OF ROBUST FIX ---
+        
+    actual_prices, predicted_prices = [], []
+    target_col_idx = settings.FEATURE_COLUMNS.index(settings.TARGET_COLUMN)
+    num_features = len(settings.FEATURE_COLUMNS)
 
-        for i in range(len(test_stock_ids)):
-            stock_id = test_stock_ids[i]
-            scaler = scalers[stock_id]
-            
-            dummy_actual = np.zeros((1, num_features))
-            dummy_predicted = np.zeros((1, num_features))
-            dummy_actual[0, target_col_idx] = actual_scaled[i]
-            dummy_predicted[0, target_col_idx] = predicted_scaled[i]
-            
-            actual_prices.append(scaler.inverse_transform(dummy_actual)[0, target_col_idx])
-            predicted_prices.append(scaler.inverse_transform(dummy_predicted)[0, target_col_idx])
-        stock_ids_tiled = test_stock_ids # For DataFrame consistency
-        dates_tiled = test_dates # For DataFrame consistency
+    for i in range(len(actual_flat)):
+        stock_id = stock_ids_tiled[i]
+        scaler = scalers.get(stock_id)
+        if scaler is None: continue
+
+        dummy_actual = np.zeros(num_features)
+        dummy_predicted = np.zeros(num_features)
+        dummy_actual[target_col_idx] = actual_flat[i]
+        dummy_predicted[target_col_idx] = predicted_flat[i]
+
+        actual_prices.append(scaler.inverse_transform(dummy_actual.reshape(1, -1))[0, target_col_idx])
+        predicted_prices.append(scaler.inverse_transform(dummy_predicted.reshape(1, -1))[0, target_col_idx])
 
     actual_prices = np.array(actual_prices)
     predicted_prices = np.array(predicted_prices)
@@ -176,14 +163,16 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
     predicted_angles = np.degrees(np.arctan(predicted_slopes))
     rmse_angle = np.sqrt(mean_squared_error(actual_angles, predicted_angles))
     mae_angle = mean_absolute_error(actual_angles, predicted_angles)
+    mape_angle = np.mean(np.abs((actual_angles - predicted_angles) / (actual_angles + 1e-8))) * 100
     print(f"\n  --- Slope Angle Prediction (degrees) ---")
-    print(f"  - RMSE: {rmse_angle:.4f}, MAE: {mae_angle:.4f}")
+    print(f"  - RMSE: {rmse_angle:.4f}, MAE: {mae_angle:.4f}, MAPE: {mape_angle:.2f}%")
 
     # Duration metrics
     rmse_duration = np.sqrt(mean_squared_error(actual_durations, predicted_durations))
     mae_duration = mean_absolute_error(actual_durations, predicted_durations)
+    mape_duration = np.mean(np.abs((actual_durations - predicted_durations) / (actual_durations + 1e-8))) * 100
     print(f"\n  --- Duration Prediction (days) ---")
-    print(f"  - RMSE: {rmse_duration:.2f}, MAE: {mae_duration:.2f}")
+    print(f"  - RMSE: {rmse_duration:.2f}, MAE: {mae_duration:.2f}, MAPE: {mape_duration:.2f}%")
 
     # Save results with UNIQUE FILENAME to prevent overwrites
     results_df = pd.DataFrame({
@@ -210,6 +199,8 @@ def _evaluate_trend_prediction(model, X_test_t, y_test_t, test_stock_ids, scaler
         'Slope_MAE': [mae_angle],
         'Duration_RMSE': [rmse_duration],
         'Duration_MAE': [mae_duration],
+        'Slope_MAPE': [mape_angle],
+        'Duration_MAPE': [mape_duration]
     }
     
     metrics_df = pd.DataFrame(metrics_summary)
